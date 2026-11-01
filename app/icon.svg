@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Listado Bem">
+  <rect width="64" height="64" rx="14" fill="#0b1e33" />
+  <path
+    d="M32 51s-17-9.8-17-22a9.5 9.5 0 0 1 17-6 9.5 9.5 0 0 1 17 6c0 12.2-17 22-17 22Z"
+    fill="#10b96a"
+  />
+  <path
+    d="M23 31h6.2l3-6.4 4.2 12.8 2.8-6.4H45"
+    fill="none"
+    stroke="#f5c518"
+    stroke-width="3.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

@@ -1,0 +1,41 @@
+{
+  "name": "listado-bem",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Listado Bem / Rede de Apoio — diretório de comerciantes, prestadores de serviço, artesãos, profissionais liberais e figuras públicas vítimas de boicote ideológico.",
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "typecheck": "tsc --noEmit",
+    "check:admin": "node tools/test-admin.cjs",
+    "budget": "node tools/budget.cjs",
+    "context:budget": "node tools/context-budget.cjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@supabase/supabase-js": "^2.49.0",
+    "lucide-react": "^0.469.0",
+    "next": "^14.2.15",
+    "qrcode": "^1.5.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "^7.54.2",
+    "server-only": "^0.0.1",
+    "sonner": "^1.7.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

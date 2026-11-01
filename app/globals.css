@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-marinho-900;
+  }
+
+  ::selection {
+    @apply bg-ouro-300 text-marinho-950;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-marinho-500 ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-marinho-800;
+  }
+
+  .input {
+    @apply block w-full rounded-lg border border-marinho-200 bg-white px-3 py-2.5 text-sm text-marinho-900 shadow-sm transition placeholder:text-marinho-400 focus:border-marinho-500 focus:outline-none focus:ring-2 focus:ring-marinho-500/25 disabled:bg-marinho-50;
+  }
+
+  .input-erro {
+    @apply border-perigo-400 focus:border-perigo-500 focus:ring-perigo-500/25;
+  }
+
+  /* Botões são autossuficientes: cada variante declara suas próprias utilidades. */
+  .btn-primario {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-marinho-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-marinho-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marinho-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-secundario {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-marinho-200 bg-white px-4 py-2.5 text-sm font-semibold text-marinho-900 shadow-sm transition hover:border-marinho-300 hover:bg-marinho-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marinho-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-verde {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-esmeralda-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-esmeralda-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-esmeralda-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-claro {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ouro-300 focus-visible:ring-offset-2 focus-visible:ring-offset-marinho-950;
+  }
+
+  .card {
+    @apply rounded-xl border border-marinho-100 bg-white shadow-sm;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+}

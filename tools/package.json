@@ -1,0 +1,8 @@
+{
+  "name": "listado-bem-tools",
+  "private": true,
+  "description": "Utilitarios de verificacao local (nao fazem parte do build do app).",
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
