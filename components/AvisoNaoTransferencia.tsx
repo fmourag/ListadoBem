@@ -7,6 +7,9 @@ import { AlertTriangle, ShieldAlert } from 'lucide-react';
 export const TEXTO_AVISO_NAO_TRANSFERENCIA =
   '⚠️ NÃO FAÇA TRANSFERÊNCIAS FINANCEIRAS. Esta plataforma NÃO processa pagamentos. Apoie consumindo diretamente os produtos/serviços do estabelecimento.';
 
+/** Mesmo texto sem o emoji, porque o ícone ao lado já sinaliza o alerta. */
+const TEXTO_EXIBIDO = TEXTO_AVISO_NAO_TRANSFERENCIA.replace(/^⚠️\s*/, '');
+
 /**
  * `compact`/`full` são os nomes canônicos pedidos na especificação.
  * `barra`/`destaque`/`compacto` continuam aceitos para não quebrar as páginas
@@ -34,7 +37,7 @@ export function AvisoNaoTransferencia({
         className={`flex items-start gap-2 text-xs font-semibold leading-relaxed text-ouro-200 ${className}`}
       >
         <ShieldAlert aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-ouro-300" />
-        <span>{TEXTO_AVISO_NAO_TRANSFERENCIA}</span>
+        <span>{TEXTO_EXIBIDO}</span>
       </p>
     );
   }
@@ -53,7 +56,7 @@ export function AvisoNaoTransferencia({
               Aviso obrigatório de segurança
             </p>
             <p className="text-base font-bold leading-relaxed sm:text-lg">
-              {TEXTO_AVISO_NAO_TRANSFERENCIA}
+              {TEXTO_EXIBIDO}
             </p>
             <p className="text-sm leading-relaxed text-perigo-100">
               Se alguém pedir PIX, TED, boleto ou depósito em nome desta plataforma, é golpe.
@@ -70,14 +73,18 @@ export function AvisoNaoTransferencia({
     <div
       role="alert"
       aria-live="assertive"
-      className={`border-y-2 border-perigo-700 bg-ouro-300 ${className}`}
+      className={`border-b border-perigo-700/70 bg-ouro-300 ${className}`}
     >
-      <div className="container-page flex items-start gap-3 py-2.5 text-marinho-950">
-        <AlertTriangle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-perigo-700" />
-        <p className="text-xs font-bold uppercase leading-snug tracking-wide sm:text-sm">
-          {TEXTO_AVISO_NAO_TRANSFERENCIA}
+      <div className="container-page flex items-center gap-2 py-1.5 text-marinho-950 sm:py-2">
+        <AlertTriangle
+          aria-hidden="true"
+          className="h-4 w-4 shrink-0 text-perigo-700 sm:h-[18px] sm:w-[18px]"
+        />
+        <p className="text-[11px] font-bold leading-tight tracking-wide sm:text-xs">
+          {TEXTO_EXIBIDO}
         </p>
       </div>
     </div>
   );
 }
+
