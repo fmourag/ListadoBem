@@ -1,7 +1,7 @@
 -- =============================================================================
 -- Rede de Apoio — schema Supabase (Postgres 15+)
--- Diretório de comerciantes, prestadores de serviço, artesãos e figuras
--- públicas vítimas de boicote ideológico.
+-- Diretório de comerciantes, prestadores de serviço, artesãos, profissionais
+-- liberais, figuras públicas e ações sociais vítimas de boicote ideológico.
 --
 -- Como aplicar:
 --   Supabase Dashboard → SQL Editor → cole este arquivo inteiro → Run.
@@ -12,7 +12,8 @@
 --   • Inserção pública permitida, sempre forçada para status = 'pendente'.
 --   • Nenhuma política de UPDATE/DELETE: escrita administrativa apenas com
 --     service_role (que ignora RLS) — nunca a partir do app web.
---   • CPF/CNPJ é único (índice UNIQUE) — protege contra duplicidade.
+--   • CPF/CNPJ é OPCIONAL e único quando informado — protege contra duplicidade.
+--   • Contato mínimo: e-mail OU telefone (constraint cadastros_boicote_contato_check).
 --   • Aprovar cadastro com menos de 2 referências é bloqueado por trigger.
 --
 -- O arquivo é idempotente o suficiente para ser reexecutado com segurança
@@ -436,4 +437,6 @@ $$;
 --   'Descrição de teste com mais de quarenta caracteres para validar o CHECK.',
 --   'Situação de boicote de teste com mais de quarenta caracteres.');
 -- reset role;
+
+
 

@@ -1,15 +1,20 @@
 # Deploy na Vercel (plano Hobby/free)
 
 App Next.js 14 autônomo (App Router). Este repositório é a raiz do projeto —
-não é mais um workspace de monorepo.
+não é workspace de monorepo.
 
 ---
 
 ## 1. Pré-requisitos
 
+- **Node.js 20+** local (a Vercel usa a versão do projeto).
 - Projeto Supabase free com o `supabase-schema.sql` aplicado.
 - Repositório no GitHub/GitLab.
 - As 4 variáveis de ambiente em mãos.
+
+> **Banco já existente?** Rode o arquivo inteiro: a seção **10.1** derruba o
+> `NOT NULL` de `cpf_cnpj`/`email`, cria a constraint
+> `cadastros_boicote_contato_check` e adiciona o tipo `acao_social`. É idempotente.
 
 ## 2. Importar o projeto
 
@@ -52,11 +57,19 @@ não é mais um workspace de monorepo.
 | Vercel function duration | 10 s (Hobby)     | API faz 2-3 queries curtas                |
 | Supabase pausa           | 7 dias sem uso   | manter um ping externo se necessário      |
 
+> O QR PIX é gerado **no build** (`/apoie/qr`), então não consome function em
+> runtime e não adiciona JS ao cliente.
+
 ## 5. Checklist pós-deploy
 
-- [ ] `/` mostra o aviso vermelho/amarelo.
+- [ ] `/` mostra o aviso vermelho/amarelo e o card “Apoie esta iniciativa”.
 - [ ] `/listagem` responde 200 (vazia ou com aprovados), sem erro de configuração.
 - [ ] `/cadastro` conclui as 4 etapas e devolve protocolo.
+- [ ] Cadastro **sem CPF, só com e-mail** é aceito (201) e fica `pendente`.
+- [ ] Cadastro **sem e-mail e sem telefone** é recusado com mensagem clara.
+- [ ] Tipo **“Ação social”** aparece na etapa 1 e é gravado no banco.
+- [ ] `/apoie` responde 200, mostra QR 200×200, chave `(21) 97194-3298` e as 5
+      cláusulas; os botões copiam chave e payload.
 - [ ] Cadastro novo fica `pendente` e **não** aparece em `/listagem`.
 - [ ] `/admin/moderacao` pede `ADMIN_SECRET`; aprovar publica o card com 2 referências.
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SECRET` são **Sensitive** e não
@@ -65,4 +78,5 @@ não é mais um workspace de monorepo.
 ## 6. Rollback
 
 Vercel → **Deployments → (deploy anterior) → Promote to Production**. O banco não
-é afetado.
+é afetado: as migrações são aditivas (`DROP NOT NULL`, nova constraint e novo
+valor de enum).
