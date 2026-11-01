@@ -135,36 +135,39 @@ export async function POST(request: Request) {
   }
 
   const dados = analise.data;
-  const documento = somenteDigitos(dados.cpf_cnpj);
+  const documento =
+    dados.cpf_cnpj && dados.cpf_cnpj.trim() !== '' ? somenteDigitos(dados.cpf_cnpj) : null;
   const cadastroId = crypto.randomUUID();
 
+  // CPF/CNPJ agora é opcional: a checagem de duplicidade só roda quando informado.
   // Com service role, a consulta enxerga cadastros pendentes também.
-  // Em modo degradado, só os aprovados; a UNIQUE do banco cobre o resto.
-  const { data: existente, error: erroConsulta } = await supabase
-    .from('cadastros_boicote')
-    .select('id')
-    .eq('cpf_cnpj', documento)
-    .maybeSingle();
+  if (documento) {
+    const { data: existente, error: erroConsulta } = await supabase
+      .from('cadastros_boicote')
+      .select('id')
+      .eq('cpf_cnpj', documento)
+      .maybeSingle();
 
-  if (erroConsulta && erroConsulta.code !== 'PGRST116') {
-    return resposta(
-      {
-        ok: false,
-        mensagem: 'Não foi possível verificar o cadastro agora. Tente novamente em instantes.',
-      },
-      500,
-    );
-  }
+    if (erroConsulta && erroConsulta.code !== 'PGRST116') {
+      return resposta(
+        {
+          ok: false,
+          mensagem: 'Não foi possível verificar o cadastro agora. Tente novamente em instantes.',
+        },
+        500,
+      );
+    }
 
-  if (existente) {
-    return resposta(
-      {
-        ok: false,
-        mensagem:
-          'Já existe um cadastro com este CPF/CNPJ. Se você precisa corrigir informações, fale com a equipe pelo e-mail de contato.',
-      },
-      409,
-    );
+    if (existente) {
+      return resposta(
+        {
+          ok: false,
+          mensagem:
+            'Já existe um cadastro com este CPF/CNPJ. Se você precisa corrigir informações, fale com a equipe pelo e-mail de contato.',
+        },
+        409,
+      );
+    }
   }
 
   const midia =
@@ -184,8 +187,8 @@ export async function POST(request: Request) {
     nome_completo: dados.nome_completo,
     nome_publico: dados.nome_publico,
     cpf_cnpj: documento,
-    email: dados.email,
-    telefone: dados.telefone,
+    email: dados.email?.trim() || null,
+    telefone: dados.telefone?.trim() || null,
     categoria: dados.categoria,
     descricao_atividade: dados.descricao_atividade,
     endereco: {
@@ -277,3 +280,5 @@ export async function POST(request: Request) {
     201,
   );
 }
+
+

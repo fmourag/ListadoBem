@@ -11,7 +11,8 @@ export type TipoCadastroBoicote =
   | 'prestador_servico'
   | 'artesao'
   | 'profissional_liberal'
-  | 'figura_publica';
+  | 'figura_publica'
+  | 'acao_social';
 
 /** Ciclo de vida editorial do cadastro. Só "aprovado" aparece publicamente. */
 export type StatusCadastroBoicote = 'pendente' | 'aprovado' | 'rejeitado' | 'suspenso';
@@ -81,9 +82,10 @@ export interface CadastroBoicote {
   tipo_cadastro: TipoCadastroBoicote;
   nome_completo: string;
   nome_publico: string;
-  /** Somente dígitos: 11 (CPF) ou 14 (CNPJ). Nunca exibir publicamente. */
-  cpf_cnpj: string;
-  email: string;
+  /** Somente dígitos: 11 (CPF) ou 14 (CNPJ). Opcional; nunca exibir publicamente. */
+  cpf_cnpj: string | null;
+  /** E-mail opcional, desde que exista telefone (e vice-versa). */
+  email: string | null;
   telefone: string | null;
   categoria: CategoriaBoicote;
   descricao_atividade: string;
@@ -99,4 +101,6 @@ export interface CadastroBoicote {
 export interface CadastroBoicoteComReferencias extends CadastroBoicote {
   referencias_publicas: ReferenciaPublica[];
 }
+
+
 

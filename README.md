@@ -89,8 +89,8 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 
 ## 6. Formulário
 
-1. **Dados básicos** — tipo, nome completo, nome público, CPF/CNPJ validado,
-   e-mail e telefone.
+1. **Dados básicos** — tipo, nome completo, nome público, CPF/CNPJ **opcional**
+   e **e-mail ou telefone (pelo menos um dos dois)**.
 2. **Atividade e endereço** — categoria, descrição, contexto do boicote,
    endereço e link opcional de foto/logo.
 3. **Referências públicas** — `useFieldArray`, mínimo **2**, máximo 6, URL
@@ -115,7 +115,7 @@ A API revalida com o mesmo schema; o navegador é só conveniência.
 - `ANON_KEY` no browser/leitura pública; RLS é a autoridade.
 - `SUPABASE_SERVICE_ROLE_KEY` só no servidor, em módulo com `server-only`.
 - `status` é sempre definido no servidor (`pendente`).
-- CPF/CNPJ único no banco; duplicidade retorna `409`.
+- CPF/CNPJ é opcional e único quando informado; duplicidade retorna `409`; o banco exige e-mail ou telefone (constraint `cadastros_boicote_contato_check`).
 - Rate limit simples por IP (5/hora) na API route.
 - Headers de segurança em `vercel.json`.
 
@@ -212,4 +212,8 @@ npm run context:budget   # falha se AGENTS.md > 6 KB ou arquivo > 400 linhas
 ## 13. Deploy
 
 Veja **[DEPLOY.md](./DEPLOY.md)**.
+
+
+
+
 

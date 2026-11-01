@@ -35,7 +35,8 @@ begin
       'prestador_servico',
       'artesao',
       'profissional_liberal',
-      'figura_publica'
+      'figura_publica',
+      'acao_social'
     );
   end if;
 
@@ -73,14 +74,18 @@ create table if not exists public.cadastros_boicote (
   nome_publico text not null
     check (char_length(btrim(nome_publico)) between 3 and 160),
 
-  -- Guardado apenas com dígitos (11 = CPF, 14 = CNPJ). A API normaliza antes do insert.
-  cpf_cnpj text not null unique
-    check (cpf_cnpj ~ '^[0-9]{11}$' or cpf_cnpj ~ '^[0-9]{14}$'),
+  -- Opcional. Guardado apenas com dígitos (11 = CPF, 14 = CNPJ). A API normaliza.
+  cpf_cnpj text unique
+    check (cpf_cnpj is null or cpf_cnpj ~ '^[0-9]{11}$' or cpf_cnpj ~ '^[0-9]{14}$'),
 
-  email text not null
-    check (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
+  -- Pelo menos um contato: e-mail OU telefone (ver constraint no fim da tabela).
+  email text
+    check (email is null or email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
   telefone text
     check (telefone is null or char_length(telefone) between 10 and 20),
+
+  constraint cadastros_boicote_contato_check
+    check (email is not null or telefone is not null),
 
   categoria text not null
     check (categoria in (
@@ -121,7 +126,7 @@ create table if not exists public.cadastros_boicote (
 comment on table public.cadastros_boicote is
   'Cadastros do diretório Rede de Apoio. Leitura pública apenas com status = aprovado.';
 comment on column public.cadastros_boicote.cpf_cnpj is
-  'Somente dígitos (CPF 11 / CNPJ 14). Único. Nunca exposto na listagem pública.';
+  'Opcional. Somente dígitos (CPF 11 / CNPJ 14). Único quando informado. Nunca exposto publicamente.';
 comment on column public.cadastros_boicote.endereco is
   'JSON com cep, logradouro, numero, complemento, bairro, cidade, estado e pais.';
 
@@ -230,7 +235,7 @@ declare
 begin
   delete from public.cadastros_boicote
    where id = p_cadastro_id
-     and cpf_cnpj = p_cpf_cnpj
+     and (p_cpf_cnpj is null or cpf_cnpj = p_cpf_cnpj)
      and status = 'pendente'
      and criado_em > now() - interval '15 minutes';
 
@@ -240,7 +245,7 @@ end;
 $$;
 
 comment on function public.descartar_cadastro_pendente(uuid, text) is
-  'Compensação de falha parcial: apaga somente um cadastro pendente recente do próprio CPF/CNPJ.';
+  'Compensação de falha parcial: apaga somente um cadastro pendente recente (do próprio CPF/CNPJ, quando informado).';
 
 -- -----------------------------------------------------------------------------
 -- 7. Guardrail: não aprovar cadastro com menos de 2 referências públicas
@@ -356,6 +361,46 @@ commit;
 alter type public.tipo_cadastro_boicote
   add value if not exists 'profissional_liberal';
 
+alter type public.tipo_cadastro_boicote
+  add value if not exists 'acao_social';
+
+-- =============================================================================
+-- 10.1 CPF/CNPJ opcional e contato mínimo (e-mail OU telefone)
+--      Idempotente: no-op em banco já migrado.
+-- =============================================================================
+alter table public.cadastros_boicote alter column cpf_cnpj drop not null;
+alter table public.cadastros_boicote alter column email drop not null;
+
+alter table public.cadastros_boicote
+  drop constraint if exists cadastros_boicote_contato_check;
+
+alter table public.cadastros_boicote
+  add constraint cadastros_boicote_contato_check
+  check (email is not null or telefone is not null);
+
+create or replace function public.descartar_cadastro_pendente(
+  p_cadastro_id uuid,
+  p_cpf_cnpj text
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  removidos integer;
+begin
+  delete from public.cadastros_boicote
+   where id = p_cadastro_id
+     and (p_cpf_cnpj is null or cpf_cnpj = p_cpf_cnpj)
+     and status = 'pendente'
+     and criado_em > now() - interval '15 minutes';
+
+  get diagnostics removidos = row_count;
+  return removidos > 0;
+end;
+$$;
+
 -- =============================================================================
 -- Operação (somente service_role / SQL Editor — nunca no client)
 -- =============================================================================
@@ -391,3 +436,4 @@ alter type public.tipo_cadastro_boicote
 --   'Descrição de teste com mais de quarenta caracteres para validar o CHECK.',
 --   'Situação de boicote de teste com mais de quarenta caracteres.');
 -- reset role;
+

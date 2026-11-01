@@ -16,6 +16,7 @@ export const TIPO_CADASTRO_VALORES = [
   'artesao',
   'profissional_liberal',
   'figura_publica',
+  'acao_social',
 ] as const;
 
 export const CATEGORIA_VALORES = [
@@ -68,6 +69,10 @@ const ROTULOS_TIPO_CADASTRO: Record<
   figura_publica: {
     rotulo: 'Figura pública',
     descricao: 'Artista, comunicador(a), influenciador(a) ou profissional com atuação pública.',
+  },
+  acao_social: {
+    rotulo: 'Ação social',
+    descricao: 'Projetos sociais, coletivos, igrejas, ONGs e iniciativas comunitárias.',
   },
 };
 
@@ -133,3 +138,5 @@ export const NOME_UF: Readonly<Record<UfBrasil, string>> = {
 
 export const MINIMO_REFERENCIAS = 2;
 export const MAXIMO_REFERENCIAS = 6;
+
+

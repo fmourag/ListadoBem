@@ -13,9 +13,16 @@ import {
  * Esquema único de validação — usado no formulário (client) e revalidado
  * na API route (server). A validação do browser é conveniência de UX;
  * a autoridade é sempre a do servidor.
+ *
+ * Regras de contato:
+ *  - CPF/CNPJ é OPCIONAL (se informado, precisa ser válido);
+ *  - e-mail e telefone são opcionais individualmente, mas exige-se
+ *    PELO MENOS UM dos dois.
  */
 
 const TIPOS_MIDIA_VALORES = ['foto', 'video', 'logo', 'documento'] as const;
+
+const REGEX_EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export function somenteDigitos(valor: string): string {
   return valor.replace(/\D+/g, '');
@@ -140,88 +147,114 @@ const midiaSchema = z.object({
   descricao: z.string().trim().max(160).optional(),
 });
 
-export const cadastroSchema = z.object({
-  tipo_cadastro: z.enum(TIPO_CADASTRO_VALORES, {
-    errorMap: () => ({ message: 'Selecione o tipo de cadastro.' }),
-  }),
-  nome_completo: z
-    .string()
-    .trim()
-    .min(5, 'Informe seu nome completo (mínimo de 5 caracteres).')
-    .max(160, 'Máximo de 160 caracteres.'),
-  nome_publico: z
-    .string()
-    .trim()
-    .min(3, 'Informe o nome público do estabelecimento ou do profissional.')
-    .max(160, 'Máximo de 160 caracteres.'),
-  cpf_cnpj: z
-    .string()
-    .trim()
-    .min(11, 'Informe um CPF (11 dígitos) ou CNPJ (14 dígitos).')
-    .refine(cpfCnpjValido, 'CPF ou CNPJ inválido. Confira os números digitados.'),
-  email: z
-    .string()
-    .trim()
-    .email('Informe um e-mail válido.')
-    .max(160, 'Máximo de 160 caracteres.'),
-  telefone: z
-    .string()
-    .trim()
-    .min(10, 'Informe um telefone com DDD.')
-    .max(20, 'Máximo de 20 caracteres.')
-    .refine(
-      (valor) => /^[\d\s()+-]+$/.test(valor) && somenteDigitos(valor).length >= 10,
-      'Telefone inválido. Use DDD + número.',
-    ),
-  categoria: z.enum(CATEGORIA_VALORES, {
-    errorMap: () => ({ message: 'Selecione a categoria da atividade.' }),
-  }),
-  descricao_atividade: z
-    .string()
-    .trim()
-    .min(40, 'Descreva sua atividade com pelo menos 40 caracteres.')
-    .max(1200, 'Máximo de 1200 caracteres.'),
-  endereco: enderecoSchema,
-  situacao_boicote: z
-    .string()
-    .trim()
-    .min(40, 'Conte o que aconteceu com pelo menos 40 caracteres.')
-    .max(1500, 'Máximo de 1500 caracteres.'),
-  /** URL opcional de foto/logo do estabelecimento. */
-  link_midia: z
-    .string()
-    .trim()
-    .refine(
-      (valor) => valor === '' || urlHttpValida(valor),
-      'Informe uma URL http(s) válida ou deixe em branco.',
-    )
-    .optional(),
-  midia: z
-    .array(midiaSchema)
-    .max(MAXIMO_REFERENCIAS, 'Máximo de 6 itens de mídia.')
-    .optional(),
-  referencias: z
-    .array(referenciaSchema)
-    .min(
-      MINIMO_REFERENCIAS,
-      `Informe pelo menos ${MINIMO_REFERENCIAS} referências públicas verificáveis.`,
-    )
-    .max(
-      MAXIMO_REFERENCIAS,
-      `Máximo de ${MAXIMO_REFERENCIAS} referências por cadastro.`,
-    ),
-  aceite_termos: z
-    .boolean()
-    .refine((valor) => valor === true, {
-      message: 'É necessário aceitar os termos de uso e a política de privacidade.',
+export const cadastroSchema = z
+  .object({
+    tipo_cadastro: z.enum(TIPO_CADASTRO_VALORES, {
+      errorMap: () => ({ message: 'Selecione o tipo de cadastro.' }),
     }),
-  aceite_aviso_nao_transferencia: z
-    .boolean()
-    .refine((valor) => valor === true, {
-      message:
-        'É necessário confirmar que você entendeu que a plataforma não processa pagamentos.',
+    nome_completo: z
+      .string()
+      .trim()
+      .min(5, 'Informe seu nome completo (mínimo de 5 caracteres).')
+      .max(160, 'Máximo de 160 caracteres.'),
+    nome_publico: z
+      .string()
+      .trim()
+      .min(3, 'Informe o nome público do estabelecimento ou do profissional.')
+      .max(160, 'Máximo de 160 caracteres.'),
+    /** Opcional. Se preenchido, valida dígitos verificadores. */
+    cpf_cnpj: z
+      .string()
+      .trim()
+      .max(20, 'Máximo de 20 caracteres.')
+      .refine(
+        (valor) => valor === '' || cpfCnpjValido(valor),
+        'CPF ou CNPJ inválido. Confira os números digitados ou deixe em branco.',
+      )
+      .optional(),
+    /** Opcional individualmente; exige-se e-mail OU telefone. */
+    email: z
+      .string()
+      .trim()
+      .max(160, 'Máximo de 160 caracteres.')
+      .refine(
+        (valor) => valor === '' || REGEX_EMAIL.test(valor),
+        'Informe um e-mail válido.',
+      )
+      .optional(),
+    /** Opcional individualmente; exige-se e-mail OU telefone. */
+    telefone: z
+      .string()
+      .trim()
+      .max(20, 'Máximo de 20 caracteres.')
+      .refine(
+        (valor) =>
+          valor === '' ||
+          (/^[\d\s()+-]+$/.test(valor) && somenteDigitos(valor).length >= 10),
+        'Telefone inválido. Use DDD + número.',
+      )
+      .optional(),
+    categoria: z.enum(CATEGORIA_VALORES, {
+      errorMap: () => ({ message: 'Selecione a categoria da atividade.' }),
     }),
-});
+    descricao_atividade: z
+      .string()
+      .trim()
+      .min(40, 'Descreva sua atividade com pelo menos 40 caracteres.')
+      .max(1200, 'Máximo de 1200 caracteres.'),
+    endereco: enderecoSchema,
+    situacao_boicote: z
+      .string()
+      .trim()
+      .min(40, 'Conte o que aconteceu com pelo menos 40 caracteres.')
+      .max(1500, 'Máximo de 1500 caracteres.'),
+    /** URL opcional de foto/logo do estabelecimento. */
+    link_midia: z
+      .string()
+      .trim()
+      .refine(
+        (valor) => valor === '' || urlHttpValida(valor),
+        'Informe uma URL http(s) válida ou deixe em branco.',
+      )
+      .optional(),
+    midia: z
+      .array(midiaSchema)
+      .max(MAXIMO_REFERENCIAS, 'Máximo de 6 itens de mídia.')
+      .optional(),
+    referencias: z
+      .array(referenciaSchema)
+      .min(
+        MINIMO_REFERENCIAS,
+        `Informe pelo menos ${MINIMO_REFERENCIAS} referências públicas verificáveis.`,
+      )
+      .max(
+        MAXIMO_REFERENCIAS,
+        `Máximo de ${MAXIMO_REFERENCIAS} referências por cadastro.`,
+      ),
+    aceite_termos: z
+      .boolean()
+      .refine((valor) => valor === true, {
+        message: 'É necessário aceitar os termos de uso e a política de privacidade.',
+      }),
+    aceite_aviso_nao_transferencia: z
+      .boolean()
+      .refine((valor) => valor === true, {
+        message:
+          'É necessário confirmar que você entendeu que a plataforma não processa pagamentos.',
+      }),
+  })
+  .superRefine((dados, ctx) => {
+    const email = (dados.email ?? '').trim();
+    const telefone = (dados.telefone ?? '').trim();
+
+    if (email === '' && telefone === '') {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['email'],
+        message: 'Informe e-mail ou telefone/WhatsApp (pelo menos um dos dois).',
+      });
+    }
+  });
 
 export type CadastroFormValues = z.infer<typeof cadastroSchema>;
 

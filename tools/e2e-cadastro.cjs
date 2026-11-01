@@ -13,8 +13,7 @@ const path = require('node:path');
 
 const RAIZ = path.resolve(__dirname, '..');
 const BASE = process.env.E2E_BASE || 'http://127.0.0.1:3001';
-const CPF = '111.444.777-35';
-const CPF_DIGITOS = '11144477735';
+const EMAIL_TESTE = 'formulario@example.com';
 
 const req = createRequire(path.join(RAIZ, 'package.json'));
 const { createClient } = req('@supabase/supabase-js');
@@ -46,9 +45,7 @@ function pegar(texto, nome) {
     // Etapa 1
     await pagina.fill('#nome_completo', 'Teste Formulario da Silva');
     await pagina.fill('#nome_publico', 'Padaria Formulario E2E');
-    await pagina.fill('#cpf_cnpj', CPF);
-    await pagina.fill('#email', 'formulario@example.com');
-    await pagina.fill('#telefone', '(11) 98888-7777');
+    await pagina.fill('#email', EMAIL_TESTE);
     await pagina.getByRole('button', { name: 'Continuar' }).click();
 
     const etapa2 = pagina.getByRole('heading', { name: 'Atividade e endereço' });
@@ -97,7 +94,7 @@ function pegar(texto, nome) {
     const { data } = await admin
       .from('cadastros_boicote')
       .select('id, status, referencias_publicas(id)')
-      .eq('cpf_cnpj', CPF_DIGITOS)
+      .eq('email', EMAIL_TESTE)
       .maybeSingle();
 
     data?.status === 'pendente' ? ok('cadastro salvo como pendente') : falha('status inesperado');
@@ -112,7 +109,7 @@ function pegar(texto, nome) {
   } finally {
     await navegador.close();
     if (falhas.length > 0) {
-      const { data } = await admin.from('cadastros_boicote').select('id').eq('cpf_cnpj', CPF_DIGITOS);
+      const { data } = await admin.from('cadastros_boicote').select('id').eq('email', EMAIL_TESTE);
       for (const linha of data ?? []) await admin.from('cadastros_boicote').delete().eq('id', linha.id);
       console.log(`\nRESULTADO: ${falhas.length} falha(s).`);
       process.exitCode = 1;
@@ -124,3 +121,5 @@ function pegar(texto, nome) {
   console.error('FALHA:', erro.message);
   process.exitCode = 1;
 });
+
+

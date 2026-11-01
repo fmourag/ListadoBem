@@ -137,7 +137,7 @@ export default function HomePage() {
             </h2>
             <ol className="mt-3 space-y-3">
               {[
-                'Cadastro com dados completos e documento único.',
+                'Cadastro com dados completos e referências verificáveis.',
                 'Mínimo de 2 referências públicas com link acessível.',
                 'Análise humana antes de qualquer publicação.',
               ].map((item) => (
@@ -350,4 +350,5 @@ export default function HomePage() {
     </>
   );
 }
+
 
