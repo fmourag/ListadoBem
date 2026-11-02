@@ -84,9 +84,10 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
 - O rate limit da API é **5 cadastros/hora por IP**; rode cada E2E com o servidor
   recém-iniciado.
 - A listagem não pode ser cacheada (`cache: 'no-store'` em `lib/supabase.ts`).
-- Repositórios irmãos: o projeto das Eleições vive em
-  `..\Eleições Progressistas` (fonte da verdade daquele monorepo); o antigo está
-  arquivado em `..\_arquivado-Eleições-Presidenciais-2026` (push bloqueado).
+- **Este repositório é o único app ativo.** O `apps/web` do monorepo das Eleições
+  (`..\Eleições Progressistas`) é **legado**, não deve ser executado nem alterado.
+  O monorepo antigo está arquivado em `..\_arquivado-Eleições-Presidenciais-2026`.
 - Verificação mínima antes de concluir: `npm run typecheck`, `npm run build`,
   `npm run budget` e os E2E relevantes.
+
 

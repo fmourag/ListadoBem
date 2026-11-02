@@ -9,10 +9,11 @@ prestadores de serviço, artesãos, profissionais liberais, figuras públicas e
 > não intermedeia a relação comercial. Existe **uma** exceção explícita: a
 > contribuição **facultativa** para manutenção da infraestrutura, em `/apoie`.
 
-Este repositório é **autônomo**: nasceu dentro do monorepo das Eleições, foi
-separado e hoje tem build, deploy e ciclo de vida próprios. Ele **compartilha o
-mesmo projeto Supabase** com o app das Eleições, em tabelas dedicadas
-(`cadastros_boicote` e `referencias_publicas`), isoladas por RLS.
+Este repositório é **o único app ativo**: tem build, deploy e ciclo de vida
+próprios, sem depender de monorepo. Ele **compartilha o mesmo projeto Supabase**
+com o app das Eleições, em tabelas dedicadas (`cadastros_boicote` e
+`referencias_publicas`), isoladas por RLS. O `apps/web` do monorepo é uma cópia
+**legada** e não deve ser usada.
 
 ---
 
@@ -261,4 +262,5 @@ npm run context:budget   # falha se AGENTS.md > 6 KB ou arquivo > 400 linhas
 ## 14. Deploy
 
 Veja **[DEPLOY.md](./DEPLOY.md)**.
+
 
