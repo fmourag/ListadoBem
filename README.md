@@ -15,6 +15,19 @@ com o app das Eleições, em tabelas dedicadas (`cadastros_boicote` e
 `referencias_publicas`), isoladas por RLS. O `apps/web` do monorepo é uma cópia
 **legada** e não deve ser usada.
 
+## Documentação
+
+| Documento | Conteúdo |
+| --- | --- |
+| [PRD.md](./PRD.md) | requisitos, personas, regras e critérios de aceite |
+| [MANUAL-DO-USUARIO.md](./MANUAL-DO-USUARIO.md) | passo a passo para usuários e moderadores |
+| [LGPD.md](./LGPD.md) | dados pessoais, bases legais e direitos |
+| [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) | deploy, backup, rotação e incidentes |
+| [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) | arquitetura, banco, API e PIX |
+| [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) | ameaças, controles e lacunas |
+| [MARKDOWN.md](./MARKDOWN.md) | convenções de escrita da documentação |
+| [DEPLOY.md](./DEPLOY.md) | deploy rápido na Vercel |
+
 ---
 
 ## 1. Stack
