@@ -186,6 +186,30 @@ async function main() {
     const linksA = await publicadosA.locator('a[href*="exemplo.com"]').count();
     linksA >= 2 ? ok(`card mostra ${linksA} referencias`) : falha('referencias ausentes no card');
 
+    // 1.1 Busca na landing e por referencia publica
+    await pagina.goto(BASE, { waitUntil: 'domcontentloaded' });
+    await pagina.fill('#busca', nomeA);
+    await pagina.getByRole('button', { name: 'Buscar' }).click();
+    await pagina.waitForURL(/\/listagem\?q=/, { timeout: 20000 });
+    (await pagina.locator('article', { hasText: nomeA }).count()) === 1
+      ? ok('busca da landing encontra o cadastro')
+      : falha('busca da landing nao encontrou');
+
+    await pagina.goto(`${BASE}/listagem?q=Jornal%20Teste`, { waitUntil: 'domcontentloaded' });
+    (await pagina.locator('article', { hasText: nomeA }).count()) === 1
+      ? ok('busca por referencia publica encontra o cadastro')
+      : falha('busca por referencia nao encontrou');
+
+    await pagina.goto(`${BASE}/listagem?q=Sao%20Paulo`, { waitUntil: 'domcontentloaded' });
+    (await pagina.locator('article', { hasText: nomeA }).count()) === 1
+      ? ok('busca por cidade encontra o cadastro')
+      : falha('busca por cidade nao encontrou');
+
+    await pagina.goto(`${BASE}/listagem?q=zzzznaoexiste`, { waitUntil: 'domcontentloaded' });
+    (await pagina.locator('article').count()) === 0
+      ? ok('busca sem resultado nao mostra cards')
+      : falha('busca sem resultado mostrou cards');
+
     // 2. Rejeitar
     await apagar(criados[0]);
     const nomeB = 'Padaria E2E B';

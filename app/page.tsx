@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   CreditCard,
   FileText,
-  HandHeart,
   Mic,
   Search,
   ShieldCheck,
@@ -103,7 +102,27 @@ export default function HomePage() {
               aconteceu — e conversa direto com cada um.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <form action="/listagem" method="get" role="search" className="mt-7 w-full max-w-xl">
+              <label htmlFor="busca" className="sr-only">
+                Buscar por nome, cidade ou referência pública
+              </label>
+              <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 p-1.5 backdrop-blur transition focus-within:border-ouro-300/70">
+                <Search aria-hidden="true" className="ml-2 h-5 w-5 shrink-0 text-marinho-300" />
+                <input
+                  id="busca"
+                  name="q"
+                  type="search"
+                  maxLength={80}
+                  placeholder="Nome, cidade ou referência pública"
+                  className="h-10 min-w-0 flex-1 bg-transparent text-sm text-white placeholder:text-marinho-400 focus:outline-none"
+                />
+                <button type="submit" className="btn-verde px-4 py-2 text-sm">
+                  Buscar
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <Link href="/listagem" className="btn-ouro w-full sm:w-auto">
                 <Store aria-hidden="true" className="h-5 w-5" />
                 Ver estabelecimentos
@@ -113,21 +132,6 @@ export default function HomePage() {
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>
-
-            <ul className="mt-8 grid gap-2 text-sm text-marinho-200 sm:grid-cols-3">
-              <li className="flex items-center gap-2">
-                <BadgeCheck aria-hidden="true" className="h-4 w-4 text-esmeralda-400" />
-                2+ referências públicas
-              </li>
-              <li className="flex items-center gap-2">
-                <HandHeart aria-hidden="true" className="h-4 w-4 text-esmeralda-400" />
-                Sem taxas e sem comissão
-              </li>
-              <li className="flex items-center gap-2">
-                <ShieldCheck aria-hidden="true" className="h-4 w-4 text-esmeralda-400" />
-                Contato direto, sempre
-              </li>
-            </ul>
           </div>
 
           <aside className="card border-marinho-700/60 bg-white p-5 text-marinho-900 sm:p-6">

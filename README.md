@@ -102,7 +102,7 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 | Rota               | Tipo             | Função                                                    |
 | ------------------ | ---------------- | --------------------------------------------------------- |
 | `/`                | Server           | Landing com hero, regras de segurança e CTA               |
-| `/listagem`        | Server (dinâm.)  | Grid de aprovados, filtros por categoria e UF             |
+| `/listagem`        | Server (dinâm.)  | Busca e filtros (categoria, UF, referência)              |
 | `/cadastro`        | Server + client  | Formulário multi-step                                     |
 | `/apoie`           | Server           | Página da contribuição facultativa (PIX)                  |
 | `/apoie/qr`        | Route Handler    | SVG do QR PIX gerado no build                             |

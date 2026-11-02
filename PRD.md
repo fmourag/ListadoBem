@@ -83,6 +83,8 @@ retorna protocolo e mensagem de que nada foi cobrado.
 ### 5.3 Listagem (`/listagem`)
 
 - Somente cadastros `aprovado`.
+- Busca por nome, cidade ou referência pública via `GET ?q=` (server-side, sem
+  JavaScript extra).
 - Filtros por categoria e UF via `GET` (compartilhável).
 - Card com nome público, tipo, categoria, cidade/UF, descrição, referências e
   orientação de contato direto — **sem publicar telefone/e-mail**.

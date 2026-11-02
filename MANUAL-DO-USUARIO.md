@@ -102,8 +102,8 @@ na listagem até a análise humana.
 ## 3. Para quem quer encontrar e apoiar
 
 1. Acesse **Estabelecimentos verificados** (`/listagem`).
-2. Filtre por **categoria** e **UF** (os filtros ficam na URL e podem ser
-   compartilhados).
+2. Use a **busca** por nome, cidade ou referência pública, ou filtre por
+   **categoria** e **UF** — tudo fica na URL e pode ser compartilhado.
 3. Abra o card: você verá nome público, tipo, categoria, cidade/UF, descrição,
    contexto do boicote e as referências (até 3; as demais são contadas).
 4. Clique nas referências para conferir as fontes.

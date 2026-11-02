@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertTriangle, ArrowRight, MapPin, SearchX, Store } from 'lucide-react';
+import { AlertTriangle, ArrowRight, MapPin, Search, SearchX, Store } from 'lucide-react';
 
 import { AvisoNaoTransferencia } from '@/components/AvisoNaoTransferencia';
 import { CardEstabelecimento } from '@/components/CardEstabelecimento';
@@ -22,7 +22,30 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 interface ListagemPageProps {
-  searchParams?: { categoria?: string; estado?: string };
+  searchParams?: { categoria?: string; estado?: string; q?: string | string[] };
+}
+
+function normalizar(texto: string): string {
+  return texto
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+/** Busca textual em nome, cidade, descrição e referências públicas. */
+function combinaBusca(estabelecimento: EstabelecimentoListado, alvo: string): boolean {
+  const partes = [
+    estabelecimento.nome_publico,
+    estabelecimento.descricao_atividade,
+    estabelecimento.situacao_boicote ?? '',
+    estabelecimento.endereco?.cidade ?? '',
+    estabelecimento.endereco?.estado ?? '',
+    ...(estabelecimento.referencias_publicas ?? []).flatMap((referencia) => [
+      referencia.nome_fonte,
+      referencia.titulo_referencia,
+    ]),
+  ];
+  return normalizar(partes.join(' ')).includes(alvo);
 }
 
 const CONSULTA_PUBLICA = `
@@ -55,6 +78,11 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
     ? searchParams?.estado
     : undefined;
 
+  const qBruto = searchParams?.q;
+  const termoBusca = (Array.isArray(qBruto) ? qBruto[0] : qBruto ?? '').trim().slice(0, 80);
+  const buscaAtiva = termoBusca.length >= 2;
+  const alvoBusca = buscaAtiva ? normalizar(termoBusca) : '';
+
   let estabelecimentos: EstabelecimentoListado[] = [];
   let erroConsulta: string | null = null;
 
@@ -67,7 +95,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
         .select(CONSULTA_PUBLICA)
         .eq('status', 'aprovado')
         .order('criado_em', { ascending: false })
-        .limit(60);
+        .limit(buscaAtiva ? 200 : 60);
 
       if (categoriaSelecionada) {
         consulta = consulta.eq('categoria', categoriaSelecionada);
@@ -83,13 +111,18 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
         erroConsulta = error.message;
       } else {
         estabelecimentos = (data ?? []) as unknown as EstabelecimentoListado[];
+        if (buscaAtiva) {
+          estabelecimentos = estabelecimentos
+            .filter((estabelecimento) => combinaBusca(estabelecimento, alvoBusca))
+            .slice(0, 60);
+        }
       }
     } catch (erro) {
       erroConsulta = erro instanceof Error ? erro.message : 'Erro ao consultar o diretório.';
     }
   }
 
-  const temFiltro = Boolean(categoriaSelecionada || estadoSelecionado);
+  const temFiltro = Boolean(categoriaSelecionada || estadoSelecionado || buscaAtiva);
 
   return (
     <>
@@ -140,9 +173,30 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
         <form
           method="get"
           action="/listagem"
-          className="card mt-6 grid gap-3 p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end"
-          aria-label="Filtrar estabelecimentos"
+          className="card mt-6 grid gap-3 p-4 sm:grid-cols-[1.4fr_1fr_1fr_auto] sm:items-end"
+          aria-label="Buscar e filtrar estabelecimentos"
         >
+          <div>
+            <label htmlFor="busca" className="label">
+              Buscar
+            </label>
+            <div className="relative">
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-marinho-400"
+              />
+              <input
+                id="busca"
+                name="q"
+                type="search"
+                maxLength={80}
+                defaultValue={termoBusca}
+                placeholder="Nome, cidade ou referência"
+                className="input pl-9"
+              />
+            </div>
+          </div>
+
           <div>
             <label htmlFor="filtro-categoria" className="label">
               Categoria
@@ -197,12 +251,17 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
             {estabelecimentos.length === 1
               ? 'estabelecimento encontrado'
               : 'estabelecimentos encontrados'}
-            {temFiltro ? ' com os filtros atuais' : ''}
+            {temFiltro ? ' com a busca/filtros atuais' : ''}
           </p>
           {temFiltro ? (
             <p className="text-xs font-semibold text-marinho-500">
-              {categoriaSelecionada ? formatarCategoria(categoriaSelecionada) : 'Todas as categorias'}
-              {estadoSelecionado ? ` · ${estadoSelecionado}` : ''}
+              {[
+                termoBusca ? `“${termoBusca}”` : null,
+                categoriaSelecionada ? formatarCategoria(categoriaSelecionada) : null,
+                estadoSelecionado ? estadoSelecionado : null,
+              ]
+                .filter(Boolean)
+                .join(' · ')}
             </p>
           ) : null}
         </div>
@@ -231,7 +290,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
             </h2>
             <p className="max-w-md text-sm leading-relaxed text-marinho-600">
               {temFiltro
-                ? 'Tente outra categoria ou estado, ou limpe os filtros para ver o diretório completo.'
+                ? 'Tente outro termo, categoria ou estado — ou limpe a busca para ver o diretório completo.'
                 : 'Seja um dos primeiros: cadastre seu negócio com duas referências públicas e ajude a formar a rede.'}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
