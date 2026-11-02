@@ -54,6 +54,11 @@ Next.js na Vercel (região gru1)
 O cliente Supabase de servidor força `cache: 'no-store'` em todo `fetch`, para
 que aprovações apareçam imediatamente.
 
+Cabeçalhos: a **CSP** (enforce) é emitida pelo `next.config.mjs`, com
+`default-src 'self'`, `connect-src` para `https://*.supabase.co` e
+`frame-ancestors 'none'`; `X-Content-Type-Options`, `Referrer-Policy` e
+`Permissions-Policy` ficam em `vercel.json`. Não há `'unsafe-eval'` em produção.
+
 ## 4. Estrutura de pastas
 
 ```
@@ -250,7 +255,7 @@ E2E (Playwright + Supabase admin): `e2e-listado`, `e2e-cadastro`, `e2e-contato`,
 - **Sem cache na listagem:** prioriza consistência após moderação.
 - **Rate limit em memória:** simples e sem custo; não é distribuído.
 - **Sessão por cookie:** token HMAC de 1 h; não há revogação individual antes do vencimento.
-- **Sem CSP:** headers básicos apenas.
+- **CSP com `'unsafe-inline'`:** exigida pela hidratação; sem nonce/hash.
 - **Sem upload:** mídia é URL externa.
 - **Sem verificação de e-mail:** curadoria humana cobre.
 

@@ -42,8 +42,10 @@ não é workspace de monorepo.
 
 ## 3. Domínio e headers
 
-- `vercel.json` define região `gru1`, `X-Content-Type-Options`, `X-Frame-Options`,
-  `Referrer-Policy` e `Permissions-Policy`.
+- `vercel.json` define região `gru1` e os headers `X-Content-Type-Options`,
+  `Referrer-Policy` e `Permissions-Policy`; a **CSP** é emitida pelo
+  `next.config.mjs` (enforce), com `frame-ancestors 'none'` no lugar de
+  `X-Frame-Options`.
 - Domínio `.vercel.app` é gratuito; domínio próprio é opcional.
 - Ao trocar o domínio, atualize `metadataBase` em `app/layout.tsx`.
 

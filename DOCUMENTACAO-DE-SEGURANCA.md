@@ -70,14 +70,19 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 - Links de referência renderizados com `rel="noopener noreferrer nofollow"`.
 - Nenhum `dangerouslySetInnerHTML`, `eval` ou script de terceiros.
 
-### 4.3 Cabeçalhos (`vercel.json`)
+### 4.3 Cabeçalhos (`next.config.mjs` + `vercel.json`)
 
 | Header | Valor |
 | --- | --- |
+| `Content-Security-Policy` | `default-src 'self'`; `script-src 'self' 'unsafe-inline'`; `style-src 'self' 'unsafe-inline'`; `img-src 'self' data:`; `connect-src 'self' https://*.supabase.co <origem>`; `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`; `object-src 'none'` |
 | `X-Content-Type-Options` | `nosniff` |
-| `X-Frame-Options` | `SAMEORIGIN` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
+
+A CSP é emitida pelo `next.config.mjs` (funciona local e na Vercel) no modo
+**enforce**. `frame-ancestors 'none'` substitui o antigo `X-Frame-Options`.
+`'unsafe-inline'` é a concessão documentada para a hidratação do Next; não há
+`'unsafe-eval'` em produção.
 
 ### 4.4 Rate limit
 
@@ -102,7 +107,7 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 | Lacuna | Risco | Correção sugerida | Prioridade |
 | --- | --- | --- | --- |
 | Sem limite de tentativas de login | força bruta online | throttle por IP + atraso progressivo | média |
-| Sem CSP | XSS de terceiros | CSP com `script-src 'self'` + nonce do Next | média |
+| Sem CSP com nonce | `'unsafe-inline'` ainda permite script inline | avaliar nonce/hash quando o Next suportar sem quebrar a hidratação | baixa |
 | Rate limit em memória | bypass distribuído | Cloudflare Rate Limiting / Upstash | média |
 | Sem CAPTCHA | spam | Turnstile no cadastro | média |
 | Sem verificação de e-mail | contato inválido | double opt-in (requer e-mail transacional) | baixa |

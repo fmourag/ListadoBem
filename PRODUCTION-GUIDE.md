@@ -208,7 +208,7 @@ O banco não é afetado; migrações são aditivas.
 | --- | --- | --- |
 | Rate limit em memória | reinicia com o processo e não é global | Cloudflare/WAF ou KV |
 | `ADMIN_SECRET` na URL | aparece em logs/histórico | Access/SSO + cookie `HttpOnly` |
-| Sem CSP | reduz defesa contra XSS | adicionar CSP compatível com Next |
+| CSP com `'unsafe-inline'` | reduz defesa contra XSS inline | avaliar nonce/hash em versões futuras do Next |
 | Sem verificação de e-mail | contato pode ser inválido | conferência humana na moderação |
 | Sem CI | deploy depende de disciplina local | GitHub Actions sugerido |
 

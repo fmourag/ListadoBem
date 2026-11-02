@@ -165,7 +165,7 @@ quantia. O QR é um SVG estático em `/apoie/qr`.
 - A chave PIX é pública por natureza (serve para receber), mas só aparece em
   `/apoie` e na landing — nunca é usada para cobrança de cadastro.
 - Rate limit simples por IP (5/hora) na API route.
-- Headers de segurança em `vercel.json`.
+- CSP enforce + headers em `vercel.json`.
 
 ## 10. Estrutura
 
