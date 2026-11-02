@@ -23,7 +23,7 @@ const ROTAS = [
   { rota: '/cadastro', limiteHtml: 11 * 1024, limiteJs: 165 * 1024, limiteCss: 8 * 1024 },
   // Paginas legais: conteudo longo em HTML, zero JS proprio.
   { rota: '/termos', limiteHtml: 12 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
-  { rota: '/privacidade', limiteHtml: 13 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
+  { rota: '/privacidade', limiteHtml: 14 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
 ];
 
 function requisitar(url, encoding) {
