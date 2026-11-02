@@ -30,6 +30,35 @@ export function SiteFooter() {
             públicas que sofreram boicote ideológico. Existimos para reconectar pessoas a quem
             produz — sem intermediar pagamentos e sem cobrar por cadastro.
           </p>
+
+          <div className="flex items-center gap-3 rounded-xl border border-marinho-800 bg-marinho-900/60 p-2.5">
+            <a
+              href="/apoie/qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 rounded-lg bg-white p-1"
+              aria-label="Abrir QR Code PIX em tamanho real"
+            >
+              <img
+                src="/apoie/qr"
+                alt="QR Code PIX para contribuição voluntária"
+                width={76}
+                height={76}
+                loading="lazy"
+                className="h-[76px] w-[76px]"
+              />
+            </a>
+            <div className="text-xs leading-snug">
+              <p className="font-bold text-white">Contribuição voluntária</p>
+              <p className="mt-0.5 text-marinho-300">Aponte a câmera do banco. Qualquer valor.</p>
+              <Link
+                href="/apoie"
+                className="mt-1 inline-block font-semibold text-ouro-300 underline decoration-ouro-300/40 underline-offset-2 hover:text-ouro-200"
+              >
+                Apoie via PIX
+              </Link>
+            </div>
+          </div>
         </div>
 
         <nav aria-label="Navegação do rodapé" className="space-y-2 text-sm">

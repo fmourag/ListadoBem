@@ -66,14 +66,22 @@ export function ContribuicaoPIX({ variante = 'completa' }: Props) {
 
       <div className="mt-5 grid gap-5 sm:grid-cols-[220px_1fr] sm:items-start">
         <figure className="mx-auto w-[216px] rounded-xl border border-marinho-100 bg-white p-2">
-          <img
-            src="/apoie/qr"
-            alt="QR Code PIX para contribuição facultativa"
-            width={200}
-            height={200}
-            loading="lazy"
-            className="mx-auto h-[200px] w-[200px] max-w-none"
-          />
+          <a
+            href="/apoie/qr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-esmeralda-500"
+            aria-label="Abrir QR Code PIX em tamanho real"
+          >
+            <img
+              src="/apoie/qr"
+              alt="QR Code PIX para contribuição facultativa"
+              width={200}
+              height={200}
+              loading="lazy"
+              className="mx-auto h-[200px] w-[200px] max-w-none"
+            />
+          </a>
           <figcaption className="mt-2 text-center text-[11px] leading-snug text-marinho-500">
             Aponte a câmera do seu banco. O valor fica em aberto.
           </figcaption>
