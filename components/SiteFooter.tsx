@@ -43,6 +43,15 @@ export function SiteFooter() {
           <Link href="/apoie" className="block text-marinho-200 transition hover:text-white">
             Apoie a iniciativa
           </Link>
+          <p className="pt-2 text-xs text-marinho-400">
+            <Link href="/termos" className="transition hover:text-white">
+              Termos de Uso
+            </Link>
+            <span aria-hidden="true"> · </span>
+            <Link href="/privacidade" className="transition hover:text-white">
+              Política de Privacidade
+            </Link>
+          </p>
         </nav>
 
         <div className="space-y-2 text-sm">

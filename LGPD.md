@@ -5,10 +5,9 @@
 **Data:** 2026-11-01
 **Público:** titulares, mantenedor, jurídico
 
-> **Status:** documento de trabalho. Antes do lançamento público, publicar uma
-> **Política de Privacidade** no site (hoje o formulário cita “termos de uso e
-> política de privacidade”, mas as páginas ainda não existem) e nomear o canal
-> oficial do encarregado.
+> **Status:** a Política de Privacidade e os Termos de Uso já estão publicados em
+> `/privacidade` e `/termos`, com links no rodapé e no aceite do formulário.
+> Falta definir o domínio e o e-mail oficial do encarregado.
 
 ---
 
@@ -155,11 +154,11 @@ a base legal for consentimento, nova coleta de aceite.
 
 ## 14. Pendências antes do lançamento
 
-- [ ] Publicar Política de Privacidade e Termos de Uso no site.
+- [x] Publicar Política de Privacidade e Termos de Uso no site.
 - [ ] Definir domínio e e-mail oficial do encarregado.
 - [ ] Formalizar cláusulas de transferência internacional.
 - [ ] Criar rotina de expurgo (pendentes/rejeitados).
-- [ ] Adicionar link para a política no rodapé e no formulário.
+- [x] Adicionar link para a política no rodapé e no formulário.
 - [ ] Registrar base legal no momento do aceite (versão do texto).
 
 ## 15. Referências

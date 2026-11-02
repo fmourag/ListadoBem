@@ -46,6 +46,8 @@ Next.js na Vercel (região gru1)
 | `/cadastro` | Server + client (`FormularioCadastro`) | estática + hidratação |
 | `/apoie` | Server Component | estática |
 | `/apoie/qr` | Route Handler | `force-static` + `Cache-Control: public, max-age=86400` |
+| `/termos` | Server Component | estática no build |
+| `/privacidade` | Server Component | estática no build |
 | `/api/cadastro` | Route Handler (Node) | `force-dynamic`, `no-store` |
 | `/admin/moderacao` | Server Component + Server Actions | dinâmica |
 

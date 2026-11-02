@@ -61,6 +61,9 @@ pagamento**, não cobra por cadastro e não intermedeia a relação comercial.
 
 **Aceite:** carrega em < 2 s em 4G; aviso visível sem scroll; CTA para `/cadastro`.
 
+**Páginas legais:** `/termos` e `/privacidade` são estáticas, sem JS próprio,
+linkadas no rodapé e no aceite do formulário.
+
 ### 5.2 Cadastro (`/cadastro`)
 
 Fluxo em 4 etapas, com validação por etapa e resumo final:
@@ -164,7 +167,7 @@ do usuário → comprovante pessoal (a plataforma não recebe dado de pagamento)
 
 ## 12. Roadmap sugerido
 
-1. **Ahora:** páginas de Termos e Privacidade (hoje citadas, ainda inexistentes).
+1. ~~Páginas de Termos e Privacidade~~ — publicadas em `/termos` e `/privacidade`.
 2. Sessão de moderação com cookie `HttpOnly` em vez de chave na URL.
 3. CAPTCHA invisível no cadastro.
 4. Painel de métricas simples (sem analytics de terceiros).
@@ -178,4 +181,4 @@ do usuário → comprovante pessoal (a plataforma não recebe dado de pagamento)
 - [x] Aprovação bloqueada com < 2 referências.
 - [x] Nenhum dado de contato exposto publicamente.
 - [x] Aviso de não transferência em todas as telas.
-- [ ] Páginas de Termos e Privacidade publicadas.
+- [x] Páginas de Termos e Privacidade publicadas.

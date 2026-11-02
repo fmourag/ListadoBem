@@ -1,4 +1,5 @@
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import Link from 'next/link';
 import { Send } from 'lucide-react';
 
 import { AvisoNaoTransferencia } from '@/components/AvisoNaoTransferencia';
@@ -73,7 +74,25 @@ export function EtapaTermos({ register, errors, valores }: Props) {
                 />
                 <span className="text-sm leading-relaxed text-marinho-800">
                   Declaro que as informações e as referências são verdadeiras, que sou responsável
-                  pelo conteúdo enviado e que aceito os termos de uso e a política de privacidade.
+                  pelo conteúdo enviado e que aceito os{' '}
+                  <Link
+                    href="/termos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-esmeralda-800 underline decoration-esmeralda-300 underline-offset-2 hover:text-esmeralda-900"
+                  >
+                    Termos de Uso
+                  </Link>{' '}
+                  e a{' '}
+                  <Link
+                    href="/privacidade"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-esmeralda-800 underline decoration-esmeralda-300 underline-offset-2 hover:text-esmeralda-900"
+                  >
+                    Política de Privacidade
+                  </Link>
+                  .
                 </span>
               </label>
               <ErroCampo id="erro-aceite-termos" mensagem={mensagemDeErro(errors.aceite_termos)} />

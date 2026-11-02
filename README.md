@@ -19,14 +19,14 @@ com o app das Eleições, em tabelas dedicadas (`cadastros_boicote` e
 
 | Documento | Conteúdo |
 | --- | --- |
-| [PRD.md](./PRD.md) | requisitos, personas, regras e critérios de aceite |
-| [MANUAL-DO-USUARIO.md](./MANUAL-DO-USUARIO.md) | passo a passo para usuários e moderadores |
-| [LGPD.md](./LGPD.md) | dados pessoais, bases legais e direitos |
-| [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) | deploy, backup, rotação e incidentes |
-| [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) | arquitetura, banco, API e PIX |
-| [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) | ameaças, controles e lacunas |
-| [MARKDOWN.md](./MARKDOWN.md) | convenções de escrita da documentação |
-| [DEPLOY.md](./DEPLOY.md) | deploy rápido na Vercel |
+| [PRD.md](./PRD.md) | requisitos e regras |
+| [MANUAL-DO-USUARIO.md](./MANUAL-DO-USUARIO.md) | passo a passo do usuário |
+| [LGPD.md](./LGPD.md) | dados e direitos |
+| [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) | deploy e operação |
+| [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) | arquitetura e API |
+| [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) | ameaças e controles |
+| [MARKDOWN.md](./MARKDOWN.md) | convenções de escrita |
+| [DEPLOY.md](./DEPLOY.md) | deploy rápido |
 
 ---
 
@@ -106,6 +106,8 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 | `/cadastro`        | Server + client  | Formulário multi-step                                     |
 | `/apoie`           | Server           | Página da contribuição facultativa (PIX)                  |
 | `/apoie/qr`        | Route Handler    | SVG do QR PIX gerado no build                             |
+| `/termos`          | Server (estática)| Termos de Uso                                            |
+| `/privacidade`     | Server (estática)| Política de Privacidade (LGPD)                           |
 | `/api/cadastro`    | Route Handler    | Valida, checa duplicidade e grava cadastro + referências  |
 | `/admin/moderacao` | Server + Actions | Painel protegido por `ADMIN_SECRET`                       |
 
