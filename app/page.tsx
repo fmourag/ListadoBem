@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   CreditCard,
   FileText,
+  HeartHandshake,
   Mic,
   Search,
   ShieldCheck,
@@ -45,6 +46,7 @@ const TIPOS = [
   { icone: Wrench, titulo: 'Prestadores de serviço', texto: 'Manutenção, beleza, reformas, aulas, consultorias e transporte.' },
   { icone: Brush, titulo: 'Artesãos e artesãs', texto: 'Costura, cerâmica, arte, doces artesanais e produção manual.' },
   { icone: Briefcase, titulo: 'Profissionais liberais', texto: 'Advocacia, contabilidade, psicologia, odontologia, arquitetura e autônomos.' },
+  { icone: HeartHandshake, titulo: 'Ação social', texto: 'Projetos sociais, coletivos, igrejas, ONGs e iniciativas comunitárias.' },
   { icone: Mic, titulo: 'Figuras públicas', texto: 'Artistas, comunicadores e profissionais com atuação pública.' },
 ];
 
