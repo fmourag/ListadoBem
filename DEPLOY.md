@@ -77,6 +77,9 @@ não é workspace de monorepo.
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SECRET` são **Sensitive** e não
       aparecem em nenhuma variável `NEXT_PUBLIC_*`.
 
+> Checklist completo: [CHECKLIST-DEPLOY.md](./CHECKLIST-DEPLOY.md).
+> Smoke automatizado: `node tools/smoke-deploy.cjs https://SEU-DOMINIO`.
+
 ## 6. Rollback
 
 Vercel → **Deployments → (deploy anterior) → Promote to Production**. O banco não

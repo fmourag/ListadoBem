@@ -110,12 +110,22 @@ node tools/e2e-cadastro.cjs
 node tools/e2e-contato.cjs
 node tools/e2e-pix.cjs
 npm run test:csp
+node tools/smoke-deploy.cjs http://127.0.0.1:3001
 ```
 
 > Cada suíte consome o rate limit (5 cadastros/hora/IP). Reinicie o servidor
 > entre suítes ou rode em horários diferentes.
 
 ## 7. Smoke test pós-deploy
+
+Automatizado (só HTTP, sem banco):
+
+```bash
+node tools/smoke-deploy.cjs https://SEU-DOMINIO
+```
+
+> Em `localhost`, os headers exclusivos do `vercel.json` são marcados como SKIP;
+> no domínio de produção eles são exigidos.
 
 | Verificação | Esperado |
 | --- | --- |
@@ -252,5 +262,6 @@ jobs:
 ## 15. Referências
 
 - [DEPLOY.md](./DEPLOY.md) — passo a passo resumido.
+- [CHECKLIST-DEPLOY.md](./CHECKLIST-DEPLOY.md) — checklist completo de go-live.
 - [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) — arquitetura.
 - [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) — controles.
