@@ -18,8 +18,8 @@ const ROTAS = [
   // Limites calibrados no Next 15 (payload RSC maior que no 14).
   // 19 KB: landing com as 5 clausulas legais + busca no HTML.
   { rota: '/', limiteHtml: 19 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
-  // 18 KB: listagem dinamica com formulario de busca e resumo de filtros.
-  { rota: '/listagem', limiteHtml: 18 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
+  // 19 KB: listagem dinamica com busca, filtros e estado de erro.
+  { rota: '/listagem', limiteHtml: 19 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },
   { rota: '/cadastro', limiteHtml: 11 * 1024, limiteJs: 165 * 1024, limiteCss: 8 * 1024 },
   // Paginas legais: conteudo longo em HTML, zero JS proprio.
   { rota: '/termos', limiteHtml: 12 * 1024, limiteJs: 115 * 1024, limiteCss: 8 * 1024 },

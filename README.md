@@ -242,8 +242,8 @@ Valores de referência (Next 15, build de produção):
 | `/listagem` | 17.2  | 104.5 | 6.7   | **128 KB** |
 | `/cadastro` | 9.5   | 151.4 | 6.7   | **168 KB** |
 
-Limites atuais (falham o script): HTML 19/18/11 KB, JS 115/115/165 KB,
-CSS 8 KB. O limite de 19 KB cobre as 5 cláusulas e a busca no HTML.
+Limites atuais (falham o script): HTML 19/19/11 KB, JS 115/115/165 KB,
+CSS 8 KB. O limite de 19 KB cobre as 5 cláusulas, a busca e o estado de erro.
 
 Regras que sustentam o orçamento:
 

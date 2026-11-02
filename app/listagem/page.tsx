@@ -110,6 +110,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
       const { data, error } = await consulta;
 
       if (error) {
+        console.error('[listagem] Falha na consulta:', error.message);
         erroConsulta = error.message;
       } else {
         estabelecimentos = (data ?? []) as unknown as EstabelecimentoListado[];
@@ -120,6 +121,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
         }
       }
     } catch (erro) {
+      console.error('[listagem] Erro inesperado:', erro);
       erroConsulta = erro instanceof Error ? erro.message : 'Erro ao consultar o diretório.';
     }
   }
@@ -160,15 +162,12 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
         ) : null}
 
         {erroConsulta ? (
-          <div role="alert" className="mt-6 rounded-xl border border-perigo-200 bg-perigo-50 p-4">
-            <p className="flex items-center gap-2 text-sm font-bold text-perigo-800">
-              <AlertTriangle aria-hidden="true" className="h-4 w-4" />
-              Não foi possível carregar a listagem agora
-            </p>
-            <p className="mt-1 text-sm leading-relaxed text-perigo-700">
-              Tente atualizar a página em instantes. Detalhe técnico: {erroConsulta}
-            </p>
-          </div>
+          <p
+            role="alert"
+            className="mt-6 rounded-lg border border-perigo-200 bg-perigo-50 px-3 py-2 text-sm font-semibold text-perigo-800"
+          >
+            Não foi possível carregar a listagem agora. Tente novamente em instantes.
+          </p>
         ) : null}
 
         {/* Filtros: formulário GET nativo — funciona sem JavaScript no cliente. */}
@@ -336,5 +335,6 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
     </>
   );
 }
+
 
 
