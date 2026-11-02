@@ -225,9 +225,10 @@ cache de 1 dia. O componente usa `<img width={200} height={200}>`, sem JS.
 
 ## 9. Moderação
 
-- Página `/admin/moderacao?chave=...` compara a chave com `ADMIN_SECRET` no
-  servidor (comparação simples de string).
-- Server Actions (`aprovarCadastro`, `rejeitarCadastro`) usam `timingSafeEqual`,
+- Login em `/admin/moderacao` valida `ADMIN_SECRET` com `timingSafeEqual` e grava
+  um cookie `admin_session` (HMAC-SHA256 do segredo) com `HttpOnly`, `Secure`,
+  `SameSite=Strict`, `Path=/` e 1 hora de validade.
+- Server Actions (`aprovarCadastro`, `rejeitarCadastro`) verificam a sessão,
   validam UUID, atualizam o status com service role e chamam `revalidatePath`.
 - O trigger do banco é a última barreira contra aprovação sem 2 referências.
 
@@ -248,7 +249,7 @@ E2E (Playwright + Supabase admin): `e2e-listado`, `e2e-cadastro`, `e2e-contato`,
 - **Sem ORM:** consultas diretas via supabase-js; tipos locais.
 - **Sem cache na listagem:** prioriza consistência após moderação.
 - **Rate limit em memória:** simples e sem custo; não é distribuído.
-- **Admin por chave na URL:** simples, porém aparece em logs/histórico.
+- **Sessão por cookie:** token HMAC de 1 h; não há revogação individual antes do vencimento.
 - **Sem CSP:** headers básicos apenas.
 - **Sem upload:** mídia é URL externa.
 - **Sem verificação de e-mail:** curadoria humana cobre.

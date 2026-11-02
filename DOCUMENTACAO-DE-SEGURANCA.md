@@ -40,7 +40,7 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 | T3 | Spam automatizado | alta | médio | rate limit 5/h/IP + moderação | parcial |
 | T4 | Vazamento da service role | baixa | crítico | `server-only`, env Sensitive, sem `NEXT_PUBLIC_` | mitigado |
 | T5 | Força bruta no painel | média | alto | segredo longo + comparação no servidor | parcial |
-| T6 | Chave do admin em logs/histórico | alta | alto | nenhum (chave vai na URL) | **aberto** |
+| T6 | Vazamento da chave do admin em logs/URL | média | alto | sessão em cookie HttpOnly; senha só no POST | mitigado |
 | T7 | XSS via conteúdo do cadastro | baixa | alto | React escapa; URLs `http(s)`; sem `dangerouslySetInnerHTML` | mitigado |
 | T8 | CSRF nas Server Actions | baixa | alto | checagem de origem do Next + chave no form | mitigado |
 | T9 | Injeção SQL | baixa | alto | PostgREST parametrizado; sem SQL dinâmico | mitigado |
@@ -88,17 +88,20 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 
 ### 4.5 Moderação
 
-- `ADMIN_SECRET` lido só no servidor.
-- Server Actions comparam com `timingSafeEqual` e validam UUID.
-- Não há sessão/cookie; cada ação reenvia a chave.
+- Login em `/admin/moderacao` valida `ADMIN_SECRET` com `timingSafeEqual` e grava
+  um cookie `admin_session` (HMAC-SHA256 do segredo): `HttpOnly`, `Secure`,
+  `SameSite=Strict`, `Path=/`, validade de 1 hora.
+- A senha nunca vai para a URL; o cookie não é legível por JavaScript.
+- Server Actions verificam a sessão antes de tocar no banco e validam UUID;
+  `logoutAdmin` expira o cookie.
+- Trocar `ADMIN_SECRET` invalida todas as sessões existentes.
 - Recomendação: Cloudflare Access, Vercel Password Protection ou SSO.
 
 ## 5. Lacunas e riscos residuais
 
 | Lacuna | Risco | Correção sugerida | Prioridade |
 | --- | --- | --- | --- |
-| Chave do admin na query string | logs, histórico, Referer | cookie `HttpOnly`/`Secure` + sessão assinada; ou Access/SSO | **alta** |
-| Comparação simples na página (`chave !== segredo`) | timing attack teórico | usar `timingSafeEqual` também na página | média |
+| Sem limite de tentativas de login | força bruta online | throttle por IP + atraso progressivo | média |
 | Sem CSP | XSS de terceiros | CSP com `script-src 'self'` + nonce do Next | média |
 | Rate limit em memória | bypass distribuído | Cloudflare Rate Limiting / Upstash | média |
 | Sem CAPTCHA | spam | Turnstile no cadastro | média |

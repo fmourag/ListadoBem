@@ -1,49 +1,56 @@
 'use server';
 
-import { timingSafeEqual } from 'node:crypto';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+import {
+  clearAdminSession,
+  compararSegredo,
+  setAdminSession,
+  verifyAdminSession,
+} from '@/lib/admin-auth';
 import { criarSupabaseAdmin, SupabaseAdminConfigError } from '@/lib/supabase-admin';
 
 /**
  * Server Actions do painel de moderação.
  *
- * A autenticação é a "verificação simples" pedida na especificação: a chave
- * digitada precisa bater com `ADMIN_SECRET`. Ela nunca vai para o client bundle
- * porque é lida apenas aqui, no servidor.
- *
- * Para produção de verdade, coloque o painel atrás de Cloudflare Access,
- * Vercel Password Protection ou um provedor de identidade.
+ * A autenticação agora é por cookie de sessão (`admin_session`), derivado da
+ * `ADMIN_SECRET` por HMAC e comparado com `timingSafeEqual`. A senha nunca
+ * aparece na URL; o cookie é HttpOnly/Secure/SameSite=Strict.
  */
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-function chaveConfere(chaveRecebida: string): boolean {
-  const esperada = process.env.ADMIN_SECRET;
-  if (!esperada || esperada.length === 0) return false;
+export async function loginAdmin(formData: FormData): Promise<void> {
+  const senha = String(formData.get('senha') ?? '');
 
-  const a = Buffer.from(chaveRecebida);
-  const b = Buffer.from(esperada);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
-
-function destino(chave: string, params: Record<string, string>): string {
-  const busca = new URLSearchParams({ chave, ...params });
-  return `/admin/moderacao?${busca.toString()}`;
-}
-
-async function moderar(formData: FormData, novoStatus: 'aprovado' | 'rejeitado'): Promise<void> {
-  const chave = String(formData.get('chave') ?? '');
-  const id = String(formData.get('id') ?? '');
-
-  if (!chaveConfere(chave)) {
-    redirect(destino(chave, { erro: 'chave' }));
+  if (!compararSegredo(senha)) {
+    redirect('/admin/moderacao?erro=credenciais');
   }
 
+  setAdminSession();
+  revalidatePath('/admin/moderacao');
+  redirect('/admin/moderacao');
+}
+
+export async function logoutAdmin(): Promise<void> {
+  clearAdminSession();
+  revalidatePath('/admin/moderacao');
+  redirect('/admin/moderacao');
+}
+
+async function moderar(
+  formData: FormData,
+  novoStatus: 'aprovado' | 'rejeitado',
+): Promise<void> {
+  if (!verifyAdminSession()) {
+    redirect('/admin/moderacao?erro=sessao');
+  }
+
+  const id = String(formData.get('id') ?? '');
+
   if (!UUID.test(id)) {
-    redirect(destino(chave, { erro: 'id-invalido' }));
+    redirect('/admin/moderacao?erro=id-invalido');
   }
 
   let mensagemErro: string | null = null;
@@ -71,8 +78,8 @@ async function moderar(formData: FormData, novoStatus: 'aprovado' | 'rejeitado')
 
   redirect(
     mensagemErro
-      ? destino(chave, { erro: mensagemErro })
-      : destino(chave, { ok: novoStatus }),
+      ? `/admin/moderacao?erro=${encodeURIComponent(mensagemErro)}`
+      : `/admin/moderacao?ok=${novoStatus}`,
   );
 }
 

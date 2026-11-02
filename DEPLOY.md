@@ -71,7 +71,7 @@ não é workspace de monorepo.
 - [ ] `/apoie` responde 200, mostra QR 200×200, chave `(21) 97194-3298` e as 5
       cláusulas; os botões copiam chave e payload.
 - [ ] Cadastro novo fica `pendente` e **não** aparece em `/listagem`.
-- [ ] `/admin/moderacao` pede `ADMIN_SECRET`; aprovar publica o card com 2 referências.
+- [ ] `/admin/moderacao` pede a senha (`ADMIN_SECRET`), grava cookie HttpOnly e aprovar publica o card com 2 referências.
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SECRET` são **Sensitive** e não
       aparecem em nenhuma variável `NEXT_PUBLIC_*`.
 

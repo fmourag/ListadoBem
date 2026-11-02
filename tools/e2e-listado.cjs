@@ -127,12 +127,44 @@ async function main() {
     const nomeA = 'Padaria E2E A';
     await criar(nomeA, 'e2e-a@example.com');
 
-    await pagina.goto(`${BASE}/admin/moderacao?chave=${encodeURIComponent(segredo)}`, {
-      waitUntil: 'domcontentloaded',
-    });
+    await pagina.goto(`${BASE}/admin/moderacao`, { waitUntil: 'domcontentloaded' });
+
+    if ((await pagina.locator('#senha').count()) === 1) {
+      await pagina.fill('#senha', segredo);
+      await pagina.getByRole('button', { name: 'Acessar Painel' }).click();
+      await pagina
+        .getByRole('heading', { name: 'Moderação de cadastros' })
+        .waitFor({ timeout: 20000 });
+    }
+
     (await pagina.getByRole('heading', { name: 'Moderação de cadastros' }).count()) === 1
-      ? ok('painel abriu com a chave correta')
-      : falha('painel nao abriu com a chave correta');
+      ? ok('painel abriu com a sessao autenticada')
+      : falha('painel nao abriu apos o login');
+
+    const cookies = await pagina.context().cookies();
+    const sessao = cookies.find((cookie) => cookie.name === 'admin_session');
+    if (!sessao) {
+      falha('cookie de sessao ausente');
+    } else {
+      const flagsOk =
+        sessao.httpOnly === true &&
+        sessao.secure === true &&
+        sessao.sameSite === 'Strict' &&
+        sessao.path === '/';
+      flagsOk
+        ? ok('cookie HttpOnly + Secure + SameSite=Strict + Path=/')
+        : falha(
+            `flags do cookie inesperadas: httpOnly=${sessao.httpOnly} secure=${sessao.secure} sameSite=${sessao.sameSite} path=${sessao.path}`,
+          );
+      const ttl = Math.round(sessao.expires - Date.now() / 1000);
+      ttl > 3500 && ttl <= 3700
+        ? ok('cookie com validade de 1 hora')
+        : falha(`validade inesperada: ${ttl}s`);
+    }
+
+    !pagina.url().includes('chave=')
+      ? ok('URL sem segredo na query')
+      : falha('URL ainda contem chave=');
 
     const cartaoA = pagina.locator('li', { hasText: nomeA }).first();
     (await cartaoA.count()) === 1
@@ -159,9 +191,7 @@ async function main() {
     const nomeB = 'Padaria E2E B';
     await criar(nomeB, 'e2e-b@example.com');
 
-    await pagina.goto(`${BASE}/admin/moderacao?chave=${encodeURIComponent(segredo)}`, {
-      waitUntil: 'domcontentloaded',
-    });
+    await pagina.goto(`${BASE}/admin/moderacao`, { waitUntil: 'domcontentloaded' });
     const cartaoB = pagina.locator('li', { hasText: nomeB }).first();
     await cartaoB.getByRole('button', { name: 'Rejeitar' }).click();
     await pagina.waitForURL(/ok=rejeitado/, { timeout: 20000 });
@@ -173,6 +203,28 @@ async function main() {
     (await pagina.locator('article', { hasText: nomeB }).count()) === 0
       ? ok('rejeitado NAO aparece na listagem')
       : falha('rejeitado apareceu indevidamente');
+
+    // 3. Logout e recusa de senha incorreta
+    await pagina.goto(`${BASE}/admin/moderacao`, { waitUntil: 'domcontentloaded' });
+    await pagina.getByRole('button', { name: 'Sair' }).click();
+    await pagina.locator('#senha').waitFor({ timeout: 20000 });
+    const aposLogout = (await pagina.context().cookies()).find(
+      (cookie) => cookie.name === 'admin_session',
+    );
+    !aposLogout || aposLogout.value === ''
+      ? ok('Sair encerrou a sessao')
+      : falha('cookie permaneceu apos o logout');
+
+    await pagina.fill('#senha', 'senha-incorreta');
+    await pagina.getByRole('button', { name: 'Acessar Painel' }).click();
+    const erroLogin = pagina.getByText('Credenciais inválidas');
+    await erroLogin.waitFor({ timeout: 20000 });
+    (await erroLogin.count()) >= 1
+      ? ok('senha incorreta recusada')
+      : falha('mensagem de credencial invalida ausente');
+    (await pagina.locator('#senha').count()) === 1
+      ? ok('permanece no formulario de login')
+      : falha('saiu do login apos senha incorreta');
   } finally {
     await navegador.close();
     for (const id of [...criados]) {

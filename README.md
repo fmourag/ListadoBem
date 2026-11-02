@@ -109,7 +109,7 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 | `/termos`          | Server (estática)| Termos de Uso                                            |
 | `/privacidade`     | Server (estática)| Política de Privacidade (LGPD)                           |
 | `/api/cadastro`    | Route Handler    | Valida, checa duplicidade e grava cadastro + referências  |
-| `/admin/moderacao` | Server + Actions | Painel protegido por `ADMIN_SECRET`                       |
+| `/admin/moderacao` | Server + Actions | Login por `ADMIN_SECRET` + cookie HttpOnly               |
 
 ## 6. Formulário
 
@@ -146,7 +146,7 @@ quantia. O QR é um SVG estático em `/apoie/qr`.
 
 ## 8. Moderação
 
-- Acesse `/admin/moderacao` e informe a `ADMIN_SECRET`.
+- Acesse `/admin/moderacao` e informe a senha (`ADMIN_SECRET`).
 - Lista cadastros `pendente` com as referências.
 - **Aprovar** / **Rejeitar** são Server Actions que atualizam o status com o
   cliente admin e chamam `revalidatePath('/listagem')`.

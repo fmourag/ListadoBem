@@ -10,11 +10,13 @@ import {
   Inbox,
   KeyRound,
   Lock,
+  LogOut,
   ShieldAlert,
   XCircle,
 } from 'lucide-react';
 
 import { AvisoNaoTransferencia } from '@/components/AvisoNaoTransferencia';
+import { adminConfigurado, verifyAdminSession } from '@/lib/admin-auth';
 import { formatarCategoria, formatarDataHora, formatarTipoCadastro } from '@/lib/format';
 import {
   criarSupabaseAdmin,
@@ -22,7 +24,7 @@ import {
   supabaseAdminConfigurado,
 } from '@/lib/supabase-admin';
 
-import { aprovarCadastro, rejeitarCadastro } from './actions';
+import { aprovarCadastro, loginAdmin, logoutAdmin, rejeitarCadastro } from './actions';
 
 /**
  * Painel de moderação — protegido por ADMIN_SECRET (verificação simples).
@@ -42,7 +44,7 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 interface ModeracaoPageProps {
-  searchParams?: { chave?: string; ok?: string; erro?: string };
+  searchParams?: { ok?: string; erro?: string };
 }
 
 interface Pendente {
@@ -60,7 +62,8 @@ interface Pendente {
 }
 
 const MENSAGENS_ERRO: Record<string, string> = {
-  chave: 'Chave de acesso incorreta. Tente novamente.',
+  credenciais: 'Credenciais inválidas. Confira a senha e tente novamente.',
+  sessao: 'Sua sessão expirou. Entre novamente para continuar.',
   config:
     'SUPABASE_SERVICE_ROLE_KEY não configurada. Defina a variável (server-side) para moderar cadastros.',
   'id-invalido': 'Identificador de cadastro inválido.',
@@ -98,8 +101,7 @@ function Aviso({ tom, titulo, texto }: { tom: 'sucesso' | 'erro'; titulo: string
 }
 
 export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps) {
-  const chave = searchParams?.chave ?? '';
-  const segredo = process.env.ADMIN_SECRET;
+  const autenticado = verifyAdminSession();
 
   const custoDeAcesso = (
     <div className="container-page py-12">
@@ -110,20 +112,29 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
           </span>
           <h1 className="mt-4 text-xl font-black text-marinho-950">Área restrita</h1>
           <p className="mt-1 text-sm leading-relaxed text-marinho-600">
-            Informe a chave de moderação (<code className="rounded bg-marinho-50 px-1">ADMIN_SECRET</code>)
-            para ver e aprovar cadastros pendentes.
+            Informe a senha de moderação para ver e aprovar cadastros pendentes. A sessão dura
+            1 hora e fica em cookie seguro — a senha nunca vai para a URL.
           </p>
 
-          <form method="get" action="/admin/moderacao" className="mt-5 space-y-3">
+          {searchParams?.erro === 'credenciais' || searchParams?.erro === 'sessao' ? (
+            <p
+              role="alert"
+              className="mt-4 rounded-lg border border-perigo-200 bg-perigo-50 px-3 py-2 text-sm font-semibold text-perigo-800"
+            >
+              {MENSAGENS_ERRO[searchParams.erro]}
+            </p>
+          ) : null}
+
+          <form action={loginAdmin} className="mt-5 space-y-3">
             <div>
-              <label htmlFor="chave" className="label">
-                Chave de acesso
+              <label htmlFor="senha" className="label">
+                Senha de acesso
               </label>
               <input
-                id="chave"
-                name="chave"
+                id="senha"
+                name="senha"
                 type="password"
-                autoComplete="off"
+                autoComplete="current-password"
                 required
                 className="input"
                 placeholder="••••••••••••"
@@ -131,16 +142,9 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
             </div>
             <button type="submit" className="btn-primario w-full">
               <Lock aria-hidden="true" className="h-4 w-4" />
-              Entrar
+              Acessar Painel
             </button>
           </form>
-
-          <p className="mt-4 text-xs leading-relaxed text-marinho-500">
-            Dica: gere uma chave longa com{' '}
-            <code className="rounded bg-marinho-50 px-1">
-              node -e &quot;console.log(require(&apos;crypto&apos;).randomBytes(24).toString(&apos;hex&apos;))&quot;
-            </code>
-          </p>
         </div>
 
         <div className="mt-5">
@@ -150,7 +154,7 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
     </div>
   );
 
-  if (!segredo || segredo.length === 0) {
+  if (!adminConfigurado()) {
     return (
       <div className="container-page py-12">
         <div className="mx-auto max-w-lg">
@@ -175,7 +179,7 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
     );
   }
 
-  if (chave !== segredo) {
+  if (!autenticado) {
     return custoDeAcesso;
   }
 
@@ -230,10 +234,18 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
             mantém fora do diretório.
           </p>
         </div>
-        <Link href="/listagem" className="btn-secundario">
-          <ExternalLink aria-hidden="true" className="h-4 w-4" />
-          Ver listagem pública
-        </Link>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link href="/listagem" className="btn-secundario">
+            <ExternalLink aria-hidden="true" className="h-4 w-4" />
+            Ver listagem pública
+          </Link>
+          <form action={logoutAdmin}>
+            <button type="submit" className="btn-secundario">
+              <LogOut aria-hidden="true" className="h-4 w-4" />
+              Sair
+            </button>
+          </form>
+        </div>
       </header>
 
       {searchParams?.ok ? (
@@ -320,7 +332,6 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
                 <div className="flex gap-2">
                   <form action={aprovarCadastro}>
                     <input type="hidden" name="id" value={pendente.id} />
-                    <input type="hidden" name="chave" value={chave} />
                     <button type="submit" className="btn-verde">
                       <CheckCircle2 aria-hidden="true" className="h-4 w-4" />
                       Aprovar
@@ -328,7 +339,6 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
                   </form>
                   <form action={rejeitarCadastro}>
                     <input type="hidden" name="id" value={pendente.id} />
-                    <input type="hidden" name="chave" value={chave} />
                     <button
                       type="submit"
                       className="inline-flex items-center justify-center gap-2 rounded-lg border border-perigo-200 bg-white px-4 py-2.5 text-sm font-semibold text-perigo-700 shadow-sm transition hover:bg-perigo-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-perigo-500 focus-visible:ring-offset-2"
@@ -376,8 +386,10 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-marinho-500">
-        Acesso por chave simples (<code className="rounded bg-marinho-50 px-1">ADMIN_SECRET</code>).
-        Em produção, proteja também por Cloudflare Access, Vercel Password Protection ou SSO.
+        Sessão por cookie <code className="rounded bg-marinho-50 px-1">HttpOnly</code>,{' '}
+        <code className="rounded bg-marinho-50 px-1">Secure</code> e{' '}
+        <code className="rounded bg-marinho-50 px-1">SameSite=Strict</code>, com validade de 1
+        hora. Em produção, proteja também por Cloudflare Access, Vercel Password Protection ou SSO.
       </p>
     </div>
   );
