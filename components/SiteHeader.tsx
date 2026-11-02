@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { HandHeart, PlusCircle, Store } from 'lucide-react';
+import { PlusCircle, Store } from 'lucide-react';
+
+import { LogoRedeApoio } from './LogoRedeApoio';
 
 export function SiteHeader() {
   return (
@@ -10,9 +12,10 @@ export function SiteHeader() {
           className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ouro-300 sm:gap-3"
           aria-label="Rede de Apoio — página inicial"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-esmeralda-600 shadow-sm sm:h-12 sm:w-12">
-            <HandHeart aria-hidden="true" className="h-5 w-5 text-white sm:h-7 sm:w-7" />
-          </span>
+          <LogoRedeApoio
+            id="header"
+            className="h-10 w-10 drop-shadow-sm sm:h-12 sm:w-12"
+          />
           <span className="leading-tight">
             <span className="block text-[15px] font-black uppercase tracking-wide text-ouro-300 sm:text-lg">
               Rede de Apoio

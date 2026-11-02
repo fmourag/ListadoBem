@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { HandHeart, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 import { AvisoNaoTransferencia } from './AvisoNaoTransferencia';
+import { LogoRedeApoio } from './LogoRedeApoio';
 
 export function SiteFooter() {
   return (
@@ -15,9 +16,7 @@ export function SiteFooter() {
       <div className="container-page grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-esmeralda-600">
-              <HandHeart aria-hidden="true" className="h-4 w-4 text-white" />
-            </span>
+            <LogoRedeApoio id="footer" className="h-8 w-8" />
             <span className="text-sm font-black uppercase tracking-wide text-ouro-300">
               Rede de Apoio
             </span>
