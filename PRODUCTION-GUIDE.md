@@ -220,27 +220,18 @@ O banco não é afetado; migrações são aditivas.
 | Limitação | Impacto | Mitigação |
 | --- | --- | --- |
 | Rate limit em memória | reinicia com o processo e não é global | Cloudflare/WAF ou KV |
-| `ADMIN_SECRET` na URL | aparece em logs/histórico | Access/SSO + cookie `HttpOnly` |
 | CSP com `'unsafe-inline'` | reduz defesa contra XSS inline | avaliar nonce/hash em versões futuras do Next |
 | Sem verificação de e-mail | contato pode ser inválido | conferência humana na moderação |
-| Sem CI | deploy depende de disciplina local | GitHub Actions sugerido |
 
-### Pipeline de CI sugerido (GitHub Actions)
+### CI ativo (GitHub Actions)
 
-```yaml
-name: ci
-on: [push, pull_request]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run build
-```
+O workflow [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) roda em todo
+`push` e `pull_request` e falha no primeiro erro:
+
+- `typecheck`, `build`, `context:budget`, `budget`, `test:csp` e `security`;
+- Node 20 com **cache do npm** e Chromium instalado via Playwright;
+- variáveis **dummy** (nenhum segredo real) e `SEC_SKIP_RLS=1`: o CI valida
+  headers, auth, API e CSP; a RLS é exercitada localmente com o Supabase real.
 
 ## 13. Manutenção
 

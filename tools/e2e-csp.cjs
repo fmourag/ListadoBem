@@ -30,8 +30,13 @@ function violacao(texto) {
 }
 
 (async () => {
-  const env = await readFile(path.join(RAIZ, '.env.local'), 'utf8');
-  const senha = pegar(env, 'ADMIN_SECRET');
+  let env = '';
+  try {
+    env = await readFile(path.join(RAIZ, '.env.local'), 'utf8');
+  } catch {
+    // CI pode rodar sem arquivo; usa process.env.
+  }
+  const senha = process.env.ADMIN_SECRET || pegar(env, 'ADMIN_SECRET');
 
   const navegador = await chromium.launch({ headless: true });
   const contexto = await navegador.newContext();

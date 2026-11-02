@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validar:
+    name: Typecheck, build, budget e seguranca
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # Valores ficticios: apenas para o build/Next e os testes de app.
+    # Nenhum segredo real e necessario no CI.
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SUPABASE_URL: https://example.com
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-dummy-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: ci-dummy-service-role-key
+      ADMIN_SECRET: ci-dummy-admin-secret-32-caracteres
+      SEC_SKIP_RLS: '1'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js 20 com cache do npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium (CSP e seguranca)
+        run: npx playwright install --with-deps chromium
+
+      - name: Criar .env.local de CI
+        run: |
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL"
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY"
+            echo "SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY"
+            echo "ADMIN_SECRET=$ADMIN_SECRET"
+          } > .env.local
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build de producao
+        run: npm run build
+
+      - name: Orcamento de contexto
+        run: npm run context:budget
+
+      - name: Subir servidor
+        run: |
+          nohup npm start > /tmp/listado-server.log 2>&1 &
+          echo $! > /tmp/listado-server.pid
+          for _ in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:3001/ > /dev/null; then
+              echo "servidor pronto"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "servidor nao subiu"
+          tail -n 100 /tmp/listado-server.log
+          exit 1
+
+      - name: Orcamento de payload
+        run: npm run budget
+
+      - name: Content Security Policy
+        run: npm run test:csp
+
+      - name: Seguranca (headers, auth, API)
+        run: npm run security
+
+      - name: Logs do servidor em caso de falha
+        if: failure()
+        run: tail -n 200 /tmp/listado-server.log || true
+
+      - name: Encerrar servidor
+        if: always()
+        run: |
+          if [ -f /tmp/listado-server.pid ]; then
+            kill "$(cat /tmp/listado-server.pid)" 2>/dev/null || true
+          fi

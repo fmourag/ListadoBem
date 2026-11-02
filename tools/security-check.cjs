@@ -42,16 +42,43 @@ function lerEnv(texto) {
   return mapa;
 }
 
+async function carregarEnv() {
+  let texto = '';
+  try {
+    texto = await readFile(path.join(RAIZ, '.env.local'), 'utf8');
+  } catch {
+    // CI pode rodar sem arquivo; usa apenas process.env.
+  }
+  const env = lerEnv(texto);
+  for (const chave of [
+    'ADMIN_SECRET',
+    'NEXT_PUBLIC_SUPABASE_URL',
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+  ]) {
+    if (process.env[chave]) env[chave] = process.env[chave];
+  }
+  return env;
+}
+
 async function headers(caminho) {
   const resposta = await fetch(BASE + caminho, { redirect: 'manual' });
   return { resposta, headers: resposta.headers, corpo: await resposta.text() };
 }
 
 (async () => {
-  const env = lerEnv(await readFile(path.join(RAIZ, '.env.local'), 'utf8'));
+  const env = await carregarEnv();
   const senha = env.ADMIN_SECRET;
   const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
   const anon = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const rlsIgnorado =
+    process.env.SEC_SKIP_RLS === '1' ||
+    (() => {
+      try {
+        return new URL(supabaseUrl).hostname.startsWith('example.');
+      } catch {
+        return false;
+      }
+    })();
 
   // 1. Headers de seguranca
   for (const rota of ['/', '/admin/moderacao', '/apoie/qr']) {
@@ -118,7 +145,7 @@ async function headers(caminho) {
   }
 
   // 4. RLS com a chave anon
-  if (supabaseUrl && anon) {
+  if (supabaseUrl && anon && !rlsIgnorado) {
     const cab = { apikey: anon, Authorization: `Bearer ${anon}` };
     const pendentes = await fetch(
       `${supabaseUrl}/rest/v1/cadastros_boicote?select=id&status=eq.pendente&limit=5`,
@@ -141,7 +168,7 @@ async function headers(caminho) {
       ? ok('anon nao atualiza cadastros (RLS)')
       : falha(`PATCH anon -> ${patch.status} (esperado 401/403)`);
   } else {
-    console.log('SKIP  RLS: Supabase nao configurado no .env.local');
+    console.log('SKIP  RLS: Supabase real nao configurado (ambiente de CI)');
   }
 
   if (!senha) {

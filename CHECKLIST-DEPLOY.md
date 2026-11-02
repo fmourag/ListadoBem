@@ -9,6 +9,7 @@
 ## 1. Antes do deploy (local)
 
 - [ ] `git status` limpo e commit revisado.
+- [ ] CI verde no GitHub Actions (push/PR) — `.github/workflows/ci.yml`.
 - [ ] `npm ci` sem erros.
 - [ ] `npm run typecheck` — 0 erros.
 - [ ] `npm run build` — concluído.

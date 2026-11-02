@@ -16,6 +16,7 @@ manutenção (PIX em `/apoie`).
 | Payload (gzip/rota) | `npm run budget` (com servidor no ar) |
 | Contexto (docs/arquivos) | `npm run context:budget` |
 | Segurança (headers/auth/RLS) | `npm run security` |
+| CI | GitHub Actions em `.github/workflows/ci.yml` |
 | E2E navegador | `node tools/e2e-listado.cjs` · `e2e-cadastro.cjs` · `e2e-pix.cjs` |
 | E2E regras de contato (API) | `node tools/e2e-contato.cjs` |
 | Launcher Windows | `iniciar-listado-bem.bat [--check\|--clean\|--restart]` |

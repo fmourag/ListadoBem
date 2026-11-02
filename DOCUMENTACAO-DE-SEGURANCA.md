@@ -127,7 +127,7 @@ hidratação do Next; não há `'unsafe-eval'` em produção.
 | Sem verificação de e-mail | contato inválido | double opt-in (requer e-mail transacional) | baixa |
 | Sem log de auditoria | difícil investigar | tabela `eventos_moderacao` | média |
 | Sem WAF | abuso L7 | Cloudflare proxy | baixa |
-| Sem CI de segurança | regressão | rodar `npm audit` + `npm run security` no GitHub Actions | baixa |
+| CI sem Supabase real | RLS não é exercitada no pipeline | rodar `npm run security` localmente com `.env.local` | baixa |
 
 ## 6. Gestão de segredos
 
