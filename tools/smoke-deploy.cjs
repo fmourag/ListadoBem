@@ -16,12 +16,8 @@ const BASE = (process.env.SMOKE_BASE || process.argv[2] || 'http://127.0.0.1:300
 
 const TIMEOUT_MS = 15000;
 
-/** Headers definidos em vercel.json só existem quando servidos pela Vercel. */
-const LOCAL = /^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(BASE).hostname);
-
 let falhas = 0;
 let passes = 0;
-let pulados = 0;
 
 function ok(msg) {
   passes += 1;
@@ -59,19 +55,14 @@ function conferirHeader(rotulo, headers, nome, predicao, descricao) {
 function conferirHtml(rotulo, headers) {
   conferirHeader(rotulo, headers, 'content-type', (v) => v.includes('text/html'), 'text/html');
   conferirHeader(rotulo, headers, 'content-security-policy', (v) => v.includes("frame-ancestors 'none'"), "frame-ancestors 'none'");
+  conferirHeader(rotulo, headers, 'x-content-type-options', (v) => v === 'nosniff', 'nosniff');
+  conferirHeader(rotulo, headers, 'x-frame-options', (v) => v === 'DENY', 'DENY');
+  conferirHeader(rotulo, headers, 'referrer-policy', (v) => v.length > 0, 'presente');
+  conferirHeader(rotulo, headers, 'permissions-policy', (v) => v.length > 0, 'presente');
+  conferirHeader(rotulo, headers, 'strict-transport-security', (v) => v.includes('max-age='), 'HSTS');
   headers.get('x-powered-by') === null
     ? ok(`${rotulo}: sem X-Powered-By`)
     : falha(`${rotulo}: X-Powered-By exposto`);
-
-  if (LOCAL) {
-    pulados += 3;
-    console.log(`SKIP  ${rotulo}: headers do vercel.json (nosniff/referrer/permissions)`);
-    return;
-  }
-
-  conferirHeader(rotulo, headers, 'x-content-type-options', (v) => v === 'nosniff', 'nosniff');
-  conferirHeader(rotulo, headers, 'referrer-policy', (v) => v.length > 0, 'presente');
-  conferirHeader(rotulo, headers, 'permissions-policy', (v) => v.length > 0, 'presente');
 }
 
 async function main() {
@@ -137,7 +128,7 @@ async function main() {
       : falha(`GET /api/cadastro → ${resposta.status} (esperado 405)`);
   }
 
-  console.log(`\n${passes} PASS · ${falhas} FAIL · ${pulados} SKIP`);
+  console.log(`\n${passes} PASS · ${falhas} FAIL`);
   if (falhas > 0) {
     console.log('RESULTADO: smoke test FALHOU.');
     process.exitCode = 1;

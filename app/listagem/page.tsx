@@ -22,7 +22,7 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 interface ListagemPageProps {
-  searchParams?: { categoria?: string; estado?: string; q?: string | string[] };
+  searchParams?: Promise<{ categoria?: string; estado?: string; q?: string | string[] }>;
 }
 
 function normalizar(texto: string): string {
@@ -68,17 +68,19 @@ const CONSULTA_PUBLICA = `
 `;
 
 export default async function ListagemPage({ searchParams }: ListagemPageProps) {
+  const params = (await searchParams) ?? {};
+
   const categoriaSelecionada = CATEGORIAS.some(
-    (categoria) => categoria.valor === searchParams?.categoria,
+    (categoria) => categoria.valor === params.categoria,
   )
-    ? searchParams?.categoria
+    ? params.categoria
     : undefined;
 
-  const estadoSelecionado = UFS.includes(searchParams?.estado as (typeof UFS)[number])
-    ? searchParams?.estado
+  const estadoSelecionado = UFS.includes(params.estado as (typeof UFS)[number])
+    ? params.estado
     : undefined;
 
-  const qBruto = searchParams?.q;
+  const qBruto = params.q;
   const termoBusca = (Array.isArray(qBruto) ? qBruto[0] : qBruto ?? '').trim().slice(0, 80);
   const buscaAtiva = termoBusca.length >= 2;
   const alvoBusca = buscaAtiva ? normalizar(termoBusca) : '';

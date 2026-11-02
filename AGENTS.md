@@ -1,6 +1,6 @@
 # AGENTS.md — leia só isto antes de mexer no app
 
-Diretório **Lista do Bem**: Next.js 14 (App Router) + Tailwind +
+Diretório **Lista do Bem**: Next.js 15 (App Router) + Tailwind +
 Supabase. É um diretório de estabelecimentos; **nunca** processa pagamentos entre
 usuário e estabelecimento. A única exceção é a contribuição facultativa de
 manutenção (PIX em `/apoie`).
@@ -15,6 +15,7 @@ manutenção (PIX em `/apoie`).
 | Service role | `npm run check:admin` |
 | Payload (gzip/rota) | `npm run budget` (com servidor no ar) |
 | Contexto (docs/arquivos) | `npm run context:budget` |
+| Segurança (headers/auth/RLS) | `npm run security` |
 | E2E navegador | `node tools/e2e-listado.cjs` · `e2e-cadastro.cjs` · `e2e-pix.cjs` |
 | E2E regras de contato (API) | `node tools/e2e-contato.cjs` |
 | Launcher Windows | `iniciar-listado-bem.bat [--check\|--clean\|--restart]` |
@@ -68,7 +69,7 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
 ## Economia de tokens (diretriz do projeto)
 
 - **Payload**: orçamento em `tools/budget.cjs` (gzip, navegador moderno). Landing
-  ≈118 KB, listagem ≈113 KB, cadastro ≈155 KB. Landing/listagem são Server
+  ≈130 KB, listagem ≈128 KB, cadastro ≈168 KB. Landing/listagem são Server
   Components; só o formulário e o botão de copiar são client. `<Toaster>` vive
   apenas em `/cadastro`; o QR é estático em `/apoie/qr`. Se aumentar JS, reduza
   antes de subir o limite.
@@ -89,6 +90,7 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
   O monorepo antigo está arquivado em `..\_arquivado-Eleições-Presidenciais-2026`.
 - Verificação mínima antes de concluir: `npm run typecheck`, `npm run build`,
   `npm run budget` e os E2E relevantes.
+
 
 
 

@@ -1,6 +1,6 @@
 # Deploy na Vercel (plano Hobby/free)
 
-App Next.js 14 autônomo (App Router). Este repositório é a raiz do projeto —
+App Next.js 15 autônomo (App Router). Este repositório é a raiz do projeto —
 não é workspace de monorepo.
 
 ---
@@ -85,3 +85,4 @@ não é workspace de monorepo.
 Vercel → **Deployments → (deploy anterior) → Promote to Production**. O banco não
 é afetado: as migrações são aditivas (`DROP NOT NULL`, nova constraint e novo
 valor de enum).
+

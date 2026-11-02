@@ -75,14 +75,17 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 | Header | Valor |
 | --- | --- |
 | `Content-Security-Policy` | `default-src 'self'`; `script-src 'self' 'unsafe-inline'`; `style-src 'self' 'unsafe-inline'`; `img-src 'self' data:`; `connect-src 'self' https://*.supabase.co <origem>`; `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`; `object-src 'none'` |
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains` |
 | `X-Content-Type-Options` | `nosniff` |
+| `X-Frame-Options` | `DENY` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
 
-A CSP é emitida pelo `next.config.mjs` (funciona local e na Vercel) no modo
-**enforce**. `frame-ancestors 'none'` substitui o antigo `X-Frame-Options`.
-`'unsafe-inline'` é a concessão documentada para a hidratação do Next; não há
-`'unsafe-eval'` em produção.
+Todos os headers são emitidos pelo `next.config.mjs` (funcionam local e na
+Vercel); o `vercel.json` guarda apenas framework e região. A CSP está em
+**enforce**. `X-Frame-Options: DENY` reforça o `frame-ancestors 'none'` em
+navegadores antigos. `'unsafe-inline'` é a concessão documentada para a
+hidratação do Next; não há `'unsafe-eval'` em produção.
 
 ### 4.4 Rate limit
 
@@ -94,26 +97,37 @@ A CSP é emitida pelo `next.config.mjs` (funciona local e na Vercel) no modo
 ### 4.5 Moderação
 
 - Login em `/admin/moderacao` valida `ADMIN_SECRET` com `timingSafeEqual` e grava
-  um cookie `admin_session` (HMAC-SHA256 do segredo): `HttpOnly`, `Secure`,
-  `SameSite=Strict`, `Path=/`, validade de 1 hora.
+  um cookie `admin_session` com token `timestamp.HMAC-SHA256`: `HttpOnly`,
+  `Secure`, `SameSite=Strict`, `Path=/`, validade de 1 hora.
+- O servidor valida a assinatura **e a idade** do token (1 h, tolerância de 60 s),
+  então um cookie copiado não vale para sempre.
 - A senha nunca vai para a URL; o cookie não é legível por JavaScript.
 - Server Actions verificam a sessão antes de tocar no banco e validam UUID;
   `logoutAdmin` expira o cookie.
+- Login tem throttle de **5 falhas por 15 min por IP** (em memória).
 - Trocar `ADMIN_SECRET` invalida todas as sessões existentes.
 - Recomendação: Cloudflare Access, Vercel Password Protection ou SSO.
+
+### 4.6 Dependências e corpo de requisição
+
+- Next.js **15.5.28**, React 18.3, Zod 4 e `@hookform/resolvers` 7.
+- `npm audit --omit=dev` retorna **0 vulnerabilidades**. Restam avisos
+  moderados em dependências de desenvolvimento (ESLint/minimatch), sem efeito
+  no runtime.
+- A API lê o corpo com **limite real de 200 KB** (streaming, mesmo sem
+  `Content-Length`), evitando payloads gigantes antes do Zod.
 
 ## 5. Lacunas e riscos residuais
 
 | Lacuna | Risco | Correção sugerida | Prioridade |
 | --- | --- | --- | --- |
-| Sem limite de tentativas de login | força bruta online | throttle por IP + atraso progressivo | média |
 | Sem CSP com nonce | `'unsafe-inline'` ainda permite script inline | avaliar nonce/hash quando o Next suportar sem quebrar a hidratação | baixa |
 | Rate limit em memória | bypass distribuído | Cloudflare Rate Limiting / Upstash | média |
 | Sem CAPTCHA | spam | Turnstile no cadastro | média |
 | Sem verificação de e-mail | contato inválido | double opt-in (requer e-mail transacional) | baixa |
 | Sem log de auditoria | difícil investigar | tabela `eventos_moderacao` | média |
 | Sem WAF | abuso L7 | Cloudflare proxy | baixa |
-| Sem CI de segurança | regressão | `npm audit` + CodeQL no GitHub Actions | baixa |
+| Sem CI de segurança | regressão | rodar `npm audit` + `npm run security` no GitHub Actions | baixa |
 
 ## 6. Gestão de segredos
 

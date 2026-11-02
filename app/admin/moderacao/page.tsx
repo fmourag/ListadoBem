@@ -44,7 +44,7 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 interface ModeracaoPageProps {
-  searchParams?: { ok?: string; erro?: string };
+  searchParams?: Promise<{ ok?: string; erro?: string }>;
 }
 
 interface Pendente {
@@ -63,6 +63,7 @@ interface Pendente {
 
 const MENSAGENS_ERRO: Record<string, string> = {
   credenciais: 'Credenciais inválidas. Confira a senha e tente novamente.',
+  limite: 'Muitas tentativas de login. Aguarde 15 minutos e tente novamente.',
   sessao: 'Sua sessão expirou. Entre novamente para continuar.',
   config:
     'SUPABASE_SERVICE_ROLE_KEY não configurada. Defina a variável (server-side) para moderar cadastros.',
@@ -101,7 +102,8 @@ function Aviso({ tom, titulo, texto }: { tom: 'sucesso' | 'erro'; titulo: string
 }
 
 export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps) {
-  const autenticado = verifyAdminSession();
+  const params = (await searchParams) ?? {};
+  const autenticado = await verifyAdminSession();
 
   const custoDeAcesso = (
     <div className="container-page py-12">
@@ -116,12 +118,12 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
             1 hora e fica em cookie seguro — a senha nunca vai para a URL.
           </p>
 
-          {searchParams?.erro === 'credenciais' || searchParams?.erro === 'sessao' ? (
+          {['credenciais', 'sessao', 'limite'].includes(params.erro ?? '') ? (
             <p
               role="alert"
               className="mt-4 rounded-lg border border-perigo-200 bg-perigo-50 px-3 py-2 text-sm font-semibold text-perigo-800"
             >
-              {MENSAGENS_ERRO[searchParams.erro]}
+              {MENSAGENS_ERRO[params.erro ?? '']}
             </p>
           ) : null}
 
@@ -214,8 +216,8 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
   }
 
   const semServiceRole = !supabaseAdminConfigurado();
-  const mensagemErro = searchParams?.erro
-    ? (MENSAGENS_ERRO[searchParams.erro] ?? searchParams.erro)
+  const mensagemErro = params.erro
+    ? (MENSAGENS_ERRO[params.erro] ?? params.erro)
     : null;
 
   return (
@@ -248,12 +250,12 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
         </div>
       </header>
 
-      {searchParams?.ok ? (
+      {params.ok ? (
         <Aviso
           tom="sucesso"
-          titulo={searchParams.ok === 'aprovado' ? 'Cadastro aprovado' : 'Cadastro rejeitado'}
+          titulo={params.ok === 'aprovado' ? 'Cadastro aprovado' : 'Cadastro rejeitado'}
           texto={
-            searchParams.ok === 'aprovado'
+            params.ok === 'aprovado'
               ? 'O cadastro já está visível na listagem pública.'
               : 'O cadastro continua fora do diretório.'
           }

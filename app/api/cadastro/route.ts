@@ -59,6 +59,37 @@ function resposta(
   });
 }
 
+async function lerCorpoLimitado(request: Request, limite: number): Promise<string | null> {
+  const leitor = request.body?.getReader();
+  if (!leitor) return '';
+
+  const partes: Uint8Array[] = [];
+  let total = 0;
+
+  try {
+    for (;;) {
+      const { done, value } = await leitor.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > limite) {
+        await leitor.cancel();
+        return null;
+      }
+      partes.push(value);
+    }
+  } finally {
+    leitor.releaseLock();
+  }
+
+  const buffer = new Uint8Array(total);
+  let offset = 0;
+  for (const parte of partes) {
+    buffer.set(parte, offset);
+    offset += parte.byteLength;
+  }
+  return new TextDecoder('utf-8').decode(buffer);
+}
+
 export async function POST(request: Request) {
   const tamanhoDeclarado = Number(request.headers.get('content-length') ?? 0);
   if (tamanhoDeclarado > TAMANHO_MAXIMO_BYTES) {
@@ -68,9 +99,17 @@ export async function POST(request: Request) {
     );
   }
 
+  const texto = await lerCorpoLimitado(request, TAMANHO_MAXIMO_BYTES);
+  if (texto === null) {
+    return resposta(
+      { ok: false, mensagem: 'Requisição muito grande. Reduza o texto enviado.' },
+      413,
+    );
+  }
+
   let corpoBruto: unknown;
   try {
-    corpoBruto = await request.json();
+    corpoBruto = JSON.parse(texto);
   } catch {
     return resposta(
       { ok: false, mensagem: 'Corpo da requisição inválido (JSON esperado).' },

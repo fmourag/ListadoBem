@@ -34,7 +34,7 @@ com o app das Eleições, em tabelas dedicadas (`cadastros_boicote` e
 
 | Item        | Escolha                                                              |
 | ----------- | -------------------------------------------------------------------- |
-| Framework   | Next.js 14 (App Router) + TypeScript strict                          |
+| Framework   | Next.js 15 (App Router) + TypeScript strict                          |
 | Estilo      | Tailwind CSS 3                                                       |
 | Formulários | React Hook Form + Zod (schema único client/server)                   |
 | Dados       | `@supabase/supabase-js`: chave publicável + RLS; service role no servidor |
@@ -233,17 +233,17 @@ npm run dev            # ou npm start, em outro terminal
 npm run budget         # mede /, /listagem e /cadastro e falha se estourar
 ```
 
-Valores de referência (Next 14, build de produção):
+Valores de referência (Next 15, build de produção):
 
 | Rota        | HTML  | JS    | CSS   | Total gzip |
 | ----------- | ----- | ----- | ----- | ---------- |
-| `/`         | 16.5  | 95.6  | 5.9   | **118 KB** |
-| `/apoie`    | 16.5  | 95.6  | 5.9   | **118 KB** |
-| `/listagem` | 12.2  | 94.4  | 5.9   | **113 KB** |
-| `/cadastro` | 8.3   | 141.1 | 5.9   | **155 KB** |
+| `/`         | 18.1  | 105.7 | 6.7   | **130 KB** |
+| `/apoie`    | 18.1  | 105.7 | 6.7   | **130 KB** |
+| `/listagem` | 17.2  | 104.5 | 6.7   | **128 KB** |
+| `/cadastro` | 9.5   | 151.4 | 6.7   | **168 KB** |
 
-Limites atuais (falham o script): HTML 18/14/11 KB, JS 115/115/165 KB,
-CSS 8 KB. O limite de 18 KB cobre as 5 cláusulas do card PIX.
+Limites atuais (falham o script): HTML 19/18/11 KB, JS 115/115/165 KB,
+CSS 8 KB. O limite de 19 KB cobre as 5 cláusulas e a busca no HTML.
 
 Regras que sustentam o orçamento:
 
@@ -277,6 +277,7 @@ npm run context:budget   # falha se AGENTS.md > 6 KB ou arquivo > 400 linhas
 ## 14. Deploy
 
 Veja **[DEPLOY.md](./DEPLOY.md)**.
+
 
 
 

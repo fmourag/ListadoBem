@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import {
@@ -21,20 +22,59 @@ import { criarSupabaseAdmin, SupabaseAdminConfigError } from '@/lib/supabase-adm
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+const LIMITE_LOGIN = 5;
+const JANELA_LOGIN_MS = 15 * 60 * 1000;
+const tentativasLogin = new Map<string, { total: number; expiraEm: number }>();
+
+async function ipDoLogin(): Promise<string> {
+  const cabecalhos = await headers();
+  const encaminhado = cabecalhos.get('x-forwarded-for');
+  if (encaminhado) return encaminhado.split(',')[0]?.trim() || 'desconhecido';
+  return cabecalhos.get('x-real-ip')?.trim() || 'desconhecido';
+}
+
+function loginBloqueado(ip: string): boolean {
+  const registro = tentativasLogin.get(ip);
+  if (!registro || registro.expiraEm < Date.now()) return false;
+  return registro.total >= LIMITE_LOGIN;
+}
+
+function registrarFalhaLogin(ip: string): void {
+  const agora = Date.now();
+  const registro = tentativasLogin.get(ip);
+  if (!registro || registro.expiraEm < agora) {
+    tentativasLogin.set(ip, { total: 1, expiraEm: agora + JANELA_LOGIN_MS });
+    return;
+  }
+  registro.total += 1;
+}
+
+function limparFalhasLogin(ip: string): void {
+  tentativasLogin.delete(ip);
+}
+
 export async function loginAdmin(formData: FormData): Promise<void> {
+  const ip = await ipDoLogin();
+
+  if (loginBloqueado(ip)) {
+    redirect('/admin/moderacao?erro=limite');
+  }
+
   const senha = String(formData.get('senha') ?? '');
 
   if (!compararSegredo(senha)) {
+    registrarFalhaLogin(ip);
     redirect('/admin/moderacao?erro=credenciais');
   }
 
-  setAdminSession();
+  limparFalhasLogin(ip);
+  await setAdminSession();
   revalidatePath('/admin/moderacao');
   redirect('/admin/moderacao');
 }
 
 export async function logoutAdmin(): Promise<void> {
-  clearAdminSession();
+  await clearAdminSession();
   revalidatePath('/admin/moderacao');
   redirect('/admin/moderacao');
 }
@@ -43,7 +83,7 @@ async function moderar(
   formData: FormData,
   novoStatus: 'aprovado' | 'rejeitado',
 ): Promise<void> {
-  if (!verifyAdminSession()) {
+  if (!(await verifyAdminSession())) {
     redirect('/admin/moderacao?erro=sessao');
   }
 

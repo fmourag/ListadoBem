@@ -19,6 +19,7 @@ import type { NextResponse } from 'next/server';
 export const ADMIN_COOKIE = 'admin_session';
 const TOKEN_CONTEXTO = 'listado-bem:admin-session:v1';
 const MAX_AGE_SEGUNDOS = 60 * 60;
+const TOLERANCIA_SEGUNDOS = 60;
 
 const OPCOES_COOKIE = {
   httpOnly: true,
@@ -38,8 +39,31 @@ export function adminConfigurado(): boolean {
   return segredoConfigurado() !== null;
 }
 
+function assinar(segredo: string, timestamp: number): string {
+  return createHmac('sha256', segredo)
+    .update(`${TOKEN_CONTEXTO}:${timestamp}`)
+    .digest('hex');
+}
+
 function tokenEsperado(segredo: string): string {
-  return createHmac('sha256', segredo).update(TOKEN_CONTEXTO).digest('hex');
+  const timestamp = Math.floor(Date.now() / 1000);
+  return `${timestamp}.${assinar(segredo, timestamp)}`;
+}
+
+/** Valida assinatura E idade do token (mesmo que o cookie seja copiado). */
+function tokenValido(segredo: string, valor: string): boolean {
+  const [timestampTexto, assinatura] = valor.split('.');
+  if (!/^\d{1,12}$/.test(timestampTexto ?? '') || !assinatura) return false;
+
+  const timestamp = Number(timestampTexto);
+  const agora = Math.floor(Date.now() / 1000);
+  if (timestamp > agora + TOLERANCIA_SEGUNDOS) return false;
+  if (agora - timestamp > MAX_AGE_SEGUNDOS) return false;
+
+  const a = Buffer.from(assinatura);
+  const b = Buffer.from(assinar(segredo, timestamp));
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
 /** Compara a senha digitada com `ADMIN_SECRET` em tempo constante. */
@@ -73,7 +97,7 @@ function lerCookie(header: string | null, nome: string): string | undefined {
  * Valida a sessão a partir de um `Request`/`Headers` (Route Handlers) ou,
  * sem argumento, do cookie da requisição atual (Server Components/Actions).
  */
-export function verifyAdminSession(entrada?: Request | Headers): boolean {
+export async function verifyAdminSession(entrada?: Request | Headers): Promise<boolean> {
   const segredo = segredoConfigurado();
   if (!segredo) return false;
 
@@ -82,19 +106,16 @@ export function verifyAdminSession(entrada?: Request | Headers): boolean {
     const headers = entrada instanceof Headers ? entrada : entrada.headers;
     valor = lerCookie(headers.get('cookie'), ADMIN_COOKIE);
   } else {
-    valor = cookies().get(ADMIN_COOKIE)?.value;
+    valor = (await cookies()).get(ADMIN_COOKIE)?.value;
   }
 
   if (!valor) return false;
 
-  const a = Buffer.from(valor);
-  const b = Buffer.from(tokenEsperado(segredo));
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
+  return tokenValido(segredo, valor);
 }
 
 /** Define o cookie de sessão (Server Action/Route Handler). */
-export function setAdminSession(res?: NextResponse): void {
+export async function setAdminSession(res?: NextResponse): Promise<void> {
   const segredo = segredoConfigurado();
   if (!segredo) return;
   const token = tokenEsperado(segredo);
@@ -102,14 +123,14 @@ export function setAdminSession(res?: NextResponse): void {
     res.cookies.set(ADMIN_COOKIE, token, OPCOES_COOKIE);
     return;
   }
-  cookies().set({ name: ADMIN_COOKIE, value: token, ...OPCOES_COOKIE });
+  (await cookies()).set({ name: ADMIN_COOKIE, value: token, ...OPCOES_COOKIE });
 }
 
 /** Expira o cookie de sessão. */
-export function clearAdminSession(res?: NextResponse): void {
+export async function clearAdminSession(res?: NextResponse): Promise<void> {
   if (res) {
     res.cookies.set(ADMIN_COOKIE, '', { ...OPCOES_COOKIE, maxAge: 0 });
     return;
   }
-  cookies().set({ name: ADMIN_COOKIE, value: '', ...OPCOES_COOKIE, maxAge: 0 });
+  (await cookies()).set({ name: ADMIN_COOKIE, value: '', ...OPCOES_COOKIE, maxAge: 0 });
 }

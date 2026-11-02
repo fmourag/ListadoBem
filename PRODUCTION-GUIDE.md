@@ -110,6 +110,7 @@ node tools/e2e-cadastro.cjs
 node tools/e2e-contato.cjs
 node tools/e2e-pix.cjs
 npm run test:csp
+npm run security
 node tools/smoke-deploy.cjs http://127.0.0.1:3001
 ```
 
@@ -124,8 +125,8 @@ Automatizado (só HTTP, sem banco):
 node tools/smoke-deploy.cjs https://SEU-DOMINIO
 ```
 
-> Em `localhost`, os headers exclusivos do `vercel.json` são marcados como SKIP;
-> no domínio de produção eles são exigidos.
+> Os headers de segurança são emitidos pelo `next.config.mjs`, então valem
+> também no `next start` local — não há SKIP por ambiente.
 
 | Verificação | Esperado |
 | --- | --- |

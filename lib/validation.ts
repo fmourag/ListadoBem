@@ -84,9 +84,7 @@ function urlHttpValida(valor: string): boolean {
 }
 
 export const referenciaSchema = z.object({
-  tipo_fonte: z.enum(TIPO_FONTE_VALORES, {
-    errorMap: () => ({ message: 'Selecione o tipo de fonte.' }),
-  }),
+  tipo_fonte: z.enum(TIPO_FONTE_VALORES, { message: 'Selecione o tipo de fonte.' }),
   nome_fonte: z
     .string()
     .trim()
@@ -132,14 +130,12 @@ const enderecoSchema = z.object({
   complemento: z.string().trim().max(80).optional(),
   bairro: z.string().trim().min(2, 'Informe o bairro.').max(80),
   cidade: z.string().trim().min(2, 'Informe a cidade.').max(80),
-  estado: z.enum(UFS, { errorMap: () => ({ message: 'Selecione o estado (UF).' }) }),
+  estado: z.enum(UFS, { message: 'Selecione o estado (UF).' }),
   pais: z.string().trim().max(60).optional(),
 });
 
 const midiaSchema = z.object({
-  tipo: z.enum(TIPOS_MIDIA_VALORES, {
-    errorMap: () => ({ message: 'Tipo de mídia inválido.' }),
-  }),
+  tipo: z.enum(TIPOS_MIDIA_VALORES, { message: 'Tipo de mídia inválido.' }),
   url: z
     .string()
     .trim()
@@ -149,9 +145,7 @@ const midiaSchema = z.object({
 
 export const cadastroSchema = z
   .object({
-    tipo_cadastro: z.enum(TIPO_CADASTRO_VALORES, {
-      errorMap: () => ({ message: 'Selecione o tipo de cadastro.' }),
-    }),
+    tipo_cadastro: z.enum(TIPO_CADASTRO_VALORES, { message: 'Selecione o tipo de cadastro.' }),
     nome_completo: z
       .string()
       .trim()
@@ -194,9 +188,7 @@ export const cadastroSchema = z
         'Telefone inválido. Use DDD + número.',
       )
       .optional(),
-    categoria: z.enum(CATEGORIA_VALORES, {
-      errorMap: () => ({ message: 'Selecione a categoria da atividade.' }),
-    }),
+    categoria: z.enum(CATEGORIA_VALORES, { message: 'Selecione a categoria da atividade.' }),
     descricao_atividade: z
       .string()
       .trim()
@@ -298,3 +290,4 @@ export function valoresIniciaisCadastro(): CadastroFormValues {
     aceite_aviso_nao_transferencia: false,
   };
 }
+

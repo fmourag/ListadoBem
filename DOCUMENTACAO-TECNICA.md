@@ -9,7 +9,7 @@
 
 ## 1. Visão geral
 
-Aplicação **Next.js 14 (App Router)** monolítica, com renderização no servidor
+Aplicação **Next.js 15 (App Router)** monolítica, com renderização no servidor
 por padrão e ilhas de cliente apenas onde há interação. Persistência no
 **Supabase (PostgreSQL + PostgREST)** com RLS. Sem backend separado.
 
@@ -28,9 +28,9 @@ Next.js na Vercel (região gru1)
 
 | Camada | Tecnologia |
 | --- | --- |
-| Framework | Next.js 14.2 (App Router) |
+| Framework | Next.js 15.5 (App Router) |
 | UI | React 18.3, Tailwind CSS 3.4 |
-| Formulários | React Hook Form 7 + `@hookform/resolvers` + Zod 3 |
+| Formulários | React Hook Form 7 + `@hookform/resolvers` 7 + Zod 4 |
 | Dados | `@supabase/supabase-js` 2 |
 | Ícones/toasts | `lucide-react`, `sonner` |
 | QR | `qrcode` (server-side) |
@@ -265,5 +265,6 @@ E2E (Playwright + Supabase admin): `e2e-listado`, `e2e-cadastro`, `e2e-contato`,
 - [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) — ameaças.
 - [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) — operação.
 - `supabase-schema.sql` — fonte da verdade do banco.
+
 
 

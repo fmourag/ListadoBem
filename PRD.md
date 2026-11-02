@@ -120,7 +120,7 @@ retorna protocolo e mensagem de que nada foi cobrado.
 
 | Área | Requisito |
 | --- | --- |
-| Performance | orçamento gzip: landing ≈118 KB, listagem ≈113 KB, cadastro ≈155 KB |
+| Performance | orçamento gzip: landing ≈130 KB, listagem ≈128 KB, cadastro ≈168 KB |
 | Acessibilidade | HTML semântico, foco visível, `aria-*` nos erros, contraste AA |
 | Privacidade | minimização (CPF opcional), sem analytics/cookies de rastreio |
 | Segurança | RLS, service role apenas no servidor, headers, rate limit 5/h/IP |
