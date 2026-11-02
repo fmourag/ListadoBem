@@ -51,7 +51,7 @@ export default function TermosPage() {
           </ol>
         </nav>
 
-        <section id="aceitacao" className="mt-10">
+        <section id="aceitacao" className="scroll-mt-40 sm:scroll-mt-28 mt-10">
           <h2 className="text-xl font-bold text-marinho-950">1. Aceitação dos termos</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Ao acessar o site, consultar a listagem ou enviar um cadastro, você concorda com estes
@@ -63,7 +63,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="objeto" className="mt-8">
+        <section id="objeto" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">2. Objeto da plataforma</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             A Lista do Bem é um diretório informativo, gratuito e independente de comerciantes,
@@ -79,7 +79,7 @@ export default function TermosPage() {
           </ul>
         </section>
 
-        <section id="cadastro" className="mt-8">
+        <section id="cadastro" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">3. Cadastro e referências</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Para publicar um cadastro é necessário informar dados de identificação, um meio de
@@ -94,7 +94,7 @@ export default function TermosPage() {
           </ul>
         </section>
 
-        <section id="conteudo" className="mt-8">
+        <section id="conteudo" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">4. Conteúdo do usuário</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Você é responsável pelo conteúdo que envia. Ao cadastrar, declara que as informações
@@ -107,7 +107,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="contribuicao" className="mt-8">
+        <section id="contribuicao" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">5. Contribuição facultativa</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             A plataforma oferece uma contribuição via PIX para custear infraestrutura e
@@ -126,7 +126,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="propriedade" className="mt-8">
+        <section id="propriedade" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">6. Propriedade intelectual</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             A marca, o layout, os textos institucionais e o código da plataforma pertencem aos
@@ -140,7 +140,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="responsabilidade" className="mt-8">
+        <section id="responsabilidade" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">7. Limitação de responsabilidade</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             A plataforma não garante a veracidade das referências nem a qualidade dos produtos ou
@@ -154,7 +154,7 @@ export default function TermosPage() {
           </ul>
         </section>
 
-        <section id="alteracoes" className="mt-8">
+        <section id="alteracoes" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">8. Modificações dos termos</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Podemos atualizar estes termos para refletir mudanças no produto ou na lei. A data de
@@ -163,7 +163,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="foro" className="mt-8">
+        <section id="foro" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">9. Lei aplicável e foro</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Estes termos são regidos pelas leis brasileiras. Fica eleito o foro da Comarca do
@@ -172,7 +172,7 @@ export default function TermosPage() {
           </p>
         </section>
 
-        <section id="contato" className="mt-8">
+        <section id="contato" className="scroll-mt-40 sm:scroll-mt-28 mt-8">
           <h2 className="text-xl font-bold text-marinho-950">10. Contato do controlador</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Dúvidas sobre estes termos podem ser enviadas para{' '}
@@ -200,4 +200,6 @@ export default function TermosPage() {
     </div>
   );
 }
+
+
 

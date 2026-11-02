@@ -228,7 +228,8 @@ O banco não é afetado; migrações são aditivas.
 O workflow [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) roda em todo
 `push` e `pull_request` e falha no primeiro erro:
 
-- `typecheck`, `build`, `context:budget`, `budget`, `test:csp` e `security`;
+- `typecheck`, `build`, `context:budget`, `budget`, `test:csp`, `responsive` e
+  `security`;
 - Node 20 com **cache do npm** e Chromium instalado via Playwright;
 - variáveis **dummy** (nenhum segredo real) e `SEC_SKIP_RLS=1`: o CI valida
   headers, auth, API e CSP; a RLS é exercitada localmente com o Supabase real.

@@ -84,6 +84,9 @@ jobs:
       - name: Content Security Policy
         run: npm run test:csp
 
+      - name: Responsividade (320-1920px)
+        run: npm run responsive
+
       - name: Seguranca (headers, auth, API)
         run: npm run security
 

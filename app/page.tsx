@@ -115,7 +115,7 @@ export default function HomePage() {
                   name="q"
                   type="search"
                   maxLength={80}
-                  placeholder="Nome, cidade ou referência pública"
+                  placeholder="Nome, cidade ou referência"
                   className="h-10 min-w-0 flex-1 bg-transparent text-sm text-white placeholder:text-marinho-400 focus:outline-none"
                 />
                 <button type="submit" className="btn-verde px-4 py-2 text-sm">

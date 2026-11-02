@@ -18,6 +18,7 @@
 - [ ] `npm run context:budget` — dentro.
 - [ ] `npm run test:csp` — CSP enforce, 0 violações.
 - [ ] `npm run security` — headers, cookie, RLS e força bruta OK.
+- [ ] `npm run responsive` — sem overflow de 320 a 1920 px.
 - [ ] `node tools/smoke-deploy.cjs http://127.0.0.1:3001` — 100% PASS.
 - [ ] E2E: `e2e-listado`, `e2e-cadastro`, `e2e-contato`, `e2e-pix` (servidor recém-iniciado por suíte).
 

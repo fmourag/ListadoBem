@@ -11,6 +11,7 @@
     "check:admin": "node tools/test-admin.cjs",
     "test:csp": "node tools/e2e-csp.cjs",
     "security": "node tools/security-check.cjs",
+    "responsive": "node tools/responsive-check.cjs",
     "budget": "node tools/budget.cjs",
     "context:budget": "node tools/context-budget.cjs"
   },
