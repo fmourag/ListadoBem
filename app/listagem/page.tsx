@@ -241,7 +241,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
                 </Link>
               ) : null}
               <Link href="/cadastro" className="btn-primario">
-                Quero me cadastrar
+                Quero cadastrar
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>

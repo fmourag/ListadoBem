@@ -98,19 +98,19 @@ export default function HomePage() {
 
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-marinho-200 sm:text-lg">
               A Lista do Bem reúne comerciantes, prestadores de serviço, artesãos,
-              profissionais liberais e figuras públicas que foram alvo de boicote ideológico.
-              Aqui você encontra quem faz, com referências públicas que comprovam o que
+              profissionais liberais, ações sociais e figuras públicas que foram alvo de boicote
+              ideológico. Aqui você encontra quem faz, com referências públicas que comprovam o que
               aconteceu — e conversa direto com cada um.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/cadastro" className="btn-verde">
-                Quero me cadastrar
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
-              <Link href="/listagem" className="btn-claro">
-                <Store aria-hidden="true" className="h-4 w-4" />
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link href="/listagem" className="btn-ouro w-full sm:w-auto">
+                <Store aria-hidden="true" className="h-5 w-5" />
                 Ver estabelecimentos
+              </Link>
+              <Link href="/cadastro" className="btn-claro w-full sm:w-auto">
+                Quero cadastrar
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>
 

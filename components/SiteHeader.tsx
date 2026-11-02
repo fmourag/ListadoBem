@@ -46,7 +46,7 @@ export function SiteHeader() {
             className="inline-flex items-center gap-1.5 rounded-lg bg-ouro-400 px-3 py-2 text-[13px] font-bold text-marinho-950 transition hover:bg-ouro-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ouro-200 sm:px-4 sm:py-2.5 sm:text-[15px]"
           >
             <PlusCircle aria-hidden="true" className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
-            Quero me cadastrar
+            Quero cadastrar
           </Link>
         </nav>
       </div>

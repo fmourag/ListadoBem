@@ -54,6 +54,11 @@
     @apply inline-flex items-center justify-center gap-2 rounded-lg bg-esmeralda-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-esmeralda-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-esmeralda-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
+  /* CTA de destaque da landing (listagem). */
+  .btn-ouro {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-ouro-400 px-5 py-3 text-base font-bold text-marinho-950 shadow-sm transition hover:bg-ouro-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ouro-200 focus-visible:ring-offset-2 focus-visible:ring-offset-marinho-950 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
   .btn-claro {
     @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ouro-300 focus-visible:ring-offset-2 focus-visible:ring-offset-marinho-950;
   }
