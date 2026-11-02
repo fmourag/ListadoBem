@@ -5,7 +5,7 @@ import { LockKeyhole, ShieldCheck } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Política de Privacidade — Listado Bem',
   description:
-    'Como a Rede de Apoio trata seus dados: o que é público, o que fica privado, bases legais, retenção, cookies e direitos do titular conforme a LGPD.',
+    'Como a Lista do Bem trata seus dados: o que é público, o que fica privado, bases legais, retenção, cookies e direitos do titular conforme a LGPD.',
   alternates: { canonical: '/privacidade' },
 };
 
@@ -35,7 +35,7 @@ export default function PrivacidadePage() {
           Política de Privacidade
         </h1>
         <p className="mt-3 text-sm text-marinho-600">
-          Última atualização: {ATUALIZADO_EM}. Esta política explica quais dados a Rede de Apoio
+          Última atualização: {ATUALIZADO_EM}. Esta política explica quais dados a Lista do Bem
           trata, por quê, com quem compartilha e como você pode exercer seus direitos.
         </p>
 
@@ -51,7 +51,7 @@ export default function PrivacidadePage() {
         <section className="mt-10">
           <h2 className="text-xl font-bold text-marinho-950">1. Controlador</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
-            O controlador dos dados é o mantenedor do projeto <strong>Rede de Apoio / Listado
+            O controlador dos dados é o mantenedor do projeto <strong>Lista do Bem / Listado
             Bem</strong>. Contato geral:{' '}
             <a className="font-semibold text-esmeralda-800 underline decoration-esmeralda-300 underline-offset-2 hover:text-esmeralda-900" href="mailto:contato@listadobem.com">
               contato@listadobem.com
@@ -253,3 +253,4 @@ export default function PrivacidadePage() {
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 /**
- * Domínio "Listado Bem" / Rede de Apoio — tipos compartilhados pelo app.
+ * Domínio "Listado Bem" / Lista do Bem — tipos compartilhados pelo app.
  *
  * Espelham o schema de `supabase-schema.sql`. Ficavam no pacote compartilhado
  * do monorepo original; agora são locais para o app ser 100% autônomo.
@@ -101,6 +101,7 @@ export interface CadastroBoicote {
 export interface CadastroBoicoteComReferencias extends CadastroBoicote {
   referencias_publicas: ReferenciaPublica[];
 }
+
 
 
 

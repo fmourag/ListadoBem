@@ -109,7 +109,7 @@ Não use emoji como sinalização (quebra leitores de tela e diffs).
 ```markdown
 # Título do documento
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.0
 **Data:** AAAA-MM-DD
 **Público:** …
@@ -157,3 +157,5 @@ Não use emoji como sinalização (quebra leitores de tela e diffs).
 
 - [README.md](./README.md)
 - [AGENTS.md](./AGENTS.md)
+
+

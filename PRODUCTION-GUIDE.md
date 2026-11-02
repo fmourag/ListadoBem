@@ -1,6 +1,6 @@
 # PRODUCTION GUIDE — Deploy e Operação
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.0 — 2026-11-01
 **Público:** DevOps, mantenedor
 **Objetivo:** colocar e manter o site em produção gastando R$ 0 (free tier).
@@ -265,3 +265,5 @@ jobs:
 - [CHECKLIST-DEPLOY.md](./CHECKLIST-DEPLOY.md) — checklist completo de go-live.
 - [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) — arquitetura.
 - [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) — controles.
+
+

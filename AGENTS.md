@@ -1,6 +1,6 @@
 # AGENTS.md — leia só isto antes de mexer no app
 
-Diretório **Listado Bem / Rede de Apoio**: Next.js 14 (App Router) + Tailwind +
+Diretório **Lista do Bem**: Next.js 14 (App Router) + Tailwind +
 Supabase. É um diretório de estabelecimentos; **nunca** processa pagamentos entre
 usuário e estabelecimento. A única exceção é a contribuição facultativa de
 manutenção (PIX em `/apoie`).
@@ -89,5 +89,7 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
   O monorepo antigo está arquivado em `..\_arquivado-Eleições-Presidenciais-2026`.
 - Verificação mínima antes de concluir: `npm run typecheck`, `npm run build`,
   `npm run budget` e os E2E relevantes.
+
+
 
 

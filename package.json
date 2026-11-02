@@ -2,7 +2,7 @@
   "name": "listado-bem",
   "version": "1.0.0",
   "private": true,
-  "description": "Listado Bem / Rede de Apoio — diretório de comerciantes, prestadores de serviço, artesãos, profissionais liberais e figuras públicas vítimas de boicote ideológico.",
+  "description": "Lista do Bem — diretório de comerciantes, prestadores de serviço, artesãos, profissionais liberais e figuras públicas vítimas de boicote ideológico.",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
@@ -40,3 +40,5 @@
     "node": ">=20"
   }
 }
+
+

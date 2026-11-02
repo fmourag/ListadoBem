@@ -1,6 +1,6 @@
 # Documentação Técnica
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.1 — 2026-11-01
 **Público:** engenharia
 **Escopo:** arquitetura, banco, API, validação, PIX, build e testes
@@ -265,3 +265,5 @@ E2E (Playwright + Supabase admin): `e2e-listado`, `e2e-cadastro`, `e2e-contato`,
 - [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) — ameaças.
 - [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) — operação.
 - `supabase-schema.sql` — fonte da verdade do banco.
+
+

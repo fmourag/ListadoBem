@@ -5,7 +5,7 @@ import { FileText, ShieldAlert } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Termos de Uso — Listado Bem',
   description:
-    'Regras de uso do diretório Rede de Apoio: cadastro gratuito, duas referências públicas, curadoria e aviso de que a plataforma não processa pagamentos.',
+    'Regras de uso do diretório Lista do Bem: cadastro gratuito, duas referências públicas, curadoria e aviso de que a plataforma não processa pagamentos.',
   alternates: { canonical: '/termos' },
 };
 
@@ -29,7 +29,7 @@ export default function TermosPage() {
         <div className="mt-6 flex items-start gap-3 rounded-xl border border-ouro-300 bg-ouro-50 p-4">
           <ShieldAlert aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-perigo-700" />
           <p className="text-sm font-semibold leading-relaxed text-marinho-900">
-            A Rede de Apoio é apenas um diretório. Ela não processa pagamentos, não recebe
+            A Lista do Bem é apenas um diretório. Ela não processa pagamentos, não recebe
             transferências em nome de estabelecimentos e não cobra por cadastro. Compre e pague
             diretamente ao estabelecimento escolhido.
           </p>
@@ -66,7 +66,7 @@ export default function TermosPage() {
         <section id="objeto" className="mt-8">
           <h2 className="text-xl font-bold text-marinho-950">2. Objeto da plataforma</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
-            A Rede de Apoio é um diretório informativo, gratuito e independente de comerciantes,
+            A Lista do Bem é um diretório informativo, gratuito e independente de comerciantes,
             prestadores de serviço, artesãos, profissionais liberais, figuras públicas e ações
             sociais que relatam boicote ideológico. O objetivo é dar visibilidade e facilitar o
             contato direto entre o público e esses negócios.
@@ -200,3 +200,4 @@ export default function TermosPage() {
     </div>
   );
 }
+

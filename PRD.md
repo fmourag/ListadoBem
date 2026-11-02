@@ -1,6 +1,6 @@
 # PRD — Product Requirements Document
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão do documento:** 1.0
 **Data:** 2026-11-01
 **Responsável:** mantenedor do projeto
@@ -182,3 +182,5 @@ do usuário → comprovante pessoal (a plataforma não recebe dado de pagamento)
 - [x] Nenhum dado de contato exposto publicamente.
 - [x] Aviso de não transferência em todas as telas.
 - [x] Páginas de Termos e Privacidade publicadas.
+
+

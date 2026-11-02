@@ -1,6 +1,6 @@
 # Documentação de Segurança
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.0 — 2026-11-01
 **Público:** engenharia, segurança, mantenedor
 **Classificação:** interno
@@ -187,3 +187,5 @@ técnico, jurídico e provedor.
 - [LGPD.md](./LGPD.md) — dados pessoais e incidentes.
 - [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md) — operação e rotação.
 - [PRD.md](./PRD.md) — regras de negócio.
+
+

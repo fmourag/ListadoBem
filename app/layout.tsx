@@ -8,24 +8,24 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://rede-de-apoio.vercel.app'),
   title: {
-    default: 'Rede de Apoio — diretório de quem foi boicotado por ideologia',
-    template: '%s | Rede de Apoio',
+    default: 'Lista do Bem — Proteja o Próximo da Intolerância',
+    template: '%s | Lista do Bem',
   },
   description:
-    'Diretório gratuito de comerciantes, prestadores de serviço, artesãos e figuras públicas vítimas de boicote ideológico. Cadastro verificado por referências públicas. A plataforma não processa pagamentos: compre direto do estabelecimento.',
+    'Lista do Bem é um diretório gratuito de comerciantes, prestadores de serviço, artesãos e figuras públicas vítimas de boicote ideológico. Cadastro verificado por referências públicas. A plataforma não processa pagamentos: compre direto do estabelecimento.',
   keywords: [
     'boicote ideológico',
     'diretório de comércios',
     'apoio a comerciantes',
     'compre direto',
-    'rede de apoio',
+    'lista do bem',
   ],
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    siteName: 'Rede de Apoio',
-    title: 'Rede de Apoio — diretório de quem foi boicotado por ideologia',
+    siteName: 'Lista do Bem',
+    title: 'Lista do Bem — Proteja o Próximo da Intolerância',
     description:
       'Encontre e apoie comerciantes, prestadores de serviço, artesãos e figuras públicas boicotadas. 100% gratuito, sem intermediação de pagamentos.',
   },
@@ -56,4 +56,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
 

@@ -105,7 +105,7 @@ export function EtapaTermos({ register, errors, valores }: Props) {
                   {...register('aceite_aviso_nao_transferencia')}
                 />
                 <span className="text-sm font-semibold leading-relaxed text-marinho-900">
-                  Entendi que a Rede de Apoio é apenas um diretório: ela não processa pagamentos,
+                  Entendi que a Lista do Bem é apenas um diretório: ela não processa pagamentos,
                   não recebe PIX/TED e não intermedeia a relação comercial. Vou combinar e pagar
                   diretamente com o estabelecimento.
                 </span>
@@ -118,3 +118,4 @@ export function EtapaTermos({ register, errors, valores }: Props) {
           </div>
   );
 }
+

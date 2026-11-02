@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
 
+import { fonteCursiva } from '@/lib/fonts';
+
 import { AvisoNaoTransferencia } from './AvisoNaoTransferencia';
-import { LogoRedeApoio } from './LogoRedeApoio';
+import { LogoListaDoBem } from './LogoListaDoBem';
 
 export function SiteFooter() {
   return (
@@ -15,10 +17,12 @@ export function SiteFooter() {
 
       <div className="container-page grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <LogoRedeApoio id="footer" className="h-8 w-8" />
-            <span className="text-sm font-black uppercase tracking-wide text-ouro-300">
-              Rede de Apoio
+          <div className="flex items-center gap-2.5">
+            <LogoListaDoBem id="footer" className="h-9 w-9 shrink-0" />
+            <span
+              className={`${fonteCursiva.className} text-2xl leading-none text-ouro-300`}
+            >
+              Lista do Bem
             </span>
           </div>
           <p className="text-sm leading-relaxed text-marinho-300">
@@ -86,10 +90,12 @@ export function SiteFooter() {
       <div className="border-t border-marinho-800/60">
         <div className="container-page flex flex-col gap-2 py-4 text-xs text-marinho-400 sm:flex-row sm:items-center sm:justify-between">
           <p>Projeto independente, sem fins partidários. Conteúdo informativo e gratuito.</p>
-          <p>© {new Date().getFullYear()} Rede de Apoio. Cadastro sempre gratuito.</p>
+          <p>© {new Date().getFullYear()} Lista do Bem. Cadastro sempre gratuito.</p>
         </div>
       </div>
     </footer>
   );
 }
+
+
 

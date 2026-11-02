@@ -1,6 +1,6 @@
-# Listado Bem — Rede de Apoio
+# Lista do Bem
 
-Landing page e sistema de cadastro do diretório **Rede de Apoio**: comerciantes,
+Landing page e sistema de cadastro do diretório **Lista do Bem**: comerciantes,
 prestadores de serviço, artesãos, profissionais liberais, figuras públicas e
 **ações sociais** vítimas de boicote ideológico.
 
@@ -277,5 +277,7 @@ npm run context:budget   # falha se AGENTS.md > 6 KB ou arquivo > 400 linhas
 ## 14. Deploy
 
 Veja **[DEPLOY.md](./DEPLOY.md)**.
+
+
 
 

@@ -12,7 +12,7 @@ import type { EstabelecimentoListado } from '@/lib/tipos';
 export const metadata: Metadata = {
   title: 'Estabelecimentos verificados',
   description:
-    'Lista pública de comerciantes, prestadores de serviço, artesãos e figuras públicas com cadastro aprovado na Rede de Apoio, com referências públicas verificáveis.',
+    'Lista pública de comerciantes, prestadores de serviço, artesãos e figuras públicas com cadastro aprovado na Lista do Bem, com referências públicas verificáveis.',
 };
 
 /** A listagem é sempre dinâmica: nada é pré-renderizado sem consultar o RLS. */
@@ -275,4 +275,5 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
     </>
   );
 }
+
 

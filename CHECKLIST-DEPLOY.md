@@ -1,6 +1,6 @@
 # CHECKLIST-DEPLOY.md — Checklist de deploy na Vercel
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.0 — 2026-11-01
 **Público:** DevOps / mantenedor
 
@@ -110,3 +110,5 @@ node tools/smoke-deploy.cjs https://SEU-DOMINIO
 - [PRODUCTION-GUIDE.md](./PRODUCTION-GUIDE.md)
 - [DEPLOY.md](./DEPLOY.md)
 - [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md)
+
+

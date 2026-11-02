@@ -1,6 +1,6 @@
 # LGPD — Privacidade e Proteção de Dados
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Versão:** 1.0
 **Data:** 2026-11-01
 **Público:** titulares, mantenedor, jurídico
@@ -13,7 +13,7 @@
 
 ## 1. Quem é o controlador
 
-O **mantenedor do projeto Rede de Apoio** é o controlador dos dados pessoais
+O **mantenedor do projeto Lista do Bem** é o controlador dos dados pessoais
 tratados no site. Os provedores de infraestrutura atuam como **operadores**:
 
 | Operador | Serviço | Região |
@@ -166,3 +166,5 @@ a base legal for consentimento, nova coleta de aceite.
 - Lei nº 13.709/2018 (LGPD).
 - [PRD.md](./PRD.md) — regras de negócio.
 - [DOCUMENTACAO-TECNICA.md](./DOCUMENTACAO-TECNICA.md) — modelo de dados.
+
+

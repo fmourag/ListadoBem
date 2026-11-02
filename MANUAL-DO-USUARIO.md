@@ -1,12 +1,12 @@
 # Manual do Usuário
 
-**Produto:** Listado Bem / Rede de Apoio
+**Produto:** Lista do Bem
 **Público:** visitantes, estabelecimentos, moderadores
 **Versão:** 1.0 — 2026-11-01
 
 ---
 
-## 1. O que é a Rede de Apoio
+## 1. O que é a Lista do Bem
 
 Um diretório público e gratuito de comerciantes, prestadores de serviço,
 artesãos, profissionais liberais, figuras públicas e **ações sociais** que
@@ -223,3 +223,5 @@ Solicite pelos canais de contato do projeto; veja [LGPD.md](./LGPD.md).
 | Cadastro não aparece | ainda pendente ou rejeitado | aguarde a análise / corrija |
 | Painel não abre | chave incorreta ou ausente | confira `ADMIN_SECRET` |
 | Erro 429 ao enviar | muitas tentativas por hora | aguarde e tente novamente |
+
+

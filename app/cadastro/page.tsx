@@ -24,7 +24,7 @@ export default function CadastroPage() {
               Cadastro gratuito
             </p>
             <h1 className="mt-2 text-3xl font-black tracking-tight text-marinho-950 sm:text-4xl">
-              Cadastre seu negócio na Rede de Apoio
+              Cadastre seu negócio na Lista do Bem
             </h1>
             <p className="mt-3 text-base leading-relaxed text-marinho-600">
               Preencha os quatro passos. O cadastro fica pendente até a verificação das
@@ -59,4 +59,5 @@ export default function CadastroPage() {
     </>
   );
 }
+
 

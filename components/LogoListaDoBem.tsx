@@ -1,4 +1,4 @@
-interface LogoRedeApoioProps {
+interface LogoListaDoBemProps {
   /** Classes de tamanho (ex.: `h-10 w-10`). */
   className?: string;
   /** Sufixo único para o gradiente quando há mais de um logo na página. */
@@ -6,7 +6,7 @@ interface LogoRedeApoioProps {
 }
 
 /**
- * Marca da Rede de Apoio: fachada de loja com coração.
+ * Marca da Lista do Bem: fachada de loja com coração.
  *
  * - telhado = comércio local / estabelecimento;
  * - coração = apoio e verificação humana;
@@ -14,7 +14,7 @@ interface LogoRedeApoioProps {
  *
  * É decorativo: o nome acessível vem do link/texto ao lado.
  */
-export function LogoRedeApoio({ className = 'h-10 w-10', id = 'logo' }: LogoRedeApoioProps) {
+export function LogoListaDoBem({ className = 'h-10 w-10', id = 'logo' }: LogoListaDoBemProps) {
   const gradiente = `ra-logo-${id}`;
 
   return (
@@ -73,3 +73,5 @@ export function LogoRedeApoio({ className = 'h-10 w-10', id = 'logo' }: LogoRede
     </svg>
   );
 }
+
+

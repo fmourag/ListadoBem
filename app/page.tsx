@@ -97,7 +97,7 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-marinho-200 sm:text-lg">
-              A Rede de Apoio reúne comerciantes, prestadores de serviço, artesãos,
+              A Lista do Bem reúne comerciantes, prestadores de serviço, artesãos,
               profissionais liberais e figuras públicas que foram alvo de boicote ideológico.
               Aqui você encontra quem faz, com referências públicas que comprovam o que
               aconteceu — e conversa direto com cada um.
@@ -202,7 +202,7 @@ export default function HomePage() {
               O que nunca vai existir aqui
             </h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-marinho-600">
-              A Rede de Apoio é só um diretório. Não somos loja, não somos banco e não somos
+              A Lista do Bem é só um diretório. Não somos loja, não somos banco e não somos
               intermediários de pagamento. Se algo pedir dinheiro em nosso nome, é golpe.
             </p>
 
@@ -350,5 +350,6 @@ export default function HomePage() {
     </>
   );
 }
+
 
 
