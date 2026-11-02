@@ -14,7 +14,7 @@
 --     service_role (que ignora RLS) — nunca a partir do app web.
 --   • CPF/CNPJ é OPCIONAL e único quando informado — protege contra duplicidade.
 --   • Contato mínimo: e-mail OU telefone (constraint cadastros_boicote_contato_check).
---   • Aprovar cadastro com menos de 2 referências é bloqueado por trigger.
+--   • Aprovar cadastro sem referência pública é bloqueado por trigger.
 --
 -- O arquivo é idempotente o suficiente para ser reexecutado com segurança
 -- (usa IF NOT EXISTS / CREATE OR REPLACE / DROP POLICY IF EXISTS).
@@ -132,7 +132,7 @@ comment on column public.cadastros_boicote.endereco is
   'JSON com cep, logradouro, numero, complemento, bairro, cidade, estado e pais.';
 
 -- -----------------------------------------------------------------------------
--- 3. Referências públicas (mínimo de 2 por cadastro, validado na API e na aprovação)
+-- 3. Referências públicas (mínimo de 1 por cadastro, validado na API e na aprovação)
 -- -----------------------------------------------------------------------------
 create table if not exists public.referencias_publicas (
   id uuid primary key default gen_random_uuid(),
@@ -249,7 +249,7 @@ comment on function public.descartar_cadastro_pendente(uuid, text) is
   'Compensação de falha parcial: apaga somente um cadastro pendente recente (do próprio CPF/CNPJ, quando informado).';
 
 -- -----------------------------------------------------------------------------
--- 7. Guardrail: não aprovar cadastro com menos de 2 referências públicas
+-- 7. Guardrail: não aprovar cadastro sem referência pública
 -- -----------------------------------------------------------------------------
 create or replace function public.boicote_validar_aprovacao()
 returns trigger
@@ -264,9 +264,9 @@ begin
       from public.referencias_publicas
      where cadastro_id = new.id;
 
-    if total_referencias < 2 then
+    if total_referencias < 1 then
       raise exception
-        'Cadastro % não pode ser aprovado com % referência(s) pública(s); o mínimo é 2.',
+        'Cadastro % não pode ser aprovado sem referência pública (recebidas: %).',
         new.id, total_referencias
         using errcode = 'check_violation';
     end if;
@@ -437,6 +437,7 @@ $$;
 --   'Descrição de teste com mais de quarenta caracteres para validar o CHECK.',
 --   'Situação de boicote de teste com mais de quarenta caracteres.');
 -- reset role;
+
 
 
 

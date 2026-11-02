@@ -72,7 +72,7 @@ iniciar-listado-bem.bat --no-browser :: sobe sem abrir o navegador
 O schema está em **`supabase-schema.sql`**. Ele cria:
 
 - `cadastros_boicote` — cadastro principal (`status` default `pendente`);
-- `referencias_publicas` — no mínimo 2 por cadastro;
+- `referencias_publicas` — no mínimo 1 por cadastro;
 - enums, índices, triggers e **RLS**:
   - `SELECT` público apenas de `status = 'aprovado'`;
   - `INSERT` público sempre forçado a `pendente`;
@@ -81,7 +81,7 @@ O schema está em **`supabase-schema.sql`**. Ele cria:
 - **CPF/CNPJ opcional** (único quando informado);
 - **contato mínimo**: `email is not null or telefone is not null`
   (constraint `cadastros_boicote_contato_check`);
-- trigger que impede aprovar cadastro com menos de 2 referências.
+- trigger que impede aprovar cadastro sem referência.
 
 Aplique no **SQL Editor** do Supabase. O arquivo é idempotente: a seção **10.1**
 migra bancos antigos (derruba `NOT NULL` de CPF/e-mail, cria a constraint e o tipo
@@ -151,7 +151,7 @@ quantia. O QR é um SVG estático em `/apoie/qr`.
 - Lista cadastros `pendente` com as referências.
 - **Aprovar** / **Rejeitar** são Server Actions que atualizam o status com o
   cliente admin e chamam `revalidatePath('/listagem')`.
-- O trigger do banco bloqueia aprovação com menos de 2 referências.
+- O trigger do banco bloqueia aprovação sem referência pública.
 
 > Para produção, proteja o painel também por Cloudflare Access, Vercel Password
 > Protection ou SSO.

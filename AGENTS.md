@@ -61,7 +61,7 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
    cláusulas de `CONTRIBUICAO_PONTOS` (não é cadastro, não é para loja, não é
    obrigatória, não dá benefício, valor livre). O texto do aviso está em
    `components/AvisoNaoTransferencia.tsx` e deve aparecer nas telas.
-2. **Mínimo de 2 referências públicas** com URL `http(s)`: validado no Zod,
+2. **Mínimo de 1 referência pública** com URL `http(s)`: validado no Zod,
    reforçado pela API e pelo trigger de aprovação.
 3. **Contato**: CPF/CNPJ é **opcional**; exige-se **e-mail OU telefone**. O banco
    tem a constraint `cadastros_boicote_contato_check`.

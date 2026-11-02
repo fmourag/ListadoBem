@@ -292,7 +292,7 @@ export default async function ListagemPage({ searchParams }: ListagemPageProps) 
             <p className="max-w-md text-sm leading-relaxed text-marinho-600">
               {temFiltro
                 ? 'Tente outro termo, categoria ou estado — ou limpe a busca para ver o diretório completo.'
-                : 'Seja um dos primeiros: cadastre seu negócio com duas referências públicas e ajude a formar a rede.'}
+                : 'Seja um dos primeiros: cadastre seu negócio com uma referência pública e ajude a formar a rede.'}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {temFiltro ? (

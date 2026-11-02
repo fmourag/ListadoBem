@@ -58,12 +58,6 @@ function payload(nome, email) {
         titulo_referencia: 'Materia do E2E sobre o boicote',
         data_publicacao: '2026-01-10',
       },
-      {
-        tipo_fonte: 'blog',
-        nome_fonte: 'Blog Teste',
-        link_referencia: 'https://exemplo.com/blog-e2e',
-        titulo_referencia: 'Post do E2E sobre o boicote',
-      },
     ],
     aceite_termos: true,
     aceite_aviso_nao_transferencia: true,
@@ -184,7 +178,7 @@ async function main() {
       : falha('aprovado NAO apareceu na listagem');
 
     const linksA = await publicadosA.locator('a[href*="exemplo.com"]').count();
-    linksA >= 2 ? ok(`card mostra ${linksA} referencias`) : falha('referencias ausentes no card');
+    linksA >= 1 ? ok(`card mostra ${linksA} referencia(s)`) : falha('referencias ausentes no card');
 
     // 1.1 Busca na landing e por referencia publica
     await pagina.goto(BASE, { waitUntil: 'domcontentloaded' });

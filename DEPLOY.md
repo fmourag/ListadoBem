@@ -18,6 +18,9 @@ não é workspace de monorepo.
 > `NOT NULL` de `cpf_cnpj`/`email`, cria a constraint
 > `cadastros_boicote_contato_check` e adiciona o tipo `acao_social`. É idempotente.
 
+> **Mínimo de 1 referência:** em banco existente, rode também
+> `supabase-migration-uma-referencia.sql` para atualizar o trigger de aprovação.
+
 ## 2. Importar o projeto
 
 1. Vercel → **Add New… → Project** → importe este repositório.
@@ -75,7 +78,7 @@ não é workspace de monorepo.
 - [ ] `/apoie` responde 200, mostra QR 200×200, chave `(21) 97194-3298` e as 5
       cláusulas; os botões copiam chave e payload.
 - [ ] Cadastro novo fica `pendente` e **não** aparece em `/listagem`.
-- [ ] `/admin/moderacao` pede a senha (`ADMIN_SECRET`), grava cookie HttpOnly e aprovar publica o card com 2 referências.
+- [ ] `/admin/moderacao` pede a senha (`ADMIN_SECRET`), grava cookie HttpOnly e aprovar publica o card com 1 referência.
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SECRET` são **Sensitive** e não
       aparecem em nenhuma variável `NEXT_PUBLIC_*`.
 

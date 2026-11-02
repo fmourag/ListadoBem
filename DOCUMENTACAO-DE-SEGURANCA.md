@@ -36,7 +36,7 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 | # | Ameaça | Prob. | Impacto | Controles atuais | Status |
 | --- | --- | --- | --- | --- | --- |
 | T1 | Vazamento de contato via API pública | média | alto | RLS; projeção sem contato; `service_role` server-only | mitigado |
-| T2 | Cadastro falso/difamatório | alta | alto | 2 referências + moderação humana + trigger | mitigado |
+| T2 | Cadastro falso/difamatório | alta | alto | 1 referência + moderação humana + trigger | mitigado |
 | T3 | Spam automatizado | alta | médio | rate limit 5/h/IP + moderação | parcial |
 | T4 | Vazamento da service role | baixa | crítico | `server-only`, env Sensitive, sem `NEXT_PUBLIC_` | mitigado |
 | T5 | Força bruta no painel | média | alto | segredo longo + comparação no servidor | parcial |
@@ -59,7 +59,7 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 - Referências só são visíveis/inseridas conforme o status do cadastro.
 - Sem `UPDATE`/`DELETE` para `anon`.
 - `service_role` com `GRANT` explícito, usado apenas no servidor.
-- Trigger bloqueia aprovação com < 2 referências.
+- Trigger bloqueia aprovação sem referência pública.
 
 ### 4.2 Aplicação
 

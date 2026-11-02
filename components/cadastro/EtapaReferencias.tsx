@@ -32,10 +32,14 @@ export function EtapaReferencias({
               <div>
                 <h2 className="text-lg font-bold text-marinho-950">Referências públicas</h2>
                 <p className="text-sm leading-relaxed text-marinho-600">
-                  Cadastros sem <strong>pelo menos {MINIMO_REFERENCIAS} referências públicas
-                  verificáveis</strong> não são publicados. Vale link de jornal, blog de notícias,
-                  perfil de parlamentar, jornalista ou personalidade pública que comprove o
-                  boicote.
+                  Cadastros sem{' '}
+                  <strong>
+                    {MINIMO_REFERENCIAS === 1
+                      ? 'pelo menos uma referência pública verificável'
+                      : `pelo menos ${MINIMO_REFERENCIAS} referências públicas verificáveis`}
+                  </strong>{' '}
+                  não são publicados. Vale link de jornal, blog de notícias, perfil de
+                  parlamentar, jornalista ou personalidade pública que comprove o boicote.
                 </p>
               </div>
             </header>
@@ -191,8 +195,9 @@ export function EtapaReferencias({
 
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-xs text-marinho-600">
-                {totalReferencias} de {MINIMO_REFERENCIAS} referências obrigatórias · máximo de{' '}
-                {MAXIMO_REFERENCIAS}
+                {totalReferencias} de {MINIMO_REFERENCIAS}{' '}
+                {MINIMO_REFERENCIAS === 1 ? 'referência obrigatória' : 'referências obrigatórias'} ·
+                máximo de {MAXIMO_REFERENCIAS}
               </p>
               <button
                 type="button"

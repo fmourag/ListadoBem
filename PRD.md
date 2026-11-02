@@ -26,7 +26,7 @@ pagamento**, não cobra por cadastro e não intermedeia a relação comercial.
 
 | ID | Objetivo | Métrica |
 | --- | --- | --- |
-| O1 | Publicar um diretório gratuito e verificável | cadastros aprovados com ≥ 2 referências |
+| O1 | Publicar um diretório gratuito e verificável | cadastros aprovados com ≥ 1 referência |
 | O2 | Dar visibilidade a negócios boicotados | visitas a `/listagem` e cliques de contato |
 | O3 | Manter custo próximo de zero | Supabase Free + Vercel Hobby |
 | O4 | Ser inequívoco sobre não processar pagamentos | aviso presente em landing, listagem, cadastro e rodapé |
@@ -95,7 +95,7 @@ retorna protocolo e mensagem de que nada foi cobrado.
 - Acesso por `ADMIN_SECRET` (query `?chave=`), comparação no servidor.
 - Lista pendentes com dados e referências.
 - Aprovar/rejeitar via Server Actions.
-- Banco bloqueia aprovação com menos de 2 referências.
+- Banco bloqueia aprovação sem referência pública.
 
 ### 5.5 Contribuição facultativa (`/apoie`)
 
@@ -107,7 +107,7 @@ retorna protocolo e mensagem de que nada foi cobrado.
 
 | ID | Regra |
 | --- | --- |
-| RN-01 | Cadastro só é publicado com **≥ 2 referências públicas** verificáveis. |
+| RN-01 | Cadastro só é publicado com **≥ 1 referência pública** verificáveis. |
 | RN-02 | CPF/CNPJ é **opcional**; se informado, é validado e único. |
 | RN-03 | Exige **e-mail OU telefone**; nunca os dois obrigatórios. |
 | RN-04 | Todo cadastro nasce `pendente`; status só muda no servidor. |
@@ -160,7 +160,7 @@ do usuário → comprovante pessoal (a plataforma não recebe dado de pagamento)
 
 | Risco | Impacto | Mitigação |
 | --- | --- | --- |
-| Cadastro falso ou difamatório | alto | 2 referências + curadoria humana |
+| Cadastro falso ou difamatório | alto | 1 referência + curadoria humana |
 | Vazamento de contato | alto | RLS + nunca expor CPF/e-mail/telefone |
 | Confusão com “plataforma de pagamento” | alto | aviso repetido + cláusulas PIX |
 | Spam de cadastros | médio | rate limit 5/h/IP + moderação |
@@ -180,7 +180,7 @@ do usuário → comprovante pessoal (a plataforma não recebe dado de pagamento)
 - [x] Landing, cadastro, listagem, moderação e `/apoie` no ar.
 - [x] Cadastro sem CPF, com apenas e-mail ou apenas telefone.
 - [x] Tipo “Ação social”.
-- [x] Aprovação bloqueada com < 2 referências.
+- [x] Aprovação bloqueada sem referência pública.
 - [x] Nenhum dado de contato exposto publicamente.
 - [x] Aviso de não transferência em todas as telas.
 - [x] Páginas de Termos e Privacidade publicadas.

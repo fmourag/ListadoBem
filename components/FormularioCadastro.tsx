@@ -21,7 +21,7 @@ import {
 const ETAPAS = [
   { titulo: 'Dados básicos', descricao: 'Quem você é e como falar com você.' },
   { titulo: 'Atividade e endereço', descricao: 'O que você oferece e onde atende.' },
-  { titulo: 'Referências públicas', descricao: 'Mínimo de 2 provas verificáveis.' },
+  { titulo: 'Referências públicas', descricao: 'Pelo menos 1 prova verificável.' },
   { titulo: 'Termos e envio', descricao: 'Confirme os avisos e envie.' },
 ] as const;
 

@@ -115,7 +115,7 @@ supabase-schema.sql
 | --- | --- |
 | `boicote_cadastro_status(uuid)` | lê status ignorando RLS (usado nas políticas de referências) |
 | `descartar_cadastro_pendente(uuid, text)` | compensação: apaga pendente recente |
-| `boicote_validar_aprovacao()` + `trg_..._validar_aprovacao` | bloqueia aprovação com < 2 referências (`check_violation`) |
+| `boicote_validar_aprovacao()` + `trg_..._validar_aprovacao` | bloqueia aprovação sem referência (`check_violation`) |
 | trigger `trg_cadastros_boicote_atualizado` | atualiza `atualizado_em` |
 
 ### 5.5 RLS
@@ -235,7 +235,7 @@ cache de 1 dia. O componente usa `<img width={200} height={200}>`, sem JS.
   `SameSite=Strict`, `Path=/` e 1 hora de validade.
 - Server Actions (`aprovarCadastro`, `rejeitarCadastro`) verificam a sessão,
   validam UUID, atualizam o status com service role e chamam `revalidatePath`.
-- O trigger do banco é a última barreira contra aprovação sem 2 referências.
+- O trigger do banco é a última barreira contra aprovação sem referência.
 
 ## 10. Build, performance e testes
 

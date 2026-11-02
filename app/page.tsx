@@ -25,7 +25,7 @@ const PASSOS = [
     icone: FileText,
     titulo: '1. Você se cadastra',
     texto:
-      'Preenche seus dados, descreve a atividade e envia pelo menos duas referências públicas que comprovem o boicote.',
+      'Preenche seus dados, descreve a atividade e envia pelo menos uma referência pública que comprove o boicote.',
   },
   {
     icone: Search,
@@ -144,7 +144,7 @@ export default function HomePage() {
             <ol className="mt-3 space-y-3">
               {[
                 'Cadastro com dados completos e referências verificáveis.',
-                'Mínimo de 2 referências públicas com link acessível.',
+                'Pelo menos uma referência pública com link acessível.',
                 'Análise humana antes de qualquer publicação.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm text-marinho-800">
@@ -263,7 +263,7 @@ export default function HomePage() {
           </h2>
           <p className="mt-3 text-base leading-relaxed text-marinho-600">
             Qualquer pessoa física ou jurídica que tenha sofrido boicote ideológico e consiga
-            comprovar com pelo menos duas referências públicas. O cadastro é gratuito.
+            comprovar com pelo menos uma referência pública. O cadastro é gratuito.
           </p>
         </div>
 
@@ -292,11 +292,11 @@ export default function HomePage() {
             </h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-marinho-200">
               Para evitar uso político indevido do diretório, todo cadastro precisa de no mínimo
-              duas referências públicas verificáveis: link de jornal, blog de notícias, perfil de
+              uma referência pública verificável: link de jornal, blog de notícias, perfil de
               parlamentar, jornalista ou personalidade pública que comprove o boicote.
             </p>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-marinho-300">
-              O formulário bloqueia o envio sem essas duas referências. Cadastros incompletos ou
+              O formulário bloqueia o envio sem essa referência. Cadastros incompletos ou
               sem fonte confiável são recusados na análise.
             </p>
           </div>

@@ -8,7 +8,7 @@ import { FormularioCadastro } from '@/components/FormularioCadastro';
 export const metadata: Metadata = {
   title: 'Cadastrar meu negócio',
   description:
-    'Cadastre gratuitamente seu comércio, serviço, artesanato ou atuação pública vítima de boicote ideológico. É obrigatório apresentar pelo menos duas referências públicas verificáveis.',
+    'Cadastre gratuitamente seu comércio, serviço, artesanato ou atuação pública vítima de boicote ideológico. É obrigatório apresentar pelo menos uma referência pública verificável.',
 };
 
 export default function CadastroPage() {
@@ -35,7 +35,7 @@ export default function CadastroPage() {
           <ul className="mt-6 grid gap-2 text-sm sm:grid-cols-3">
             <li className="flex items-start gap-2 rounded-lg border border-esmeralda-100 bg-esmeralda-50 p-3 text-esmeralda-900">
               <BadgeCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>2 referências públicas obrigatórias</span>
+              <span>1 referência pública obrigatória</span>
             </li>
             <li className="flex items-start gap-2 rounded-lg border border-marinho-100 bg-marinho-50 p-3 text-marinho-800">
               <Clock3 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />

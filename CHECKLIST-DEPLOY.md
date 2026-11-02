@@ -37,9 +37,10 @@
 - [ ] Projeto na região **South America (São Paulo)**.
 - [ ] `supabase-schema.sql` aplicado (idempotente).
 - [ ] Migração **10.1** aplicada em banco existente.
+- [ ] `supabase-migration-uma-referencia.sql` aplicado (mínimo 1 referência).
 - [ ] `select` público só de `aprovado`; `insert` só `pendente`.
 - [ ] `service_role` com `GRANT` explícito.
-- [ ] Trigger de aprovação com < 2 referências ativo.
+- [ ] Trigger de aprovação sem referência ativo.
 - [ ] Backup recente (`pg_dump`) guardado fora do repositório.
 
 ## 3. Vercel — projeto

@@ -70,13 +70,10 @@ function pegar(texto, nome) {
     const etapa3 = pagina.getByRole('heading', { name: 'Referências públicas' });
     (await etapa3.count()) === 1 ? ok('etapa 2 valida e avanca') : falha('nao avancou da etapa 2');
 
-    // Etapa 3 — duas referencias
+    // Etapa 3 — uma referencia
     await pagina.fill('#referencias\\.0\\.nome_fonte', 'Jornal do Teste');
     await pagina.fill('#referencias\\.0\\.link_referencia', 'https://exemplo.com/materia-form');
     await pagina.fill('#referencias\\.0\\.titulo_referencia', 'Materia de teste sobre o boicote');
-    await pagina.fill('#referencias\\.1\\.nome_fonte', 'Blog do Teste');
-    await pagina.fill('#referencias\\.1\\.link_referencia', 'https://exemplo.com/blog-form');
-    await pagina.fill('#referencias\\.1\\.titulo_referencia', 'Post de teste sobre o boicote');
     await pagina.getByRole('button', { name: 'Continuar' }).click();
 
     const etapa4 = pagina.getByRole('heading', { name: 'Revisão e envio' });
@@ -98,8 +95,8 @@ function pegar(texto, nome) {
       .maybeSingle();
 
     data?.status === 'pendente' ? ok('cadastro salvo como pendente') : falha('status inesperado');
-    (data?.referencias_publicas?.length ?? 0) === 2
-      ? ok('duas referencias gravadas')
+    (data?.referencias_publicas?.length ?? 0) === 1
+      ? ok('uma referencia gravada')
       : falha('referencias nao gravadas');
 
     if (data?.id) {

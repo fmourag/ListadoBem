@@ -12,7 +12,7 @@ Um diretório público e gratuito de comerciantes, prestadores de serviço,
 artesãos, profissionais liberais, figuras públicas e **ações sociais** que
 sofreram boicote ideológico.
 
-Cada cadastro publicado apresenta **pelo menos duas referências públicas** que
+Cada cadastro publicado apresenta **pelo menos uma referência pública** que
 comprovam o episódio. A plataforma **não vende, não cobra e não intermedeia
 pagamentos**: o contato e a compra acontecem direto com o estabelecimento.
 
@@ -219,7 +219,7 @@ Solicite pelos canais de contato do projeto; veja [LGPD.md](./LGPD.md).
 | “Informe e-mail ou telefone” | ambos vazios | preencha um dos dois |
 | “CPF ou CNPJ inválido” | dígitos errados | corrija ou deixe em branco |
 | “Link inválido” | falta `https://` ou link quebrado | use a URL completa da matéria |
-| “Menos de 2 referências” | etapa 3 incompleta | adicione outra fonte |
+| “Sem referência pública” | etapa 3 incompleta | adicione uma fonte |
 | Cadastro não aparece | ainda pendente ou rejeitado | aguarde a análise / corrija |
 | Painel não abre | chave incorreta ou ausente | confira `ADMIN_SECRET` |
 | Erro 429 ao enviar | muitas tentativas por hora | aguarde e tente novamente |

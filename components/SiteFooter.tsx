@@ -111,7 +111,7 @@ export function SiteFooter() {
             .
           </p>
           <p className="text-marinho-300">
-            Cada anúncio exige no mínimo 2 referências públicas verificáveis.
+            Cada anúncio exige no mínimo 1 referência pública verificável.
           </p>
         </div>
       </div>

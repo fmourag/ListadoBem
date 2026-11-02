@@ -70,6 +70,11 @@ select e.enumlabel
 **Migração de banco existente:** a seção 10.1 do schema é idempotente e aplica
 `DROP NOT NULL`, a constraint de contato e o novo valor de enum.
 
+**Mínimo de referências:** o schema atual exige **1 referência pública**. Em banco
+já existente, execute `supabase-migration-uma-referencia.sql` no SQL Editor para
+atualizar o trigger de aprovação (idempotente). Sem isso, aprovar um cadastro com
+1 referência ainda falha com `check_violation`.
+
 ## 4. Variáveis de ambiente
 
 | Nome | Onde | Sensível? |

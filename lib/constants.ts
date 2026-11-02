@@ -136,7 +136,7 @@ export const NOME_UF: Readonly<Record<UfBrasil, string>> = {
   SE: 'Sergipe', TO: 'Tocantins',
 };
 
-export const MINIMO_REFERENCIAS = 2;
+export const MINIMO_REFERENCIAS = 1;
 export const MAXIMO_REFERENCIAS = 6;
 
 

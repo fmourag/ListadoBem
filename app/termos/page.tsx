@@ -5,7 +5,7 @@ import { FileText, ShieldAlert } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Termos de Uso — Listado Bem',
   description:
-    'Regras de uso do diretório Lista do Bem: cadastro gratuito, duas referências públicas, curadoria e aviso de que a plataforma não processa pagamentos.',
+    'Regras de uso do diretório Lista do Bem: cadastro gratuito, uma referência pública, curadoria e aviso de que a plataforma não processa pagamentos.',
   alternates: { canonical: '/termos' },
 };
 
@@ -83,8 +83,8 @@ export default function TermosPage() {
           <h2 className="text-xl font-bold text-marinho-950">3. Cadastro e referências</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Para publicar um cadastro é necessário informar dados de identificação, um meio de
-            contato (e-mail ou telefone) e <strong>no mínimo duas referências públicas</strong> que
-            comprovem o episódio relatado.
+            contato (e-mail ou telefone) e <strong>no mínimo uma referência pública</strong> que
+            comprove o episódio relatado.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-marinho-700">
             <li>CPF ou CNPJ é opcional e nunca é exibido publicamente.</li>

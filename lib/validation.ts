@@ -217,7 +217,11 @@ export const cadastroSchema = z
       .array(referenciaSchema)
       .min(
         MINIMO_REFERENCIAS,
-        `Informe pelo menos ${MINIMO_REFERENCIAS} referências públicas verificáveis.`,
+        `Informe pelo menos ${
+          MINIMO_REFERENCIAS === 1
+            ? 'uma referência pública verificável'
+            : `${MINIMO_REFERENCIAS} referências públicas verificáveis`
+        }.`,
       )
       .max(
         MAXIMO_REFERENCIAS,
@@ -285,7 +289,7 @@ export function valoresIniciaisCadastro(): CadastroFormValues {
     situacao_boicote: '',
     link_midia: '',
     midia: [],
-    referencias: [referenciaVazia(), referenciaVazia()],
+    referencias: [referenciaVazia()],
     aceite_termos: false,
     aceite_aviso_nao_transferencia: false,
   };
