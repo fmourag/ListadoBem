@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rede-de-apoio.vercel.app'),
+  metadataBase: new URL('https://listado-bem.vercel.app'),
   title: {
     default: 'Lista do Bem — Proteja o Próximo da Intolerância',
     template: '%s | Lista do Bem',

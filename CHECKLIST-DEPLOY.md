@@ -1,8 +1,17 @@
 # CHECKLIST-DEPLOY.md — Checklist de deploy na Vercel
 
 **Produto:** Lista do Bem
-**Versão:** 1.0 — 2026-11-01
+**Versão:** 1.1 — 2026-11-02
 **Público:** DevOps / mantenedor
+
+## 0. Deploy atual
+
+- [x] URL: https://listado-bem.vercel.app
+- [x] Build/deploy de produção READY na Vercel.
+- [x] Smoke: 75/75 PASS.
+- [x] `/listagem` sem erro de Supabase e login admin OK.
+- [x] 4 envs com valores reais (Production + Preview).
+- [x] CI verde no GitHub Actions.
 
 ---
 
@@ -19,6 +28,7 @@
 - [ ] `npm run test:csp` — CSP enforce, 0 violações.
 - [ ] `npm run security` — headers, cookie, RLS e força bruta OK.
 - [ ] `npm run responsive` — sem overflow de 320 a 1920 px.
+- [ ] 4 envs com valores reais (URL/anon/service/admin), não vazios.
 - [ ] `node tools/smoke-deploy.cjs http://127.0.0.1:3001` — 100% PASS.
 - [ ] E2E: `e2e-listado`, `e2e-cadastro`, `e2e-contato`, `e2e-pix` (servidor recém-iniciado por suíte).
 

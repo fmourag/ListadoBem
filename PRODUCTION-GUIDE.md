@@ -1,7 +1,7 @@
 # PRODUCTION GUIDE — Deploy e Operação
 
 **Produto:** Lista do Bem
-**Versão:** 1.0 — 2026-11-01
+**Versão:** 1.1 — 2026-11-02
 **Público:** DevOps, mantenedor
 **Objetivo:** colocar e manter o site em produção gastando R$ 0 (free tier).
 
@@ -13,7 +13,24 @@
 | --- | --- | --- | --- |
 | Local | `http://localhost:3001` | Supabase do projeto | desenvolvimento |
 | Preview | `*.vercel.app` (branch) | Supabase do projeto | revisão |
-| Produção | domínio oficial | Supabase do projeto | público |
+| Produção | https://listado-bem.vercel.app | Supabase do projeto | público |
+
+### Deploy atual
+
+| Item | Valor |
+| --- | --- |
+| URL | https://listado-bem.vercel.app |
+| Data | 2026-11-02 |
+| Commit em produção | `bd3bd53` |
+| Deployment | `dpl_3LPL7vbLJ9xLqbwW6CLHvuAuWg7p` |
+| Smoke | 75/75 PASS |
+| CI | verde no GitHub Actions |
+
+> As variáveis precisam ter **valores reais**. Em 2026-11-02 a UI salvou URL/anon
+> com placeholder e service/admin vazios; o deploy subiu sem Supabase e sem login.
+> Confira o tamanho da URL (~40 chars) e, após qualquer ajuste, faça **Redeploy
+> sem cache**. A prova rápida é a CSP conter `https://<projeto>.supabase.co` em
+> `connect-src` (o fallback é `https://*.supabase.co`).
 
 > **Atenção:** preview e produção compartilham o mesmo banco. Cadastros criados
 > em preview aparecem na moderação de produção. Se precisar isolar, crie um

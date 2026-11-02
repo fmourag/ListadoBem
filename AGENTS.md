@@ -5,6 +5,8 @@ Supabase. É um diretório de estabelecimentos; **nunca** processa pagamentos en
 usuário e estabelecimento. A única exceção é a contribuição facultativa de
 manutenção (PIX em `/apoie`).
 
+**Produção:** https://listado-bem.vercel.app (push em `main` dispara deploy).
+
 ## Comandos
 
 | Ação | Comando |

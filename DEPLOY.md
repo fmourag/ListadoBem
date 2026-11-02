@@ -1,5 +1,7 @@
 # Deploy na Vercel (plano Hobby/free)
 
+**Produção:** https://listado-bem.vercel.app — deploy automático a cada push em `main`.
+
 App Next.js 15 autônomo (App Router). Este repositório é a raiz do projeto —
 não é workspace de monorepo.
 

@@ -9,11 +9,12 @@ prestadores de serviço, artesãos, profissionais liberais, figuras públicas e
 > não intermedeia a relação comercial. Existe **uma** exceção explícita: a
 > contribuição **facultativa** para manutenção da infraestrutura, em `/apoie`.
 
-Este repositório é **o único app ativo**: tem build, deploy e ciclo de vida
-próprios, sem depender de monorepo. Ele **compartilha o mesmo projeto Supabase**
-com o app das Eleições, em tabelas dedicadas (`cadastros_boicote` e
-`referencias_publicas`), isoladas por RLS. O `apps/web` do monorepo é uma cópia
-**legada** e não deve ser usada.
+Este repositório é **o único app ativo**: build, deploy e ciclo próprios, sem
+monorepo. Compartilha o projeto Supabase com o app das Eleições, em tabelas
+dedicadas (`cadastros_boicote` e `referencias_publicas`), isoladas por RLS.
+O `apps/web` do monorepo é legado e não deve ser usado.
+
+**Produção:** https://listado-bem.vercel.app
 
 ## Documentação
 
