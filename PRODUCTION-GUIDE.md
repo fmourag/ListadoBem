@@ -109,6 +109,7 @@ node tools/e2e-listado.cjs
 node tools/e2e-cadastro.cjs
 node tools/e2e-contato.cjs
 node tools/e2e-pix.cjs
+npm run test:csp
 ```
 
 > Cada suíte consome o rate limit (5 cadastros/hora/IP). Reinicie o servidor
@@ -125,7 +126,8 @@ node tools/e2e-pix.cjs
 | cadastro só com e-mail | 201, status `pendente` |
 | `GET /apoie` | 200, QR e chave |
 | `GET /apoie/qr` | 200 `image/svg+xml` |
-| `/admin/moderacao` | pede chave; aprovar publica |
+| `/admin/moderacao` | pede senha; aprovar publica |
+| Resposta HTTP | header `Content-Security-Policy` (enforce), sem violações no console |
 
 ## 8. Monitoramento e logs
 

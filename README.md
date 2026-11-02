@@ -206,16 +206,18 @@ quantia. O QR é um SVG estático em `/apoie/qr`.
 ```bash
 npm run typecheck      # tsc --noEmit
 npm run check:admin    # service role: leitura + update no-op
+npm run test:csp       # CSP enforce (servidor no ar)
 ```
 
 Com o servidor em `localhost:3001`:
 
 | Script | Cobre |
 | --- | --- |
-| `node tools/e2e-listado.cjs` | landing → cadastro pendente → aprovar → listagem → rejeitar |
-| `node tools/e2e-cadastro.cjs` | formulário de 4 etapas **sem CPF, só e-mail** |
-| `node tools/e2e-contato.cjs` | API: só e-mail, só telefone, nenhum (422), CPF inválido (422) |
-| `node tools/e2e-pix.cjs` | QR 200×200, cópia da chave/payload, CRC16, cláusulas |
+| `node tools/e2e-listado.cjs` | landing → pendente → aprovar → listagem → rejeitar |
+| `node tools/e2e-cadastro.cjs` | formulário de 4 etapas sem CPF, só e-mail |
+| `node tools/e2e-contato.cjs` | API: e-mail, telefone, nenhum (422), CPF inválido (422) |
+| `node tools/e2e-pix.cjs` | QR, cópia da chave/payload, CRC16, cláusulas |
+| `npm run test:csp` | header CSP, diretivas e zero violações |
 
 > O rate limit de 5 cadastros/hora por IP é real: rode cada suíte com o servidor
 > recém-iniciado para não esbarrar em `429`.
@@ -241,8 +243,7 @@ Valores de referência (Next 14, build de produção):
 | `/cadastro` | 8.3   | 141.1 | 5.9   | **155 KB** |
 
 Limites atuais (falham o script): HTML 18/14/11 KB, JS 115/115/165 KB,
-CSS 8 KB. O limite de 18 KB na landing cobre as 5 cláusulas legais obrigatórias
-do card de contribuição.
+CSS 8 KB. O limite de 18 KB cobre as 5 cláusulas do card PIX.
 
 Regras que sustentam o orçamento:
 
@@ -250,9 +251,8 @@ Regras que sustentam o orçamento:
 - só o formulário e o botão de copiar são client; o formulário é o único que carrega RHF/Zod/sonner;
 - `<Toaster>` fica apenas em `/cadastro`;
 - o QR PIX é um SVG estático em `/apoie/qr`, não inline no HTML;
-- ícones são `lucide-react` tree-shaken; nenhuma fonte externa, imagem raster ou
-  analytics;
-- texto de UI e dados vêm do servidor — o cliente não baixa catálogo de opções.
+- ícones tree-shaken; sem fonte externa, imagem raster ou analytics;
+- texto e dados vêm do servidor; o cliente não baixa catálogo.
 
 ## 13. Contexto para agentes de IA
 

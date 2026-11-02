@@ -9,6 +9,7 @@
     "start": "next start -p 3001",
     "typecheck": "tsc --noEmit",
     "check:admin": "node tools/test-admin.cjs",
+    "test:csp": "node tools/e2e-csp.cjs",
     "budget": "node tools/budget.cjs",
     "context:budget": "node tools/context-budget.cjs"
   },
