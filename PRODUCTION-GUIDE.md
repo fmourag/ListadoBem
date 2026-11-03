@@ -1,7 +1,7 @@
 # PRODUCTION GUIDE — Deploy e Operação
 
 **Produto:** Lista do Bem
-**Versão:** 1.1 — 2026-11-02
+**Versão:** 1.2 — 2026-11-02
 **Público:** DevOps, mantenedor
 **Objetivo:** colocar e manter o site em produção gastando R$ 0 (free tier).
 
@@ -68,12 +68,15 @@ select e.enumlabel
    `service_role`.
 
 **Migração de banco existente:** a seção 10.1 do schema é idempotente e aplica
-`DROP NOT NULL`, a constraint de contato e o novo valor de enum.
+`DROP NOT NULL`, remove a constraint de contato e adiciona o novo valor de enum.
 
 **Mínimo de referências:** o schema atual exige **1 referência pública**. Em banco
 já existente, execute `supabase-migration-uma-referencia.sql` no SQL Editor para
 atualizar o trigger de aprovação (idempotente). Aplicada em **2026-11-02**; sem
 ela, aprovar um cadastro com 1 referência falha com `check_violation`.
+
+**Contato opcional:** execute `supabase-migration-contato-opcional.sql` em banco
+existente; aplicada em **2026-11-02**.
 
 ## 4. Variáveis de ambiente
 
@@ -155,7 +158,7 @@ node tools/smoke-deploy.cjs https://SEU-DOMINIO
 | `GET /` | 200, aviso de não transferência visível |
 | `GET /listagem` | 200 (vazia ou com aprovados) |
 | `GET /cadastro` | 200, 4 etapas, tipo “Ação social” |
-| `POST /api/cadastro` sem contato | 422 |
+| `POST /api/cadastro` sem contato | 201, status `pendente` |
 | cadastro só com e-mail | 201, status `pendente` |
 | `GET /apoie` | 200, QR e chave |
 | `GET /apoie/qr` | 200 `image/svg+xml` |

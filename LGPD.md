@@ -29,8 +29,8 @@ tratados no site. Os provedores de infraestrutura atuam como **operadores**:
 
 - **Finalidade:** dados coletados apenas para cadastro, verificação, publicação
   do diretório e segurança.
-- **Minimização:** CPF/CNPJ passou a ser **opcional**; contato exige apenas um
-  canal (e-mail **ou** telefone).
+- **Minimização:** CPF/CNPJ e contato são **opcionais**; a referência pública é a
+  validação do cadastro.
 - **Transparência:** o formulário informa o que é público e o que é interno.
 - **Segurança:** RLS, service role restrita ao servidor e nenhum dado sensível
   no client.
@@ -41,16 +41,16 @@ tratados no site. Os provedores de infraestrutura atuam como **operadores**:
 
 | Dado | Obrigatório? | Finalidade | Base legal | Público? |
 | --- | --- | --- | --- | --- |
-| Nome completo | sim | identificação e contato na análise | consentimento (art. 7º, I) | **não** |
-| Nome público | sim | publicação do card | consentimento | **sim** |
+| Nome completo | um dos dois | identificação e contato na análise | consentimento (art. 7º, I) | **não** |
+| Nome público | um dos dois | publicação do card | consentimento | **sim** |
 | CPF/CNPJ | **não** | evitar duplicidade/fraude | consentimento + legítimo interesse (art. 7º, IX) | **nunca** |
-| E-mail | um dos dois | contato e análise | consentimento | **não** |
-| Telefone/WhatsApp | um dos dois | contato e análise | consentimento | **não** |
+| E-mail | não | contato e análise | consentimento | **não** |
+| Telefone/WhatsApp | não | contato e análise | consentimento | **não** |
 | Cidade/UF | sim | filtro e contexto local | consentimento | **sim** |
 | Endereço completo | sim (CEP, rua, nº, bairro) | verificação e eventual contato | consentimento | **não** (exibe só cidade/UF) |
 | Descrição da atividade | sim | publicação | consentimento | **sim** |
 | Situação do boicote | sim | contexto no card | consentimento | **sim** |
-| Referências públicas | sim (2+) | comprovação | consentimento + fonte pública | **sim** |
+| Referências públicas | sim (1+) | comprovação | consentimento + fonte pública | **sim** |
 | Link de mídia (foto/logo) | não | identidade visual | consentimento | **sim** |
 | Endereço IP | transitório | rate limit e segurança | legítimo interesse | **não** (memória, sem persistência) |
 | Data/hora de criação e status | automático | auditoria e moderação | legítimo interesse | **não** |

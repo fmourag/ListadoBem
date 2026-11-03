@@ -184,18 +184,18 @@ explícito e ignora RLS.
 | Campo | Regra |
 | --- | --- |
 | `tipo_cadastro` | enum (6 valores) |
-| `nome_completo` | 5–160 |
-| `nome_publico` | 3–160 |
+| `nome_completo` | 5–160; opcional se houver nome público |
+| `nome_publico` | 3–160; opcional se houver nome completo |
 | `cpf_cnpj` | opcional; se preenchido, 11/14 dígitos com DV |
 | `email` | opcional; se preenchido, regex |
 | `telefone` | opcional; se preenchido, 10+ dígitos |
-| contato | `superRefine`: e-mail **ou** telefone obrigatório (erro no campo e-mail) |
+| contato | opcional; a referência pública é a validação |
 | `categoria` | enum (12 valores) |
 | `descricao_atividade` | 40–1200 |
 | `endereco.cep` | `00000-000` |
 | `endereco.estado` | UF válida |
 | `situacao_boicote` | 40–1500 |
-| `referencias` | 2–6; link `http(s)`; título 5+ |
+| `referencias` | 1–6; link `http(s)`; título 5+ |
 | consentimentos | ambos `true` |
 
 ## 8. PIX (contribuição facultativa)

@@ -83,8 +83,8 @@ O schema está em **`supabase-schema.sql`**. Ele cria:
 - trigger que impede aprovar cadastro sem referência.
 
 Aplique no **SQL Editor** do Supabase. O arquivo é idempotente: a seção **10.1**
-migra bancos antigos (derruba `NOT NULL` de CPF/e-mail, cria a constraint e o tipo
-`acao_social`).
+migra bancos antigos (derruba `NOT NULL` de CPF/e-mail, remove a exigência de
+contato e adiciona o tipo `acao_social`).
 
 ## 4. Variáveis de ambiente
 
@@ -117,7 +117,7 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
    e **e-mail/telefone opcionais** (a referência é a validação).
 2. **Atividade e endereço** — categoria, descrição, contexto do boicote,
    endereço e link opcional de foto/logo.
-3. **Referências públicas** — `useFieldArray`, mínimo **2**, máximo 6, URL
+3. **Referências públicas** — `useFieldArray`, mínimo **1**, máximo 6, URL
    `http(s)` válida.
 4. **Termos e envio** — resumo, aviso de não transferência e consentimentos.
 

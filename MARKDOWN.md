@@ -2,7 +2,7 @@
 
 **Objetivo:** manter os documentos do projeto consistentes, curtos e fáceis de
 revisar por pessoas e por agentes de IA.
-**Versão:** 1.0 — 2026-11-01
+**Versão:** 1.1 — 2026-11-02
 
 ---
 
@@ -19,6 +19,7 @@ revisar por pessoas e por agentes de IA.
 | [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md) | modelo de ameaças e controles | segurança/engenharia |
 | [AGENTS.md](./AGENTS.md) | contexto mínimo para agentes de IA | agentes |
 | [DEPLOY.md](./DEPLOY.md) | deploy rápido na Vercel | DevOps |
+| [AUTOMACAO-BUSCA.md](./AUTOMACAO-BUSCA.md) | rotina semanal de busca e triagem | agentes/operação |
 
 > **Regra:** cada assunto tem um dono. Não duplique tabela de variáveis em cinco
 > arquivos — referencie o documento dono.

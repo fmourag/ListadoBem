@@ -61,7 +61,7 @@ cadastros duplicados e **nunca** aparece publicamente.
 
 Este é o critério central de verificação.
 
-- **Mínimo 2**, máximo 6 referências.
+- **Mínimo 1**, máximo 6 referências.
 - Cada referência precisa de:
   - **tipo de fonte**: jornal/veículo, blog, parlamentar, jornalista ou
     personalidade pública;
@@ -122,14 +122,14 @@ na listagem até a análise humana.
 2. Informe a **chave de acesso** (`ADMIN_SECRET`) e clique em **Entrar**.
 3. A lista mostra os cadastros **pendentes**, com dados e referências.
 4. Use **Aprovar** ou **Rejeitar**.
-5. A aprovação só funciona com **2 ou mais referências** (o banco bloqueia).
+5. A aprovação exige **1 ou mais referências** (o banco bloqueia sem nenhuma).
 6. A listagem pública é atualizada na hora.
 
 **Boas práticas de moderação:**
 
 - abra todos os links e confirme que tratam do caso;
 - recuse conteúdo ofensivo, dados pessoais de terceiros ou acusação sem fonte;
-- não aprove com uma única referência, mesmo que pareça suficiente;
+- confira se a referência trata realmente do caso;
 - registre o motivo da rejeição no contato com o solicitante.
 
 > Em produção, proteja o painel também por Cloudflare Access, Vercel Password
@@ -189,11 +189,11 @@ Não. Cadastro, listagem e consulta são gratuitos.
 **Preciso de CNPJ?**
 Não. CPF/CNPJ é opcional.
 
-**Posso cadastrar só com e-mail?**
-Sim. E-mail **ou** telefone/WhatsApp, um dos dois.
+**Preciso informar e-mail ou telefone?**
+Não. O contato é opcional; a referência pública é a validação.
 
 **Quantas referências preciso?**
-No mínimo duas, com link público que trate do boicote.
+No mínimo uma, com link público que trate do boicote.
 
 **Meu telefone vai aparecer?**
 Não. A plataforma não publica contato; o visitante encontra o negócio pelo nome.

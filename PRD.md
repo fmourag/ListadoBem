@@ -73,11 +73,11 @@ Fluxo em 4 etapas, com validação por etapa e resumo final:
    CPF/CNPJ e **e-mail/telefone opcionais**; a referência pública é a validação.
 2. **Atividade e endereço** — categoria, descrição, situação do boicote, CEP,
    logradouro, número, bairro, cidade, UF, link opcional de mídia.
-3. **Referências públicas** — mínimo **2**, máximo 6; tipo de fonte, nome, URL
+3. **Referências públicas** — mínimo **1**, máximo 6; tipo de fonte, nome, URL
    `http(s)`, título e contexto opcional.
 4. **Termos e envio** — resumo, dois consentimentos obrigatórios e protocolo.
 
-**Aceite:** envia sem CPF; recusa sem contato; grava `status = 'pendente'`;
+**Aceite:** envia sem CPF; aceita sem contato; grava `status = 'pendente'`;
 retorna protocolo e mensagem de que nada foi cobrado.
 
 ### 5.3 Listagem (`/listagem`)
