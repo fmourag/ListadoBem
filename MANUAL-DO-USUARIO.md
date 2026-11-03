@@ -28,11 +28,11 @@ pagamentos**: o contato e a compra acontecem direto com o estabelecimento.
 
 Tenha em mãos:
 
-- nome completo e o **nome público** do negócio/profissional;
+- nome do estabelecimento/escritório/entidade **ou** nome do profissional/comerciante;
 - **e-mail ou telefone/WhatsApp** (pelo menos um);
 - categoria e uma descrição honesta da atividade;
 - endereço (CEP, rua, número, bairro, cidade e UF);
-- **duas ou mais referências públicas** com link acessível.
+- **uma referência pública** com link acessível (ou mais).
 
 CPF ou CNPJ é **opcional**. Se você informar, ele serve apenas para evitar
 cadastros duplicados e **nunca** aparece publicamente.
@@ -41,7 +41,7 @@ cadastros duplicados e **nunca** aparece publicamente.
 
 1. Escolha o **tipo de cadastro**: comerciante, prestador(a) de serviço,
    artesão/artesã, profissional liberal, figura pública ou **ação social**.
-2. Preencha nome completo e nome público (como aparece na fachada ou no perfil).
+2. Preencha o **nome do estabelecimento/entidade** ou o **nome do profissional** (pelo menos um; o outro campo é preenchido automaticamente).
 3. Se quiser, informe CPF/CNPJ.
 4. Informe **e-mail ou telefone/WhatsApp** — um dos dois basta.
 5. Clique em **Continuar**.

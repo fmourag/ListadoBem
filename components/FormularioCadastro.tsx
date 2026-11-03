@@ -44,6 +44,8 @@ export function FormularioCadastro() {
     handleSubmit,
     trigger,
     watch,
+    getValues,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<CadastroFormValues>({
     resolver: zodResolver(cadastroSchema),
@@ -67,6 +69,26 @@ export function FormularioCadastro() {
     erroRaizReferencias?.root?.message ?? erroRaizReferencias?.message;
 
   async function avancar() {
+    if (etapa === 0) {
+      const nomeCompleto = (getValues('nome_completo') ?? '').trim();
+      const nomePublico = (getValues('nome_publico') ?? '').trim();
+
+      if (nomeCompleto === '' && nomePublico === '') {
+        setError('nome_completo', {
+          type: 'manual',
+          message: 'Informe o nome do estabelecimento ou o nome do profissional.',
+        });
+        return;
+      }
+      if (nomeCompleto === '' && nomePublico.length < 5) {
+        setError('nome_publico', {
+          type: 'manual',
+          message: 'Use pelo menos 5 caracteres no nome do estabelecimento.',
+        });
+        return;
+      }
+    }
+
     const valido = await trigger(CAMPOS_DA_ETAPA[etapa], { shouldFocus: true });
     if (!valido) {
       toast.error('Confira os campos destacados antes de continuar.');

@@ -114,7 +114,7 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 
 ## 6. Formulário
 
-1. **Dados básicos** — tipo, nome completo, nome público, CPF/CNPJ **opcional**
+1. **Dados básicos** — tipo, nome do estabelecimento ou profissional, CPF/CNPJ **opcional**
    e **e-mail ou telefone (pelo menos um dos dois)**.
 2. **Atividade e endereço** — categoria, descrição, contexto do boicote,
    endereço e link opcional de foto/logo.

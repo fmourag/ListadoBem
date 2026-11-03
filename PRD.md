@@ -69,7 +69,7 @@ linkadas no rodapé e no aceite do formulário.
 Fluxo em 4 etapas, com validação por etapa e resumo final:
 
 1. **Dados básicos** — tipo (comerciante, prestador, artesão, profissional
-   liberal, figura pública, **ação social**), nome completo, nome público,
+   liberal, figura pública, **ação social**), nome do estabelecimento ou do profissional,
    CPF/CNPJ **opcional** e **e-mail ou telefone (ao menos um)**.
 2. **Atividade e endereço** — categoria, descrição, situação do boicote, CEP,
    logradouro, número, bairro, cidade, UF, link opcional de mídia.

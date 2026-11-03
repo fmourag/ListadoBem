@@ -70,6 +70,8 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
 5. **RLS**: `anon` lê só `aprovado`, insere só `pendente`; `service_role` tem
    `GRANT` explícito. Nunca use service role no client (`server-only`).
 6. **`ADMIN_SECRET`** protege `/admin/moderacao`; nunca prefixe com `NEXT_PUBLIC_`.
+7. **Nome**: basta o nome do estabelecimento/entidade **ou** o do profissional;
+   a API preenche o campo ausente antes de gravar.
 
 ## Economia de tokens (diretriz do projeto)
 

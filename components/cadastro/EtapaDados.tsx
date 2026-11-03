@@ -58,13 +58,32 @@ export function EtapaDados({ register, errors, tipoSelecionado }: Props) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
+          <label htmlFor="nome_publico" className="label">
+            Nome do estabelecimento, escritório ou entidade{' '}
+            <span className="font-normal text-marinho-500">(opcional)</span>
+          </label>
+          <input
+            id="nome_publico"
+            className={`input ${errors.nome_publico ? 'input-erro' : ''}`}
+            autoComplete="organization"
+            placeholder="Ex.: Padaria do Bairro, Escritório Silva, Instituto..."
+            aria-invalid={Boolean(errors.nome_publico)}
+            aria-describedby={errors.nome_publico ? 'erro-nome-publico' : undefined}
+            {...register('nome_publico')}
+          />
+          <ErroCampo id="erro-nome-publico" mensagem={mensagemDeErro(errors.nome_publico)} />
+        </div>
+
+        <div>
           <label htmlFor="nome_completo" className="label">
-            Nome completo <span aria-hidden="true" className="text-perigo-600">*</span>
+            Nome do profissional, comerciante ou responsável{' '}
+            <span className="font-normal text-marinho-500">(opcional)</span>
           </label>
           <input
             id="nome_completo"
             className={`input ${errors.nome_completo ? 'input-erro' : ''}`}
             autoComplete="name"
+            placeholder="Ex.: Maria Silva"
             aria-invalid={Boolean(errors.nome_completo)}
             aria-describedby={errors.nome_completo ? 'erro-nome-completo' : undefined}
             {...register('nome_completo')}
@@ -72,20 +91,9 @@ export function EtapaDados({ register, errors, tipoSelecionado }: Props) {
           <ErroCampo id="erro-nome-completo" mensagem={mensagemDeErro(errors.nome_completo)} />
         </div>
 
-        <div>
-          <label htmlFor="nome_publico" className="label">
-            Nome público <span aria-hidden="true" className="text-perigo-600">*</span>
-          </label>
-          <input
-            id="nome_publico"
-            className={`input ${errors.nome_publico ? 'input-erro' : ''}`}
-            placeholder="Como aparece na fachada ou no perfil"
-            aria-invalid={Boolean(errors.nome_publico)}
-            aria-describedby={errors.nome_publico ? 'erro-nome-publico' : undefined}
-            {...register('nome_publico')}
-          />
-          <ErroCampo id="erro-nome-publico" mensagem={mensagemDeErro(errors.nome_publico)} />
-        </div>
+        <p className="text-xs leading-relaxed text-marinho-500 sm:col-span-2">
+          Informe pelo menos um dos dois nomes. O nome público é o que aparece na listagem.
+        </p>
 
         <div>
           <label htmlFor="cpf_cnpj" className="label">

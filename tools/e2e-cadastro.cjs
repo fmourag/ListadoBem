@@ -42,8 +42,14 @@ function pegar(texto, nome) {
   try {
     await pagina.goto(`${BASE}/cadastro`, { waitUntil: 'domcontentloaded' });
 
-    // Etapa 1
-    await pagina.fill('#nome_completo', 'Teste Formulario da Silva');
+    // Etapa 1 — exige pelo menos um nome e aceita só o do estabelecimento
+    await pagina.getByRole('button', { name: 'Continuar' }).click();
+    const erroNome = pagina.getByText('Informe o nome do estabelecimento ou o nome do profissional.');
+    await erroNome.waitFor({ timeout: 3000 }).catch(() => {});
+    (await erroNome.count()) >= 1
+      ? ok('bloqueia envio sem nome')
+      : falha('aceitou envio sem nome');
+
     await pagina.fill('#nome_publico', 'Padaria Formulario E2E');
     await pagina.fill('#email', EMAIL_TESTE);
     await pagina.getByRole('button', { name: 'Continuar' }).click();
@@ -90,11 +96,17 @@ function pegar(texto, nome) {
 
     const { data } = await admin
       .from('cadastros_boicote')
-      .select('id, status, referencias_publicas(id)')
+      .select('id, status, nome_completo, nome_publico, referencias_publicas(id)')
       .eq('email', EMAIL_TESTE)
       .maybeSingle();
 
     data?.status === 'pendente' ? ok('cadastro salvo como pendente') : falha('status inesperado');
+    data?.nome_publico === 'Padaria Formulario E2E'
+      ? ok('nome do estabelecimento gravado')
+      : falha('nome publico inesperado');
+    data?.nome_completo === 'Padaria Formulario E2E'
+      ? ok('nome de pessoa preenchido com o estabelecimento')
+      : falha('fallback de nome nao aplicado');
     (data?.referencias_publicas?.length ?? 0) === 1
       ? ok('uma referencia gravada')
       : falha('referencias nao gravadas');

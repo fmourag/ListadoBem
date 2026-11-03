@@ -149,13 +149,17 @@ export const cadastroSchema = z
     nome_completo: z
       .string()
       .trim()
-      .min(5, 'Informe seu nome completo (mínimo de 5 caracteres).')
-      .max(160, 'Máximo de 160 caracteres.'),
+      .max(160, 'Máximo de 160 caracteres.')
+      .refine((valor) => valor === '' || valor.length >= 5, {
+        message: 'Informe o nome do profissional (mínimo de 5 caracteres).',
+      }),
     nome_publico: z
       .string()
       .trim()
-      .min(3, 'Informe o nome público do estabelecimento ou do profissional.')
-      .max(160, 'Máximo de 160 caracteres.'),
+      .max(160, 'Máximo de 160 caracteres.')
+      .refine((valor) => valor === '' || valor.length >= 3, {
+        message: 'Informe o nome do estabelecimento, escritório ou entidade.',
+      }),
     /** Opcional. Se preenchido, valida dígitos verificadores. */
     cpf_cnpj: z
       .string()

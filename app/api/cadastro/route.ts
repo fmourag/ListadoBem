@@ -220,11 +220,30 @@ export async function POST(request: Request) {
         ? [{ tipo: 'logo', url: dados.link_midia, descricao: null }]
         : [];
 
+  const nomeCompletoInformado = dados.nome_completo.trim();
+  const nomePublicoInformado = dados.nome_publico.trim();
+
+  if (nomeCompletoInformado === '' && nomePublicoInformado === '') {
+    return NextResponse.json(
+      { erro: 'Informe o nome do estabelecimento ou o nome do profissional.' },
+      { status: 422 },
+    );
+  }
+  if (nomeCompletoInformado === '' && nomePublicoInformado.length < 5) {
+    return NextResponse.json(
+      { erro: 'Use pelo menos 5 caracteres no nome do estabelecimento.' },
+      { status: 422 },
+    );
+  }
+
+  const nomeCompleto = nomeCompletoInformado || nomePublicoInformado;
+  const nomePublico = nomePublicoInformado || nomeCompleto;
+
   const { error: erroCadastro } = await supabase.from('cadastros_boicote').insert({
     id: cadastroId,
     tipo_cadastro: dados.tipo_cadastro,
-    nome_completo: dados.nome_completo,
-    nome_publico: dados.nome_publico,
+    nome_completo: nomeCompleto,
+    nome_publico: nomePublico,
     cpf_cnpj: documento,
     email: dados.email?.trim() || null,
     telefone: dados.telefone?.trim() || null,
