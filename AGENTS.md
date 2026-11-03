@@ -23,6 +23,7 @@ manutenção (PIX em `/apoie`).
 | E2E navegador | `node tools/e2e-listado.cjs` · `e2e-cadastro.cjs` · `e2e-pix.cjs` |
 | E2E regras de contato (API) | `node tools/e2e-contato.cjs` |
 | Launcher Windows | `iniciar-listado-bem.bat [--check\|--clean\|--restart]` |
+| Republicar produção | `republicar-listado-bem.bat [--check]` |
 
 ## Mapa (leia o mínimo)
 

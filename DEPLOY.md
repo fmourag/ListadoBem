@@ -91,3 +91,17 @@ Vercel → **Deployments → (deploy anterior) → Promote to Production**. O ba
 é afetado: as migrações são aditivas (`DROP NOT NULL`, nova constraint e novo
 valor de enum).
 
+## 7. Republicar uma versão
+
+O script `republicar-listado-bem.bat` publica o commit atual via push em `main`,
+aguarda `/api/version` confirmar o SHA e roda o smoke automaticamente:
+
+```bat
+republicar-listado-bem.bat            REM publica o commit atual
+republicar-listado-bem.bat --check    REM só mostra a versão online
+republicar-listado-bem.bat --no-smoke REM publica sem smoke
+```
+
+Ele exige árvore limpa e branch `main`; se a versão já estiver online, cria um
+commit vazio (`chore: republica <sha>`) para forçar um novo deployment.
+
