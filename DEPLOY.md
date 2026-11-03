@@ -25,7 +25,7 @@ não é workspace de monorepo.
 > `supabase-migration-uma-referencia.sql` para atualizar o trigger de aprovação.
 
 > **Dashboard:** rode `supabase-migration-dashboard.sql` para criar `eventos_app`
-> (acessos, falhas e moderação). Sem ela, o painel abre em modo degradado.
+> (acessos, falhas e moderação). Aplicada em **2026-11-03**.
 
 ## 2. Importar o projeto
 

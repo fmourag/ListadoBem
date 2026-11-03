@@ -79,8 +79,8 @@ ela, aprovar um cadastro com 1 referência falha com `check_violation`.
 existente; aplicada em **2026-11-02**.
 
 **Dashboard:** execute `supabase-migration-dashboard.sql` para criar
-`eventos_app` (acessos, falhas e moderação). Sem ela, o dashboard abre em modo
-degradado e o middleware não registra acessos.
+`eventos_app` (acessos, falhas e moderação). Aplicada em **2026-11-03**; o
+middleware e as actions já gravam eventos.
 
 ## 4. Variáveis de ambiente
 

@@ -39,7 +39,7 @@
 - [ ] Migração **10.1** aplicada em banco existente.
 - [x] `supabase-migration-uma-referencia.sql` aplicado (mínimo 1 referência) em 2026-11-02.
 - [x] `supabase-migration-contato-opcional.sql` aplicado (contato opcional) em 2026-11-02.
-- [ ] `supabase-migration-dashboard.sql` aplicado (`eventos_app` de acessos/falhas).
+- [x] `supabase-migration-dashboard.sql` aplicado (`eventos_app` de acessos/falhas).
 - [ ] `select` público só de `aprovado`; `insert` só `pendente`.
 - [ ] `service_role` com `GRANT` explícito.
 - [ ] Trigger de aprovação sem referência ativo.
@@ -96,7 +96,7 @@ node tools/smoke-deploy.cjs https://SEU-DOMINIO
 - [ ] Cadastro de teste **sem CPF, só e-mail** → protocolo e status `pendente`.
 - [ ] Cadastro sem contato → 201 (pendente) com 1 referência.
 - [ ] Aprovar publica na listagem; rejeitar mantém fora.
-- [ ] `/admin/dashboard` abre após login e mostra cadastros, acessos e saúde.
+- [x] `/admin/dashboard` abre após login e mostra cadastros, acessos e saúde.
 - [ ] Cookie `admin_session` com `HttpOnly`, `Secure`, `SameSite=Strict`, 1 h.
 - [ ] Contribuição PIX: QR abre, copia e cola funciona.
 - [ ] Remover cadastros de teste.
