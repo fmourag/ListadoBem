@@ -15,8 +15,11 @@ não é workspace de monorepo.
 - As 4 variáveis de ambiente em mãos.
 
 > **Banco já existente?** Rode o arquivo inteiro: a seção **10.1** derruba o
-> `NOT NULL` de `cpf_cnpj`/`email`, cria a constraint
-> `cadastros_boicote_contato_check` e adiciona o tipo `acao_social`. É idempotente.
+> `NOT NULL` de `cpf_cnpj`/`email`, remove a exigência de contato e adiciona o
+> tipo `acao_social`. É idempotente.
+
+> **Contato opcional:** em banco existente, rode também
+> `supabase-migration-contato-opcional.sql` (remove `cadastros_boicote_contato_check`).
 
 > **Mínimo de 1 referência:** em banco existente, rode também
 > `supabase-migration-uma-referencia.sql` para atualizar o trigger de aprovação.
@@ -73,7 +76,7 @@ não é workspace de monorepo.
 - [ ] `/listagem` responde 200 (vazia ou com aprovados), sem erro de configuração.
 - [ ] `/cadastro` conclui as 4 etapas e devolve protocolo.
 - [ ] Cadastro **sem CPF, só com e-mail** é aceito (201) e fica `pendente`.
-- [ ] Cadastro **sem e-mail e sem telefone** é recusado com mensagem clara.
+- [ ] Cadastro **sem e-mail e sem telefone** é aceito (201) com 1 referência pública.
 - [ ] Tipo **“Ação social”** aparece na etapa 1 e é gravado no banco.
 - [ ] `/apoie` responde 200, mostra QR 200×200, chave `(21) 97194-3298` e as 5
       cláusulas; os botões copiam chave e payload.

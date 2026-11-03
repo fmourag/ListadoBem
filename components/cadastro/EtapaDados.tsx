@@ -116,7 +116,7 @@ export function EtapaDados({ register, errors, tipoSelecionado }: Props) {
 
         <div>
           <label htmlFor="telefone" className="label">
-            Telefone / WhatsApp
+            Telefone / WhatsApp <span className="font-normal text-marinho-500">(opcional)</span>
           </label>
           <input
             id="telefone"
@@ -132,7 +132,7 @@ export function EtapaDados({ register, errors, tipoSelecionado }: Props) {
 
         <div className="sm:col-span-2">
           <label htmlFor="email" className="label">
-            E-mail
+            E-mail <span className="font-normal text-marinho-500">(opcional)</span>
           </label>
           <input
             id="email"
@@ -151,7 +151,8 @@ export function EtapaDados({ register, errors, tipoSelecionado }: Props) {
           id="ajuda-contato"
           className="rounded-lg bg-marinho-50 px-3 py-2 text-xs font-semibold text-marinho-700 sm:col-span-2"
         >
-          Informe <strong>pelo menos um</strong> contato: e-mail ou telefone/WhatsApp.
+          Contato é <strong>opcional</strong> e serve apenas para a moderação. A validação
+          do cadastro é a referência pública.
         </p>
       </div>
     </div>

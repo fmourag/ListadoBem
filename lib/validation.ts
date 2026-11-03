@@ -242,18 +242,6 @@ export const cadastroSchema = z
         message:
           'É necessário confirmar que você entendeu que a plataforma não processa pagamentos.',
       }),
-  })
-  .superRefine((dados, ctx) => {
-    const email = (dados.email ?? '').trim();
-    const telefone = (dados.telefone ?? '').trim();
-
-    if (email === '' && telefone === '') {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['email'],
-        message: 'Informe e-mail ou telefone/WhatsApp (pelo menos um dos dois).',
-      });
-    }
   });
 
 export type CadastroFormValues = z.infer<typeof cadastroSchema>;

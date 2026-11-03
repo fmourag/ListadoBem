@@ -70,7 +70,7 @@ Fluxo em 4 etapas, com validação por etapa e resumo final:
 
 1. **Dados básicos** — tipo (comerciante, prestador, artesão, profissional
    liberal, figura pública, **ação social**), nome do estabelecimento ou do profissional,
-   CPF/CNPJ **opcional** e **e-mail ou telefone (ao menos um)**.
+   CPF/CNPJ e **e-mail/telefone opcionais**; a referência pública é a validação.
 2. **Atividade e endereço** — categoria, descrição, situação do boicote, CEP,
    logradouro, número, bairro, cidade, UF, link opcional de mídia.
 3. **Referências públicas** — mínimo **2**, máximo 6; tipo de fonte, nome, URL
@@ -109,7 +109,7 @@ retorna protocolo e mensagem de que nada foi cobrado.
 | --- | --- |
 | RN-01 | Cadastro só é publicado com **≥ 1 referência pública** verificáveis. |
 | RN-02 | CPF/CNPJ é **opcional**; se informado, é validado e único. |
-| RN-03 | Exige **e-mail OU telefone**; nunca os dois obrigatórios. |
+| RN-03 | **E-mail/telefone opcionais**; a referência pública é a validação. |
 | RN-04 | Todo cadastro nasce `pendente`; status só muda no servidor. |
 | RN-05 | A plataforma **não** processa pagamentos entre usuários e estabelecimentos. |
 | RN-06 | A contribuição PIX é só para manutenção, facultativa, sem valor fixo e sem benefício. |

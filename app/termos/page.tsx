@@ -83,7 +83,7 @@ export default function TermosPage() {
           <h2 className="text-xl font-bold text-marinho-950">3. Cadastro e referências</h2>
           <p className="mt-2 text-sm leading-relaxed text-marinho-700">
             Para publicar um cadastro é necessário informar dados de identificação, um meio de
-            contato (e-mail ou telefone) e <strong>no mínimo uma referência pública</strong> que
+            contato opcional (e-mail ou telefone) e <strong>no mínimo uma referência pública</strong> que
             comprove o episódio relatado.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-marinho-700">

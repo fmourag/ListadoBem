@@ -29,7 +29,7 @@ pagamentos**: o contato e a compra acontecem direto com o estabelecimento.
 Tenha em mãos:
 
 - nome do estabelecimento/escritório/entidade **ou** nome do profissional/comerciante;
-- **e-mail ou telefone/WhatsApp** (pelo menos um);
+- **e-mail ou telefone/WhatsApp** (opcional, usado só na moderação);
 - categoria e uma descrição honesta da atividade;
 - endereço (CEP, rua, número, bairro, cidade e UF);
 - **uma referência pública** com link acessível (ou mais).
@@ -43,11 +43,11 @@ cadastros duplicados e **nunca** aparece publicamente.
    artesão/artesã, profissional liberal, figura pública ou **ação social**.
 2. Preencha o **nome do estabelecimento/entidade** ou o **nome do profissional** (pelo menos um; o outro campo é preenchido automaticamente).
 3. Se quiser, informe CPF/CNPJ.
-4. Informe **e-mail ou telefone/WhatsApp** — um dos dois basta.
+4. Se quiser, informe **e-mail ou telefone/WhatsApp** (opcional, usado só na moderação).
 5. Clique em **Continuar**.
 
-> Se aparecer “Informe e-mail ou telefone/WhatsApp”, preencha pelo menos um dos
-> campos. Se aparecer erro de CPF/CNPJ, corrija os números **ou deixe em branco**.
+> Se aparecer erro de CPF/CNPJ, corrija os números **ou deixe em branco**. O
+> contato não é obrigatório: a referência pública é a validação.
 
 ### 2.3 Passo 2 — Atividade e endereço
 
@@ -216,7 +216,7 @@ Solicite pelos canais de contato do projeto; veja [LGPD.md](./LGPD.md).
 
 | Sintoma | Causa provável | Solução |
 | --- | --- | --- |
-| “Informe e-mail ou telefone” | ambos vazios | preencha um dos dois |
+| “Contato inválido” | e-mail/telefone mal formatado | corrija ou deixe em branco |
 | “CPF ou CNPJ inválido” | dígitos errados | corrija ou deixe em branco |
 | “Link inválido” | falta `https://` ou link quebrado | use a URL completa da matéria |
 | “Sem referência pública” | etapa 3 incompleta | adicione uma fonte |

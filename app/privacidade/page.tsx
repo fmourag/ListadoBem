@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 const ATUALIZADO_EM = '1 de novembro de 2026';
 
 const DADOS = [
-  { dado: 'Nome completo', obrigatorio: 'Sim', publico: 'Não', uso: 'Identificação e contato na análise' },
-  { dado: 'Nome público', obrigatorio: 'Sim', publico: 'Sim', uso: 'Publicação do card no diretório' },
+  { dado: 'Nome completo', obrigatorio: 'Um dos dois', publico: 'Não', uso: 'Identificação e contato na análise' },
+  { dado: 'Nome público', obrigatorio: 'Um dos dois', publico: 'Sim', uso: 'Publicação do card no diretório' },
   { dado: 'CPF ou CNPJ', obrigatorio: 'Não', publico: 'Nunca', uso: 'Evitar cadastros duplicados' },
-  { dado: 'E-mail', obrigatorio: 'Um dos dois', publico: 'Não', uso: 'Contato e verificação' },
-  { dado: 'Telefone / WhatsApp', obrigatorio: 'Um dos dois', publico: 'Não', uso: 'Contato e verificação' },
+  { dado: 'E-mail', obrigatorio: 'Opcional', publico: 'Não', uso: 'Contato e verificação' },
+  { dado: 'Telefone / WhatsApp', obrigatorio: 'Opcional', publico: 'Não', uso: 'Contato e verificação' },
   { dado: 'Endereço', obrigatorio: 'Sim', publico: 'Só cidade/UF', uso: 'Verificação e contexto local' },
   { dado: 'Descrição e contexto', obrigatorio: 'Sim', publico: 'Sim', uso: 'Conteúdo do card' },
-  { dado: 'Referências públicas', obrigatorio: 'Mínimo 2', publico: 'Sim', uso: 'Comprovação do boicote' },
+  { dado: 'Referências públicas', obrigatorio: 'Mínimo 1', publico: 'Sim', uso: 'Comprovação do boicote' },
   { dado: 'Link de mídia', obrigatorio: 'Não', publico: 'Sim', uso: 'Identidade visual (URL externa)' },
   { dado: 'Endereço IP', obrigatorio: 'Automático', publico: 'Não', uso: 'Limite de tentativas e segurança' },
 ] as const;

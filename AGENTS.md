@@ -64,8 +64,8 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
    `components/AvisoNaoTransferencia.tsx` e deve aparecer nas telas.
 2. **Mínimo de 1 referência pública** com URL `http(s)`: validado no Zod,
    reforçado pela API e pelo trigger de aprovação.
-3. **Contato**: CPF/CNPJ é **opcional**; exige-se **e-mail OU telefone**. O banco
-   tem a constraint `cadastros_boicote_contato_check`.
+3. **Contato**: CPF/CNPJ e e-mail/telefone são **opcionais**; a referência
+   pública é a validação.
 4. **Status só no servidor** (`pendente`); o client nunca aprova.
 5. **RLS**: `anon` lê só `aprovado`, insere só `pendente`; `service_role` tem
    `GRANT` explícito. Nunca use service role no client (`server-only`).

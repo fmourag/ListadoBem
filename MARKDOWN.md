@@ -133,7 +133,7 @@ Não use emoji como sinalização (quebra leitores de tela e diffs).
 - [ ] Links internos abrem (arquivo existe).
 - [ ] Tabelas alinhadas e sem célula vazia ambígua.
 - [ ] Regra de negócio crítica repetida de forma consistente
-      (1 referência, contato mínimo, sem pagamentos).
+      (1 referência, contato opcional, sem pagamentos).
 - [ ] `npm run context:budget` continua passando (README ≤ 12 KB,
       `AGENTS.md` ≤ 6 KB).
 

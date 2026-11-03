@@ -13,7 +13,7 @@
 --   • Nenhuma política de UPDATE/DELETE: escrita administrativa apenas com
 --     service_role (que ignora RLS) — nunca a partir do app web.
 --   • CPF/CNPJ é OPCIONAL e único quando informado — protege contra duplicidade.
---   • Contato mínimo: e-mail OU telefone (constraint cadastros_boicote_contato_check).
+--   • Contato (e-mail/telefone) é OPCIONAL: a referência pública é a validação.
 --   • Aprovar cadastro sem referência pública é bloqueado por trigger.
 --
 -- O arquivo é idempotente o suficiente para ser reexecutado com segurança
@@ -84,9 +84,6 @@ create table if not exists public.cadastros_boicote (
     check (email is null or email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
   telefone text
     check (telefone is null or char_length(telefone) between 10 and 20),
-
-  constraint cadastros_boicote_contato_check
-    check (email is not null or telefone is not null),
 
   categoria text not null
     check (categoria in (
@@ -366,7 +363,7 @@ alter type public.tipo_cadastro_boicote
   add value if not exists 'acao_social';
 
 -- =============================================================================
--- 10.1 CPF/CNPJ opcional e contato mínimo (e-mail OU telefone)
+-- 10.1 CPF/CNPJ e contato opcionais
 --      Idempotente: no-op em banco já migrado.
 -- =============================================================================
 alter table public.cadastros_boicote alter column cpf_cnpj drop not null;
@@ -375,9 +372,10 @@ alter table public.cadastros_boicote alter column email drop not null;
 alter table public.cadastros_boicote
   drop constraint if exists cadastros_boicote_contato_check;
 
-alter table public.cadastros_boicote
-  add constraint cadastros_boicote_contato_check
-  check (email is not null or telefone is not null);
+comment on column public.cadastros_boicote.email is
+  'Opcional. Usado apenas na moderação; a referência pública é a validação.';
+comment on column public.cadastros_boicote.telefone is
+  'Opcional. Usado apenas na moderação; a referência pública é a validação.';
 
 create or replace function public.descartar_cadastro_pendente(
   p_cadastro_id uuid,

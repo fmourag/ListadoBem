@@ -79,8 +79,7 @@ O schema está em **`supabase-schema.sql`**. Ele cria:
   - nenhuma política de `UPDATE`/`DELETE` para `anon`;
   - `service_role` recebe `GRANT` explícito (moderação e API);
 - **CPF/CNPJ opcional** (único quando informado);
-- **contato mínimo**: `email is not null or telefone is not null`
-  (constraint `cadastros_boicote_contato_check`);
+- **contato opcional**: e-mail/telefone usados só na moderação;
 - trigger que impede aprovar cadastro sem referência.
 
 Aplique no **SQL Editor** do Supabase. O arquivo é idempotente: a seção **10.1**
@@ -115,7 +114,7 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 ## 6. Formulário
 
 1. **Dados básicos** — tipo, nome do estabelecimento ou profissional, CPF/CNPJ **opcional**
-   e **e-mail ou telefone (pelo menos um dos dois)**.
+   e **e-mail/telefone opcionais** (a referência é a validação).
 2. **Atividade e endereço** — categoria, descrição, contexto do boicote,
    endereço e link opcional de foto/logo.
 3. **Referências públicas** — `useFieldArray`, mínimo **2**, máximo 6, URL
@@ -162,7 +161,7 @@ quantia. O QR é um SVG estático em `/apoie/qr`.
 - `SUPABASE_SERVICE_ROLE_KEY` só no servidor, em módulo com `server-only`.
 - `status` é sempre definido no servidor (`pendente`).
 - CPF/CNPJ é opcional e único quando informado; duplicidade retorna `409`; o
-  banco exige e-mail ou telefone (constraint `cadastros_boicote_contato_check`).
+  e-mail/telefone são opcionais; a referência pública é a validação.
 - A chave PIX é pública por natureza (serve para receber), mas só aparece em
   `/apoie` e na landing — nunca é usada para cobrança de cadastro.
 - Rate limit simples por IP (5/hora) na API route.

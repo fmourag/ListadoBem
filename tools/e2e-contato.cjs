@@ -105,11 +105,10 @@ async function postar(corpo) {
       201,
     );
 
-    const semContato = await criar('sem e-mail e sem telefone', {}, 422);
-    const erroEmail = semContato?.erros?.email?.[0] ?? '';
-    erroEmail.includes('e-mail ou telefone')
-      ? ok('mensagem de contato obrigatório no campo e-mail')
-      : falha(`mensagem inesperada: ${erroEmail}`);
+    const semContato = await criar('sem e-mail e sem telefone', {}, 201);
+    !semContato?.erros
+      ? ok('contato opcional aceito com referencia publica')
+      : falha('contato opcional ainda gerou erro');
 
     await criar(
       'CPF inválido (opcional, mas validado quando informado)',

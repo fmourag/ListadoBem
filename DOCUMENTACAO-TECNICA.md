@@ -82,7 +82,6 @@ supabase-schema.sql
 | `cpf_cnpj` | text | **opcional**, único, 11/14 dígitos, **nunca público** |
 | `email` | text | **opcional**, regex simples |
 | `telefone` | text | **opcional**, 10–20 |
-|  |  | **CHECK:** `email is not null or telefone is not null` |
 | `categoria` | text | lista fixa de 12 valores |
 | `descricao_atividade` | text | 40–1200 |
 | `endereco` | jsonb | objeto `{cep, logradouro, numero, complemento, bairro, cidade, estado, pais}` |
