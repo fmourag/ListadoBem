@@ -72,8 +72,8 @@ select e.enumlabel
 
 **Mínimo de referências:** o schema atual exige **1 referência pública**. Em banco
 já existente, execute `supabase-migration-uma-referencia.sql` no SQL Editor para
-atualizar o trigger de aprovação (idempotente). Sem isso, aprovar um cadastro com
-1 referência ainda falha com `check_violation`.
+atualizar o trigger de aprovação (idempotente). Aplicada em **2026-11-02**; sem
+ela, aprovar um cadastro com 1 referência falha com `check_violation`.
 
 ## 4. Variáveis de ambiente
 

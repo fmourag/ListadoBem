@@ -37,7 +37,7 @@
 - [ ] Projeto na região **South America (São Paulo)**.
 - [ ] `supabase-schema.sql` aplicado (idempotente).
 - [ ] Migração **10.1** aplicada em banco existente.
-- [ ] `supabase-migration-uma-referencia.sql` aplicado (mínimo 1 referência).
+- [x] `supabase-migration-uma-referencia.sql` aplicado (mínimo 1 referência) em 2026-11-02.
 - [ ] `select` público só de `aprovado`; `insert` só `pendente`.
 - [ ] `service_role` com `GRANT` explícito.
 - [ ] Trigger de aprovação sem referência ativo.
