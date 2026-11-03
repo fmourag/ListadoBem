@@ -24,6 +24,7 @@ manutenção (PIX em `/apoie`).
 | E2E regras de contato (API) | `node tools/e2e-contato.cjs` |
 | Launcher Windows | `iniciar-listado-bem.bat [--check\|--clean\|--restart]` |
 | Republicar produção | `republicar-listado-bem.bat [--check]` |
+| Busca semanal | `npm run busca:semanal` |
 
 ## Mapa (leia o mínimo)
 

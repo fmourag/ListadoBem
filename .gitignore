@@ -51,3 +51,6 @@ _backup*/
 *-acl-recovery/
 .tools/
 staging/
+
+# Relatorios locais da busca semanal
+relatorios/

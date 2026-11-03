@@ -1,0 +1,64 @@
+name: Busca semanal
+
+on:
+  schedule:
+    # Segunda-feira, 11:00 UTC = 08:00 em America/Sao_Paulo.
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: busca-semanal
+  cancel-in-progress: false
+
+jobs:
+  buscar:
+    name: Buscar matérias novas
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Buscar e gerar relatório
+        id: busca
+        run: node tools/busca-semanal.cjs
+        env:
+          # Opcionais: quando configurados, evitam sugerir links já usados.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Resumo da execução
+        run: |
+          echo "### Busca semanal" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Candidatos novos: **${{ steps.busca.outputs.candidatos }}**" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Relatório no artifact \`busca-semanal\`." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Abrir issue com candidatos
+        if: ${{ steps.busca.outputs.candidatos != '0' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Busca semanal — $(date -u +%d/%m/%Y)" \
+            --body-file "${{ steps.busca.outputs.relatorio }}"
+
+      - name: Guardar relatório
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: busca-semanal
+          path: relatorios/busca-semanal/
+          if-no-files-found: warn
+          retention-days: 90
