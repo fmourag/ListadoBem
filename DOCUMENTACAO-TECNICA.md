@@ -50,6 +50,7 @@ Next.js na Vercel (região gru1)
 | `/privacidade` | Server Component | estática no build |
 | `/api/cadastro` | Route Handler (Node) | `force-dynamic`, `no-store` |
 | `/admin/moderacao` | Server Component + Server Actions | dinâmica |
+| `/admin/dashboard` | Server Component | dinâmica |
 
 O cliente Supabase de servidor força `cache: 'no-store'` em todo `fetch`, para
 que aprovações apareçam imediatamente.
@@ -103,12 +104,27 @@ supabase-schema.sql
 | `data_publicacao` | date | opcional |
 | `descricao_contexto` | text | opcional, ≤ 600 |
 
-### 5.3 Índices
+### 5.3 `public.eventos_app`
+
+| Coluna | Tipo | Regra |
+| --- | --- | --- |
+| `id` | bigint | PK identity |
+| `tipo` | text | `acesso`, `cadastro`, `falha`, `moderacao`, `contribuicao` |
+| `rota` | text | caminho da página ou endpoint |
+| `status` | text | resultado curto do evento |
+| `detalhe` | jsonb | metadados internos, sem PII |
+| `criado_em` | timestamptz | default `now()` |
+
+RLS habilitada sem políticas: apenas `service_role` lê/escreve. O middleware grava
+acessos às páginas públicas e a API/admin gravam eventos de cadastro, moderação e
+falha. Não guarda IP, e-mail, telefone nem conteúdo de formulário.
+
+### 5.4 Índices
 
 `status`, `categoria`, `(endereco->>'estado')`, `criado_em desc`,
-`referencias_publicas(cadastro_id)`.
+`referencias_publicas(cadastro_id)`, `eventos_app(tipo, criado_em desc)`.
 
-### 5.4 Funções e triggers
+### 5.5 Funções e triggers
 
 | Objeto | Função |
 | --- | --- |
@@ -227,7 +243,9 @@ CRC16-CCITT: polinômio `0x1021`, inicial `0xFFFF`, sobre `payload + "6304"`.
 `#0b1e33`/`#ffffff`) a partir de `PIX_PAYLOAD`, com `dynamic = 'force-static'` e
 cache de 1 dia. O componente usa `<img width={200} height={200}>`, sem JS.
 
-## 9. Moderação
+## 9. Administração
+
+### 9.1 Moderação
 
 - Login em `/admin/moderacao` valida `ADMIN_SECRET` com `timingSafeEqual` e grava
   um cookie `admin_session` (HMAC-SHA256 do segredo) com `HttpOnly`, `Secure`,
@@ -235,6 +253,17 @@ cache de 1 dia. O componente usa `<img width={200} height={200}>`, sem JS.
 - Server Actions (`aprovarCadastro`, `rejeitarCadastro`) verificam a sessão,
   validam UUID, atualizam o status com service role e chamam `revalidatePath`.
 - O trigger do banco é a última barreira contra aprovação sem referência.
+
+### 9.2 Dashboard
+
+- `/admin/dashboard` exige a mesma sessão `admin_session` da moderação.
+- `lib/dashboard.ts` agrega cadastros, referências e eventos dos últimos 30 dias.
+- Exibe status, série de 14 dias, acessos, falhas, saúde do Supabase, versão e
+  acessos a `/apoie`.
+- PIX é apenas **acesso à página**: a plataforma não processa nem confirma
+  doações.
+- Se `eventos_app` ainda não existir, o painel abre em modo degradado com o
+  aviso de migração pendente.
 
 ## 10. Build, performance e testes
 

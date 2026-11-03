@@ -53,6 +53,7 @@ tratados no site. Os provedores de infraestrutura atuam como **operadores**:
 | Referências públicas | sim (1+) | comprovação | consentimento + fonte pública | **sim** |
 | Link de mídia (foto/logo) | não | identidade visual | consentimento | **sim** |
 | Endereço IP | transitório | rate limit e segurança | legítimo interesse | **não** (memória, sem persistência) |
+| Eventos internos (rota, tipo, horário) | automático | métricas e segurança | legítimo interesse | **não** (sem IP ou contato) |
 | Data/hora de criação e status | automático | auditoria e moderação | legítimo interesse | **não** |
 
 **Não coletamos:** dados bancários, cartão, documentos, biometria, localização
@@ -71,7 +72,7 @@ completo, IP e status interno.
 
 - **Não há** Google Analytics, pixel de rede social, publicidade ou fingerprint.
 - **Não há** login de usuário; portanto não há cookie de sessão de titular.
-- O acesso administrativo usa chave na URL (não cookie) — ver
+- O acesso administrativo usa cookie HMAC `HttpOnly`; a senha não vai na URL — ver
   [DOCUMENTACAO-DE-SEGURANCA.md](./DOCUMENTACAO-DE-SEGURANCA.md).
 - A Vercel/Supabase podem registrar logs técnicos (IP, horário, user-agent) por
   segurança e operação, conforme contratos dos provedores.

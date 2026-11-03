@@ -24,6 +24,9 @@ não é workspace de monorepo.
 > **Mínimo de 1 referência:** em banco existente, rode também
 > `supabase-migration-uma-referencia.sql` para atualizar o trigger de aprovação.
 
+> **Dashboard:** rode `supabase-migration-dashboard.sql` para criar `eventos_app`
+> (acessos, falhas e moderação). Sem ela, o painel abre em modo degradado.
+
 ## 2. Importar o projeto
 
 1. Vercel → **Add New… → Project** → importe este repositório.

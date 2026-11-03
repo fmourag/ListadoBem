@@ -36,6 +36,7 @@ app/
   apoie/qr/route.ts           SVG do QR gerado no build
   listagem/page.tsx           grid aprovados + filtros (GET form)
   admin/moderacao/            painel (ADMIN_SECRET) + actions.ts
+  admin/dashboard/            métricas, acessos e falhas (ADMIN_SECRET)
   api/cadastro/route.ts       POST: Zod → duplicidade → insert
 components/
   FormularioCadastro.tsx      orquestrador (estado, etapas, envio)
@@ -48,6 +49,8 @@ components/
 lib/
   validation.ts               schema Zod único (client + server)
   constants.ts                valores canônicos + rótulos
+  eventos.ts                  telemetria interna (sem PII)
+  dashboard.ts                consultas agregadas do dashboard
   contribuicao.ts             chave PIX, payload, cláusulas
   pix-generator.ts            EMVCo + CRC16 (sem dependência externa)
   supabase.ts / supabase-admin.ts   público / service role (server-only)
@@ -73,6 +76,8 @@ supabase-schema.sql           tabelas, enums, RLS, triggers (idempotente)
 6. **`ADMIN_SECRET`** protege `/admin/moderacao`; nunca prefixe com `NEXT_PUBLIC_`.
 7. **Nome**: basta o nome do estabelecimento/entidade **ou** o do profissional;
    a API preenche o campo ausente antes de gravar.
+8. **Telemetria**: `eventos_app` guarda só rota, tipo, status e horário; nunca IP,
+   e-mail ou telefone. Dashboard e middleware usam service role no servidor.
 
 ## Economia de tokens (diretriz do projeto)
 

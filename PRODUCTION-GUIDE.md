@@ -78,6 +78,10 @@ ela, aprovar um cadastro com 1 referência falha com `check_violation`.
 **Contato opcional:** execute `supabase-migration-contato-opcional.sql` em banco
 existente; aplicada em **2026-11-02**.
 
+**Dashboard:** execute `supabase-migration-dashboard.sql` para criar
+`eventos_app` (acessos, falhas e moderação). Sem ela, o dashboard abre em modo
+degradado e o middleware não registra acessos.
+
 ## 4. Variáveis de ambiente
 
 | Nome | Onde | Sensível? |
@@ -163,6 +167,7 @@ node tools/smoke-deploy.cjs https://SEU-DOMINIO
 | `GET /apoie` | 200, QR e chave |
 | `GET /apoie/qr` | 200 `image/svg+xml` |
 | `/admin/moderacao` | pede senha; aprovar publica |
+| `/admin/dashboard` | pede login; mostra métricas e saúde |
 | Resposta HTTP | header `Content-Security-Policy` (enforce), sem violações no console |
 
 ## 8. Monitoramento e logs

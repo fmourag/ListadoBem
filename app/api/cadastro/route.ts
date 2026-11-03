@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { registrarEvento } from '@/lib/eventos';
 import { criarSupabaseAdmin, SupabaseAdminConfigError } from '@/lib/supabase-admin';
 import { criarSupabaseServer, SupabaseConfigError } from '@/lib/supabase';
 import type { RespostaCadastro } from '@/lib/tipos';
@@ -278,6 +279,12 @@ export async function POST(request: Request) {
     }
 
     console.error('[api/cadastro] Falha ao inserir cadastro:', erroCadastro.message);
+    await registrarEvento({
+      tipo: 'falha',
+      rota: '/api/cadastro',
+      status: 'insert_cadastro',
+      detalhe: { codigo: erroCadastro.code },
+    });
     return resposta(
       {
         ok: false,
@@ -304,6 +311,12 @@ export async function POST(request: Request) {
 
   if (erroReferencias) {
     console.error('[api/cadastro] Falha ao inserir referências:', erroReferencias.message);
+    await registrarEvento({
+      tipo: 'falha',
+      rota: '/api/cadastro',
+      status: 'insert_referencias',
+      detalhe: { codigo: erroReferencias.code },
+    });
 
     // Compensação: remove o cadastro pendente recém-criado (função SECURITY DEFINER
     // que só apaga registro pendente, criado há menos de 15 minutos e com o mesmo CPF/CNPJ).
@@ -326,6 +339,13 @@ export async function POST(request: Request) {
       500,
     );
   }
+
+  await registrarEvento({
+    tipo: 'cadastro',
+    rota: '/api/cadastro',
+    status: 'pendente',
+    detalhe: { id: cadastroId },
+  });
 
   return resposta(
     {

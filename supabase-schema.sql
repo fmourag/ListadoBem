@@ -157,7 +157,29 @@ create table if not exists public.referencias_publicas (
 );
 
 comment on table public.referencias_publicas is
-  'Provas públicas que comprovam o boicote. Cada cadastro precisa de pelo menos 2.';
+  'Provas públicas que comprovam o boicote. Cada cadastro precisa de pelo menos 1.';
+
+-- -----------------------------------------------------------------------------
+-- 3.1 Eventos internos (dashboard): acessos, cadastros, falhas e moderação
+-- -----------------------------------------------------------------------------
+create table if not exists public.eventos_app (
+  id bigint generated always as identity primary key,
+  tipo text not null
+    check (tipo in ('acesso', 'cadastro', 'falha', 'moderacao', 'contribuicao')),
+  rota text,
+  status text,
+  detalhe jsonb not null default '{}'::jsonb,
+  criado_em timestamptz not null default now()
+);
+
+create index if not exists idx_eventos_app_criado_em
+  on public.eventos_app (criado_em desc);
+
+create index if not exists idx_eventos_app_tipo_criado_em
+  on public.eventos_app (tipo, criado_em desc);
+
+comment on table public.eventos_app is
+  'Eventos internos do app: acessos, cadastros, falhas, moderação e PIX. Sem dados pessoais.';
 
 -- -----------------------------------------------------------------------------
 -- 4. Índices
@@ -284,6 +306,7 @@ create trigger trg_cadastros_boicote_validar_aprovacao
 -- -----------------------------------------------------------------------------
 alter table public.cadastros_boicote enable row level security;
 alter table public.referencias_publicas enable row level security;
+alter table public.eventos_app enable row level security;
 
 -- 8.1 Leitura pública: apenas cadastros aprovados.
 drop policy if exists "cadastros_boicote_select_aprovados" on public.cadastros_boicote;
@@ -330,6 +353,8 @@ grant select, insert on public.cadastros_boicote to anon, authenticated;
 revoke all on public.referencias_publicas from anon, authenticated;
 grant select, insert on public.referencias_publicas to anon, authenticated;
 
+revoke all on public.eventos_app from anon, authenticated;
+
 revoke all on function public.boicote_cadastro_status(uuid) from public;
 grant execute on function public.boicote_cadastro_status(uuid) to anon, authenticated;
 
@@ -345,6 +370,8 @@ grant usage on schema public to service_role;
 
 grant select, insert, update, delete on public.cadastros_boicote to service_role;
 grant select, insert, update, delete on public.referencias_publicas to service_role;
+grant select, insert, delete on public.eventos_app to service_role;
+grant usage, select on sequence public.eventos_app_id_seq to service_role;
 
 grant execute on function public.boicote_cadastro_status(uuid) to service_role;
 grant execute on function public.descartar_cadastro_pendente(uuid, text) to service_role;

@@ -133,7 +133,7 @@ na listagem até a análise humana.
 - registre o motivo da rejeição no contato com o solicitante.
 
 > Em produção, proteja o painel também por Cloudflare Access, Vercel Password
-> Protection ou SSO. A chave na URL aparece em logs e histórico do navegador.
+> Protection ou SSO. A senha não vai na URL; a sessão fica em cookie HttpOnly.
 
 ---
 

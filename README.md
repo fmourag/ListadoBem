@@ -99,17 +99,18 @@ ADMIN_SECRET=uma-chave-longa-e-aleatoria
 
 ## 5. Rotas
 
-| Rota               | Tipo             | Função                                                    |
-| ------------------ | ---------------- | --------------------------------------------------------- |
-| `/`                | Server           | Landing com hero, regras de segurança e CTA               |
-| `/listagem`        | Server (dinâm.)  | Busca e filtros (categoria, UF, referência)              |
-| `/cadastro`        | Server + client  | Formulário multi-step                                     |
-| `/apoie`           | Server           | Página da contribuição facultativa (PIX)                  |
-| `/apoie/qr`        | Route Handler    | SVG do QR PIX gerado no build                             |
-| `/termos`          | Server (estática)| Termos de Uso                                            |
-| `/privacidade`     | Server (estática)| Política de Privacidade (LGPD)                           |
-| `/api/cadastro`    | Route Handler    | Valida, checa duplicidade e grava cadastro + referências  |
-| `/admin/moderacao` | Server + Actions | Login por `ADMIN_SECRET` + cookie HttpOnly               |
+| Rota | Tipo | Função |
+| --- | --- | --- |
+| `/` | Server | Landing com hero, regras de segurança e CTA |
+| `/listagem` | Server (dinâm.) | Busca e filtros (categoria, UF, referência) |
+| `/cadastro` | Server + client | Formulário multi-step |
+| `/apoie` | Server | Contribuição facultativa (PIX) |
+| `/apoie/qr` | Route Handler | SVG do QR PIX gerado no build |
+| `/termos` | Server (estática) | Termos de Uso |
+| `/privacidade` | Server (estática) | Política de Privacidade (LGPD) |
+| `/api/cadastro` | Route Handler | Valida e grava cadastro + referências |
+| `/admin/moderacao` | Server + Actions | Login por `ADMIN_SECRET` |
+| `/admin/dashboard` | Server | Métricas, acessos, falhas e PIX |
 
 ## 6. Formulário
 

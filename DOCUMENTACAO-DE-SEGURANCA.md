@@ -60,6 +60,8 @@ provedores (Supabase/Vercel/GitHub), dados de pagamento (não existem).
 - Sem `UPDATE`/`DELETE` para `anon`.
 - `service_role` com `GRANT` explícito, usado apenas no servidor.
 - Trigger bloqueia aprovação sem referência pública.
+- `eventos_app` tem RLS sem políticas: somente `service_role` acessa; guarda rota,
+  tipo, status e horário, nunca IP ou dado de contato.
 
 ### 4.2 Aplicação
 

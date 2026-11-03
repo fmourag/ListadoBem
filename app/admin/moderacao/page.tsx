@@ -232,11 +232,11 @@ export default async function ModeracaoPage({ searchParams }: ModeracaoPageProps
           </h1>
           <p className="mt-1 text-sm text-marinho-600">
             {pendentes.length} cadastro{pendentes.length === 1 ? '' : 's'} pendente
-            {pendentes.length === 1 ? '' : 's'} de análise. Aprovar publica na listagem; rejeitar
-            mantém fora do diretório.
+            {pendentes.length === 1 ? '' : 's'} de análise. Aprovar publica; rejeitar mantém fora.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <Link href="/admin/dashboard" className="btn-secundario">Dashboard</Link>
           <Link href="/listagem" className="btn-secundario">
             <ExternalLink aria-hidden="true" className="h-4 w-4" />
             Ver listagem pública

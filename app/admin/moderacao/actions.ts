@@ -10,6 +10,7 @@ import {
   setAdminSession,
   verifyAdminSession,
 } from '@/lib/admin-auth';
+import { registrarEvento } from '@/lib/eventos';
 import { criarSupabaseAdmin, SupabaseAdminConfigError } from '@/lib/supabase-admin';
 
 /**
@@ -57,6 +58,11 @@ export async function loginAdmin(formData: FormData): Promise<void> {
   const ip = await ipDoLogin();
 
   if (loginBloqueado(ip)) {
+    await registrarEvento({
+      tipo: 'moderacao',
+      rota: '/admin/moderacao',
+      status: 'login_bloqueado',
+    });
     redirect('/admin/moderacao?erro=limite');
   }
 
@@ -64,11 +70,21 @@ export async function loginAdmin(formData: FormData): Promise<void> {
 
   if (!compararSegredo(senha)) {
     registrarFalhaLogin(ip);
+    await registrarEvento({
+      tipo: 'moderacao',
+      rota: '/admin/moderacao',
+      status: 'login_falha',
+    });
     redirect('/admin/moderacao?erro=credenciais');
   }
 
   limparFalhasLogin(ip);
   await setAdminSession();
+  await registrarEvento({
+    tipo: 'moderacao',
+    rota: '/admin/moderacao',
+    status: 'login_ok',
+  });
   revalidatePath('/admin/moderacao');
   redirect('/admin/moderacao');
 }
@@ -115,6 +131,13 @@ async function moderar(
   // correto caso alguém troque a estratégia de cache no futuro.
   revalidatePath('/listagem');
   revalidatePath('/admin/moderacao');
+
+  await registrarEvento({
+    tipo: mensagemErro ? 'falha' : 'moderacao',
+    rota: '/admin/moderacao',
+    status: mensagemErro ? 'moderacao_falha' : novoStatus,
+    detalhe: { id },
+  });
 
   redirect(
     mensagemErro

@@ -92,12 +92,18 @@ retorna protocolo e mensagem de que nada foi cobrado.
 
 ### 5.4 Moderação (`/admin/moderacao`)
 
-- Acesso por `ADMIN_SECRET` (query `?chave=`), comparação no servidor.
+- Acesso por `ADMIN_SECRET` em cookie HMAC `HttpOnly`; a senha não vai na URL.
 - Lista pendentes com dados e referências.
 - Aprovar/rejeitar via Server Actions.
 - Banco bloqueia aprovação sem referência pública.
 
-### 5.5 Contribuição facultativa (`/apoie`)
+### 5.5 Dashboard (`/admin/dashboard`)
+
+- Métricas de cadastros, referências, acessos, falhas e moderação.
+- Saúde do Supabase, versão em produção e aviso de migração pendente.
+- Acessos a `/apoie` são visitas, **não** confirmação de doação.
+
+### 5.6 Contribuição facultativa (`/apoie`)
 
 - Página dedicada + card na landing.
 - PIX copia-e-cola e QR estático (`/apoie/qr`), sem valor embutido.
